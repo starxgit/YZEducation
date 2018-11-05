@@ -22,6 +22,7 @@ public class UploadFile extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
+        // 允许跨域访问
         response.setHeader("Access-Control-Allow-Origin", "*");
         String savePath = "/home/shaoxin/upload/";
         File file = new File(savePath);
