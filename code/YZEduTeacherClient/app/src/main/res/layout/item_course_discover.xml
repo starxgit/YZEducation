@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#00ffffff"
+    android:layout_height="fill_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/Write"
+        app:cardCornerRadius="@dimen/dimen_9dp">
+
+        <RelativeLayout
+            android:layout_width="270dp"
+            android:layout_height="360dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/iv_course_img"
+                android:layout_width="270dp"
+                android:layout_height="150dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/tv_course_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_course_img"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:text="WEB应用程序设计"
+                android:textColor="#333333"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_learn_pnum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="30dp"
+                android:text="已有1532人学习" />
+
+            <Button
+                android:id="@+id/btn_take"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_alignLeft="@+id/tv_learn_pnum"
+                android:layout_below="@+id/tv_course_name"
+                android:layout_marginTop="35dp"
+                android:background="@drawable/btn_black_bg"
+                android:text="@string/takepartin"
+                android:textColor="#FFFFFF" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

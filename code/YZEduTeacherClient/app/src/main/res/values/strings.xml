@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">云智教育教师端</string>
+    <string name="welcome_word">云享资源&#160;&#160;&#160;&#160;智慧教学</string>
+    <string name="index">首页</string>
+    <string name="course">课程</string>
+    <string name="learn">学习</string>
+    <string name="teach">教学</string>
+    <string name="live">直播</string>
+    <string name="person">个人</string>
+    <string name="click2quit">再按一次退出程序</string>
+    <string name="show_more">查看更多</string>
+    <string name="school">院校</string>
+    <string name="setting">系统设置</string>
+    <string name="wallet">我的钱包</string>
+    <string name="ability">能力档案</string>
+    <string name="use_help">使用帮助</string>
+    <string name="advice">问题反馈</string>
+    <string name="is_living">智享·直播</string>
+    <string name="input_search_content">输入搜索内容</string>
+    <string name="showmore">查看更多</string>
+    <string name="course_new">新课·速递</string>
+    <string name="course_top">热门·精选</string>
+    <string name="live_room_id">房间号：</string>
+    <string name="school_information">资讯</string>
+    <string name="school_announcement">公告</string>
+    <string name="school_circle">学友圈</string>
+    <string name="search">搜索</string>
+    <string name="mycourse">我的课程</string>
+    <string name="practical_training">综合实训</string>
+    <string name="mytask">我的任务</string>
+    <string name="grade_query">成绩查询</string>
+    <string name="live_room">直播间</string>
+    <string name="server_response_error">服务器响应异常!</string>
+    <string name="search_another_course">没有找到相关课程,请换个关键字搜索</string>
+    <string name="discover_course">发现课</string>
+    <string name="learn_like">学习偏好</string>
+    <string name="message">消息</string>
+    <string name="user_info">个人信息</string>
+    <string name="update">版本更新</string>
+    <string name="clearcache">清理缓存</string>
+    <string name="aboutus">关于我们</string>
+    <string name="finish">完成</string>
+    <string name="save_success">保存成功</string>
+    <string name="takepartin">参加课程</string>
+    <string-array name="jazzy_effects">
+        <item>Standard</item>
+        <item>Tablet</item>
+        <item>CubeIn</item>
+        <item>CubeOut</item>
+        <item>FlipVertical</item>
+        <item>FlipHorizontal</item>
+        <item>Stack</item>
+        <item>ZoomIn</item>
+        <item>ZoomOut</item>
+        <item>RotateUp</item>
+        <item>RotateDown</item>
+        <item>Accordion</item>
+    </string-array>
+    <string name="detail">详情</string>
+    <string name="misstake">错题</string>
+    <string name="exam">考试</string>
+    <string name="material">资料</string>
+    <string name="overview">总览</string>
+    <string name="quit_course">退选课程</string>
+    <string name="exercises">综合练习</string>
+    <string name="course_disscuss">课程交流</string>
+    <string name="send">发送</string>
+    <string name="clear">清空</string>
+    <string name="delete">删除</string>
+    <string name="comment">评论</string>
+    <string name="submit">提交</string>
+    <string name="please_input_content">请输入内容</string>
+    <string name="upload">上传</string>
+    <string name="chose_file">选择文件</string>
+    <string name="my_correct">我的批改</string>
+    <string name="new_disscuss">新话题</string>
+    <string name="edit">编辑</string>
+    <string name="course_name">课程名：</string>
+    <string name="course_introduce">课程介绍：</string>
+    <string name="sum_hour">总课时：</string>
+    <string name="sum_student">总人数：</string>
+    <string name="add">新增</string>
+
+
+</resources>

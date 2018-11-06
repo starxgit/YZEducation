@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="15dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1.关于Java应用程序的main方法，下面哪个是正确的写法" />
+    
+    <RadioGroup 
+        android:id="@+id/rg_answer"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="public Static void main(String args[])" />
+        
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="private static void main(String args[])" />
+        
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="public static void Main(string args[])" />
+        
+        <RadioButton
+            android:id="@+id/radioButton4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="public static void main(String args[])" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/ll_ans"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="正确答案：" />
+
+        <TextView
+            android:id="@+id/tv_trueans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="D" />
+        
+         <TextView
+            android:id="@+id/textView3"
+            android:layout_marginLeft="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="正确率：" />
+
+        <TextView
+            android:id="@+id/tv_myans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="76%" />
+
+    </LinearLayout>
+
+</LinearLayout>

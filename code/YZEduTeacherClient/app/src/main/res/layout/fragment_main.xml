@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@mipmap/toubu"
+        android:paddingTop="15dp">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/Write"
+            android:textSize="22sp" />
+    </FrameLayout>
+
+    <View
+        android:id="@+id/view_temp"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/line_d6" />
+
+    <ScrollView
+        android:id="@+id/sv_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/grey9">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey9"
+            android:orientation="vertical">
+
+            <com.oragee.banners.BannerView
+                android:id="@+id/vp_banner"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/grey0"></com.oragee.banners.BannerView>
+
+            <com.fstech.yzedutc.view.MyListView
+                android:id="@+id/lv_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/mainBackground"
+                android:dividerHeight="0dp" />
+
+            <RelativeLayout
+                android:id="@+id/re_more_top"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/grey9">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="华文黑体"
+                    android:text="@string/showmore"
+                    android:textColor="@color/text_black6" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/textView4"
+                    android:alpha="0.2"
+                    android:src="@mipmap/cd1" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

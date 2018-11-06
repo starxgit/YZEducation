@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity">
+
+    <RadioGroup
+        android:id="@+id/rg_tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/Write"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_main"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/menu_main"
+            android:text="@string/index" />
+
+        <RadioButton
+            android:id="@+id/rb_course"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/menu_course"
+            android:text="@string/live" />
+
+        <RadioButton
+            android:id="@+id/rb_learn"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/menu_school"
+            android:text="@string/teach" />
+
+        <RadioButton
+            android:id="@+id/rb_school"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/menu_mycourse"
+            android:text="@string/school" />
+
+        <RadioButton
+            android:id="@+id/rb_person"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/menu_personal"
+            android:text="@string/person" />
+
+    </RadioGroup>
+
+    <View
+        android:id="@+id/div_tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_above="@id/rg_tab_bar"
+        android:background="@color/line_d2" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/div_tab_bar" />
+
+
+</RelativeLayout>

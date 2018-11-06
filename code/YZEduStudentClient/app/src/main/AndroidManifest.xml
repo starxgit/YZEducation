@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fstech.yzedusc">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.MOUNT_FORMAT_FILESYSTEMS" />
+
+
+    <application
+        android:name=".application.YZEduApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.WelcomeActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity
+            android:name=".activity.CourseClassificationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity
+            android:name=".activity.CourseIntroduceActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.CourseSearchResultActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity
+            android:name=".activity.CourseCfaResultActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.MyCourseActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity
+            android:name=".activity.MyPracticalActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity
+            android:name=".activity.MyTaskActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.GradeQueryActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity
+            android:name=".activity.LearnLikeActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.DiscoverActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.WalletActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.AbilityActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.MessageActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.UserInfoActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.WebAboutActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.CourseLearnActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.CourseOverViewActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.LessonLearnActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.MaterialActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity
+            android:name=".activity.LiveRoomActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".activity.ExamActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.PracticalLearnActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.DoPracticalActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.CourseDisscussActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.MisstakeActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.InformationDetailActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.SchoolSelectActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity
+            android:name=".activity.MistakeDetailActivity"
+            android:screenOrientation="portrait"></activity>
+    </application>
+
+</manifest>
