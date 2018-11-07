@@ -1,6 +1,7 @@
 package com.star.common.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,17 +12,17 @@ import com.star.common.util.FileUtil;
 
 /**
  * Created By shaoxin On 2018-11-07
- * 上传文件的Servlet
+ * 上传视频的Servlet
  */
-@WebServlet("/UploadFile")
-public class UploadFile extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
-    protected void doPost(HttpServletRequest request,
+@WebServlet("/UploadVideo")
+public class UploadVideo extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+	protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         // 允许跨域访问
         response.setHeader("Access-Control-Allow-Origin", "*");
-        String fileUrl = FileUtil.upLoadFile(request,"YZEduResources/others/");
+        String fileUrl = FileUtil.upLoadFile(request,"YZEduResources/videos/");
         System.out.println(fileUrl);
         response.getWriter().print(fileUrl);
     }
