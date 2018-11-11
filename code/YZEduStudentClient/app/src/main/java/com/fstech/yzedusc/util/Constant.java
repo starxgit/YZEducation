@@ -9,13 +9,13 @@ public class Constant {
 
 
     // 这个是服务器的IP地址
-    public static final String SERVER_IP = "http://118.89.29.44";
+    public static final String SERVER_IP = "https://118.89.29.44";
 
     // 数据服务器1的IP地址
     public static final String DB_SERVER_IP1 = "http://47.101.36.60";
 
     // 设置服务器端口
-    public static final String SERVER_PORT = "8080";
+    public static final String SERVER_PORT = "8443";
 
     // 基础数据请求地址
     public static final String BASE_DB_URL = SERVER_IP + ":" + SERVER_PORT + "/YZEduDBServer/";
