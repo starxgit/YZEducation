@@ -7,7 +7,6 @@ package com.fstech.yzedusc.util;
 
 public class Constant {
 
-
     // 这个是服务器的IP地址
 //    public static final String SERVER_IP = "https://118.89.29.44";
 

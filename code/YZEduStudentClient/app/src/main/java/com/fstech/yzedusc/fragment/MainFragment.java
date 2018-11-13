@@ -2,6 +2,7 @@ package com.fstech.yzedusc.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -142,24 +143,19 @@ public class MainFragment extends Fragment {
             final int type = b.getBanner_type();
             final String link = b.getBanner_link();
             final String banner_image = b.getBanner_image();
-
             final ImageView image = new ImageView(getActivity());
             image.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             //设置显示格式
             image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-            // 使用线程工具类设置banner图片
-            ThreadUtil.runInThread(new Runnable() {
+            // 使用okhttp加载图片
+            OkhttpUtil.okHttpGetBitmap(banner_image, new CallBackUtil.CallBackBitmap() {
                 @Override
-                public void run() {
-                    int state = DownloadTools.downloadImg(banner_image);
-//                    Log.e("im3", state + "");
-                    ThreadUtil.runInUIThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ImageUitl.SimpleShowImage(banner_image, image);
-                        }
-                    });
+                public void onFailure(Call call, Exception e) {
+
+                }
+                @Override
+                public void onResponse(Bitmap bitmap) {
+                    image.setImageBitmap(bitmap);
                 }
             });
             image.setOnClickListener(new View.OnClickListener() {
@@ -194,8 +190,8 @@ public class MainFragment extends Fragment {
     * 无参数
     * 无返回
     * */
-    private void getBanners() {
-        String url = Constant.BASE_DB_URL1 + "platform/Information";
+    private void getInformations() {
+        String url = Constant.BASE_DB_URL + "platform/Information";
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", "1");
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
@@ -247,8 +243,8 @@ public class MainFragment extends Fragment {
     * 无参数
     * 无返回
     * */
-    private void getInformations() {
-        String url = Constant.BASE_DB_URL + "Banners";
+    private void getBanners() {
+        String url = Constant.BASE_DB_URL + "platform/banner";
         OkhttpUtil.okHttpGet(url, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
