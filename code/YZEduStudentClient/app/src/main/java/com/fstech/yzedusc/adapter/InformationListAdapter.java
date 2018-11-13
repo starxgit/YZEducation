@@ -1,6 +1,7 @@
 package com.fstech.yzedusc.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +12,16 @@ import android.widget.TextView;
 
 import com.fstech.yzedusc.R;
 import com.fstech.yzedusc.bean.InformationBean;
+import com.fstech.yzedusc.util.CallBackUtil;
 import com.fstech.yzedusc.util.DownloadTools;
 import com.fstech.yzedusc.util.ImageUitl;
+import com.fstech.yzedusc.util.OkhttpUtil;
 import com.fstech.yzedusc.util.ThreadUtil;
 
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.Call;
 
 /**
  * Created by shaoxin on 18-3-25.
@@ -81,28 +86,24 @@ public class InformationListAdapter extends BaseAdapter {
         final String information_image = info.getInformation_cover();
         String information_title = info.getInformation_title();
         String information_date = info.getInformation_date().substring(0, 10);
-        String information_content = info.getInformation_content();
+        String information_content = "";
         vh.tv_infomation_title.setText(information_title);
         vh.getTv_infomation_date.setText(information_date);
-        vh.getTv_infomation_content.setText(information_content);
+        vh.getTv_infomation_content.setVisibility(View.GONE);
         if (information_image == null) {
             vh.iv_information_image.setVisibility(View.GONE);
         } else {
             vh.iv_information_image.setVisibility(View.VISIBLE);
             final ViewHolder finalVh = vh;
-            ThreadUtil.runInThread(new Runnable() {
+            OkhttpUtil.okHttpGetBitmap(information_image, new CallBackUtil.CallBackBitmap() {
                 @Override
-                public void run() {
-                    // 下载图片到本地
-                    DownloadTools.downloadImg(information_image);
-                    ThreadUtil.runInUIThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // 将图片显示到视图
-//                            Log.e("img",information_image);
-                            ImageUitl.SimpleShowImage(information_image, finalVh.iv_information_image);
-                        }
-                    });
+                public void onFailure(Call call, Exception e) {
+
+                }
+
+                @Override
+                public void onResponse(Bitmap response) {
+                    finalVh.iv_information_image.setImageBitmap(response);
                 }
             });
         }

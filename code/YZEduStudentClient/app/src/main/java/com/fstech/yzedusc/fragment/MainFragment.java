@@ -191,7 +191,7 @@ public class MainFragment extends Fragment {
     * 无返回
     * */
     private void getInformations() {
-        String url = Constant.BASE_DB_URL + "platform/Information";
+        String url = Constant.BASE_DB_URL + "platform/information";
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", "1");
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
@@ -211,7 +211,6 @@ public class MainFragment extends Fragment {
                         JSONArray jsonArray = jsonObject.getJSONArray("return_data");
                         ObjectMapper objectMapper = new ObjectMapper();
                         for (int i = 0; i < jsonArray.length(); i++) {
-//                            Log.e("informationsize", listItems_information.size() + "," + i + "," + jsonArray.length());
                             JSONObject jobj = jsonArray.getJSONObject(i);
                             InformationBean ib = objectMapper.readValue(jobj.toString(), InformationBean.class);
                             listItems_information.add(ib);

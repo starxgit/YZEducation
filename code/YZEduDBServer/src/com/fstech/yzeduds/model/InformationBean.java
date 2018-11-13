@@ -1,25 +1,22 @@
-package com.fstech.yzedusc.bean;
+package com.fstech.yzeduds.model;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by shaoxin on 18-3-28.
- * 显示咨询列表的模型类
+ * Created by shaoxin on 18-11-13. 显示咨询列表的模型类
  */
 
-public class InformationBean implements Serializable {
-    private int information_id;         // 资讯id
-    private String information_title;   // 资讯标题
-    private String information_date;    // 资讯日期(直接取字符串)
-    private String information_cover;   // 资讯图片路径(如果没有设为null)
-
+public class InformationBean {
+    private int information_id; // 资讯id
+    private String information_title; // 资讯标题
+    private String information_cover; // 资讯图片路径(如果没有设为null)
+    private String information_date; // 资讯日期(直接取字符串)
 
     public InformationBean() {
     }
 
     public InformationBean(int information_id, String information_title,
-                           String information_cover, String information_date) {
+            String information_cover, String information_date) {
         super();
         this.information_id = information_id;
         this.information_title = information_title;
@@ -66,6 +63,5 @@ public class InformationBean implements Serializable {
                 + ", information_cover=" + information_cover
                 + ", information_date=" + information_date + "]";
     }
-
 
 }

@@ -1,6 +1,7 @@
 package com.fstech.yzedusc.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +12,13 @@ import android.widget.TextView;
 
 import com.fstech.yzedusc.R;
 import com.fstech.yzedusc.bean.InformationBean;
+import com.fstech.yzedusc.util.CallBackUtil;
 import com.fstech.yzedusc.util.DownloadTools;
 import com.fstech.yzedusc.util.ImageUitl;
+import com.fstech.yzedusc.util.OkhttpUtil;
 import com.fstech.yzedusc.util.ThreadUtil;
+
+import okhttp3.Call;
 
 /**
  * Created by shaoxin on 18-5-23.
@@ -62,22 +67,18 @@ public class InformationDetailActivity extends AppCompatActivity {
     * */
     private void setData() {
         tv_information_title.setText(informationBean.getInformation_title());
-        tv_information_date.setText(informationBean.getInformation_date().substring(0, 10));
-        tv_information_content.setText(informationBean.getInformation_content());
-        Log.e("count", informationBean.getInformation_image_count() + "");
+        tv_information_date.setText(informationBean.getInformation_date().substring(0, 19));
+        tv_information_content.setText("");
         if (informationBean.getInformation_cover() != null) {
-            ThreadUtil.runInThread(new Runnable() {
+            OkhttpUtil.okHttpGetBitmap(informationBean.getInformation_cover(), new CallBackUtil.CallBackBitmap() {
                 @Override
-                public void run() {
-                    // 下载图片到本地
-                    DownloadTools.downloadImg(informationBean.getInformation_cover());
-                    ThreadUtil.runInUIThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // 将图片显示到视图
-                            ImageUitl.SimpleShowImage(informationBean.getInformation_cover(), iv_information_image);
-                        }
-                    });
+                public void onFailure(Call call, Exception e) {
+
+                }
+
+                @Override
+                public void onResponse(Bitmap response) {
+                    iv_information_image.setImageBitmap(response);
                 }
             });
         }
