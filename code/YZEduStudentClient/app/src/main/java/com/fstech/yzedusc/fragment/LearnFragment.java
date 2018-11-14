@@ -143,47 +143,47 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
     private void initData() {
         listItems = new ArrayList<>();
         String url = Constant.BASE_DB_URL1 + "platform/HappyRead";
-        OkhttpUtil.okHttpGet(url, new CallBackUtil.CallBackString() {
-            @Override
-            public void onFailure(Call call, Exception e) {
-                Log.e("fail", "okhttp请求失败");
-            }
-
-            @Override
-            public void onResponse(String response) {
-                Log.e("response", response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    int result_code = jsonObject.getInt("result_code");
-                    if (result_code == 0) {
-                        // 返回正确的情况
-                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
-                        ObjectMapper objectMapper = new ObjectMapper();
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jobj = jsonArray.getJSONObject(i);
-                            HappyReadBean hb = objectMapper.readValue(jobj.toString(), HappyReadBean.class);
-                            listItems.add(hb);
-                        }
-                        handler.sendMessage(handler.obtainMessage(1));
-                    } else {
-                        String message = jsonObject.getString("message");
-                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    Log.e("Json", e.getMessage());
-                    e.printStackTrace();
-                } catch (JsonParseException e) {
-                    Log.e("error", e.getMessage());
-                    e.printStackTrace();
-                } catch (JsonMappingException e) {
-                    e.printStackTrace();
-                    Log.e("error", e.getMessage());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.e("error", e.getMessage());
-                }
-            }
-        });
+//        OkhttpUtil.okHttpGet(url, new CallBackUtil.CallBackString() {
+//            @Override
+//            public void onFailure(Call call, Exception e) {
+//                Log.e("fail", "okhttp请求失败");
+//            }
+//
+//            @Override
+//            public void onResponse(String response) {
+//                Log.e("response", response);
+//                try {
+//                    JSONObject jsonObject = new JSONObject(response);
+//                    int result_code = jsonObject.getInt("result_code");
+//                    if (result_code == 0) {
+//                        // 返回正确的情况
+//                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
+//                        ObjectMapper objectMapper = new ObjectMapper();
+//                        for (int i = 0; i < jsonArray.length(); i++) {
+//                            JSONObject jobj = jsonArray.getJSONObject(i);
+//                            HappyReadBean hb = objectMapper.readValue(jobj.toString(), HappyReadBean.class);
+//                            listItems.add(hb);
+//                        }
+//                        handler.sendMessage(handler.obtainMessage(1));
+//                    } else {
+//                        String message = jsonObject.getString("message");
+//                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+//                    }
+//                } catch (JSONException e) {
+//                    Log.e("Json", e.getMessage());
+//                    e.printStackTrace();
+//                } catch (JsonParseException e) {
+//                    Log.e("error", e.getMessage());
+//                    e.printStackTrace();
+//                } catch (JsonMappingException e) {
+//                    e.printStackTrace();
+//                    Log.e("error", e.getMessage());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                    Log.e("error", e.getMessage());
+//                }
+//            }
+//        });
     }
 
     private boolean checkLogin() {

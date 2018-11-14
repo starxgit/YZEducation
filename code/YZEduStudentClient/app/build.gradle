@@ -26,8 +26,8 @@ dependencies {
     //    qmui的库
     compile 'com.qmuiteam:qmui:1.0.6'
     //    okhttp相关的库
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
-    compile 'com.squareup.okio:okio:1.11.0'
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
+    compile 'com.squareup.okio:okio:1.13.0'
     //    bannerView
     compile 'com.coldmoqiuli:banners:1.0.1'
     //    智能刷新的库

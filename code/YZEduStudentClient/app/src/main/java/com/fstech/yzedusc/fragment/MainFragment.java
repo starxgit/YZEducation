@@ -148,16 +148,7 @@ public class MainFragment extends Fragment {
             //设置显示格式
             image.setScaleType(ImageView.ScaleType.CENTER_CROP);
             // 使用okhttp加载图片
-            OkhttpUtil.okHttpGetBitmap(banner_image, new CallBackUtil.CallBackBitmap() {
-                @Override
-                public void onFailure(Call call, Exception e) {
-
-                }
-                @Override
-                public void onResponse(Bitmap bitmap) {
-                    image.setImageBitmap(bitmap);
-                }
-            });
+            ImageUitl.showNetImage(image,banner_image);
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -194,6 +185,7 @@ public class MainFragment extends Fragment {
         String url = Constant.BASE_DB_URL + "platform/information";
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", "1");
+        Log.e("r1","请求资讯列表");
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -244,6 +236,7 @@ public class MainFragment extends Fragment {
     * */
     private void getBanners() {
         String url = Constant.BASE_DB_URL + "platform/banner";
+        Log.e("r2","请求Banner列表");
         OkhttpUtil.okHttpGet(url, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {

@@ -86,7 +86,6 @@ public class InformationListAdapter extends BaseAdapter {
         final String information_image = info.getInformation_cover();
         String information_title = info.getInformation_title();
         String information_date = info.getInformation_date().substring(0, 10);
-        String information_content = "";
         vh.tv_infomation_title.setText(information_title);
         vh.getTv_infomation_date.setText(information_date);
         vh.getTv_infomation_content.setVisibility(View.GONE);
@@ -95,17 +94,7 @@ public class InformationListAdapter extends BaseAdapter {
         } else {
             vh.iv_information_image.setVisibility(View.VISIBLE);
             final ViewHolder finalVh = vh;
-            OkhttpUtil.okHttpGetBitmap(information_image, new CallBackUtil.CallBackBitmap() {
-                @Override
-                public void onFailure(Call call, Exception e) {
-
-                }
-
-                @Override
-                public void onResponse(Bitmap response) {
-                    finalVh.iv_information_image.setImageBitmap(response);
-                }
-            });
+            ImageUitl.showNetImage(finalVh.iv_information_image,information_image);
         }
 
         return convertView;

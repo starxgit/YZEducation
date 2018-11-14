@@ -185,49 +185,49 @@ public class CourseFragment extends Fragment implements View.OnClickListener {
         Map<String, String> map = new HashMap<String, String>();
         map.put("user_id", userid);
         map.put("page", page + "");
-        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
-            @Override
-            public void onFailure(Call call, Exception e) {
-                Log.e("fail", "okhttp请求失败");
-            }
-
-            @Override
-            public void onResponse(String response) {
-                Log.e("newCourseResponse", response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    int result_code = jsonObject.getInt("result_code");
-                    if (result_code == 0) {
-                        // 返回正确的情况
-                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
-                        ObjectMapper objectMapper = new ObjectMapper();
-                        for (int i = 0; i < Constant.GRID_SIZE; i++) {
-                            JSONObject jobj = jsonArray.getJSONObject(i);
-                            CourseBean courseBean = objectMapper.readValue(jobj.toString(), CourseBean.class);
-                            // TODO 取消预定设置
-                            courseBean.setCourse_sum(Constant.ARR_COURSE_SUM_HOUR[courseBean.getCourse_id() % Constant.ARR_COURSE_SUM_HOUR.length]);
-                            list_new.add(courseBean);
-                        }
-                        handler.sendMessage(handler.obtainMessage(7));
-                    } else {
-                        String message = jsonObject.getString("message");
-                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    Log.e("Json", "创建Json对象失败");
-                    e.printStackTrace();
-                } catch (JsonParseException e) {
-                    Log.e("Json", "JSON包装成对象失败");
-                    e.printStackTrace();
-                } catch (JsonMappingException e) {
-                    Log.e("error", "NewCourseMapping异常");
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    Log.e("error", "IO异常" + e.getLocalizedMessage());
-                    e.printStackTrace();
-                }
-            }
-        });
+//        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
+//            @Override
+//            public void onFailure(Call call, Exception e) {
+//                Log.e("fail", "okhttp请求失败");
+//            }
+//
+//            @Override
+//            public void onResponse(String response) {
+//                Log.e("newCourseResponse", response);
+//                try {
+//                    JSONObject jsonObject = new JSONObject(response);
+//                    int result_code = jsonObject.getInt("result_code");
+//                    if (result_code == 0) {
+//                        // 返回正确的情况
+//                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
+//                        ObjectMapper objectMapper = new ObjectMapper();
+//                        for (int i = 0; i < Constant.GRID_SIZE; i++) {
+//                            JSONObject jobj = jsonArray.getJSONObject(i);
+//                            CourseBean courseBean = objectMapper.readValue(jobj.toString(), CourseBean.class);
+//                            // TODO 取消预定设置
+//                            courseBean.setCourse_sum(Constant.ARR_COURSE_SUM_HOUR[courseBean.getCourse_id() % Constant.ARR_COURSE_SUM_HOUR.length]);
+//                            list_new.add(courseBean);
+//                        }
+//                        handler.sendMessage(handler.obtainMessage(7));
+//                    } else {
+//                        String message = jsonObject.getString("message");
+//                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+//                    }
+//                } catch (JSONException e) {
+//                    Log.e("Json", "创建Json对象失败");
+//                    e.printStackTrace();
+//                } catch (JsonParseException e) {
+//                    Log.e("Json", "JSON包装成对象失败");
+//                    e.printStackTrace();
+//                } catch (JsonMappingException e) {
+//                    Log.e("error", "NewCourseMapping异常");
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    Log.e("error", "IO异常" + e.getLocalizedMessage());
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
     }
 
     /*
@@ -238,48 +238,48 @@ public class CourseFragment extends Fragment implements View.OnClickListener {
         Map<String, String> map = new HashMap<String, String>();
         map.put("user_id", userid);
         map.put("page", page + "");
-        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
-            @Override
-            public void onFailure(Call call, Exception e) {
-                Log.e("fail", "okhttp请求失败");
-            }
-
-            @Override
-            public void onResponse(String response) {
-                Log.e("TopCourseResponse", response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    int result_code = jsonObject.getInt("result_code");
-                    if (result_code == 0) {
-                        // 返回正确的情况
-                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
-                        ObjectMapper objectMapper = new ObjectMapper();
-                        for (int i = 0; i < Constant.GRID_SIZE; i++) {
-                            JSONObject jobj = jsonArray.getJSONObject(i);
-                            CourseBean courseBean = objectMapper.readValue(jobj.toString(), CourseBean.class);
-                            // TODO 取消预定设置
-                            courseBean.setCourse_sum(Constant.ARR_COURSE_SUM_HOUR[courseBean.getCourse_id() % Constant.ARR_COURSE_SUM_HOUR.length]);
-                            list_top.add(courseBean);
-                        }
-                        handler.sendMessage(handler.obtainMessage(8));
-                    } else {
-                        String message = jsonObject.getString("message");
-                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    Log.e("Json", "创建Json对象失败");
-                    e.printStackTrace();
-                } catch (JsonParseException e) {
-                    Log.e("Json", "JSON包装成对象失败");
-                    e.printStackTrace();
-                } catch (JsonMappingException e) {
-                    Log.e("error", "TopCourseMapping异常");
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    Log.e("error", "IO异常" + e.getLocalizedMessage());
-                    e.printStackTrace();
-                }
-            }
-        });
+//        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
+//            @Override
+//            public void onFailure(Call call, Exception e) {
+//                Log.e("fail", "okhttp请求失败");
+//            }
+//
+//            @Override
+//            public void onResponse(String response) {
+//                Log.e("TopCourseResponse", response);
+//                try {
+//                    JSONObject jsonObject = new JSONObject(response);
+//                    int result_code = jsonObject.getInt("result_code");
+//                    if (result_code == 0) {
+//                        // 返回正确的情况
+//                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
+//                        ObjectMapper objectMapper = new ObjectMapper();
+//                        for (int i = 0; i < Constant.GRID_SIZE; i++) {
+//                            JSONObject jobj = jsonArray.getJSONObject(i);
+//                            CourseBean courseBean = objectMapper.readValue(jobj.toString(), CourseBean.class);
+//                            // TODO 取消预定设置
+//                            courseBean.setCourse_sum(Constant.ARR_COURSE_SUM_HOUR[courseBean.getCourse_id() % Constant.ARR_COURSE_SUM_HOUR.length]);
+//                            list_top.add(courseBean);
+//                        }
+//                        handler.sendMessage(handler.obtainMessage(8));
+//                    } else {
+//                        String message = jsonObject.getString("message");
+//                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+//                    }
+//                } catch (JSONException e) {
+//                    Log.e("Json", "创建Json对象失败");
+//                    e.printStackTrace();
+//                } catch (JsonParseException e) {
+//                    Log.e("Json", "JSON包装成对象失败");
+//                    e.printStackTrace();
+//                } catch (JsonMappingException e) {
+//                    Log.e("error", "TopCourseMapping异常");
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    Log.e("error", "IO异常" + e.getLocalizedMessage());
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
     }
 }
