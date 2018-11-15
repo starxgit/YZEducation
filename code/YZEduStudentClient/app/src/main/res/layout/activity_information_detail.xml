@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/qmui_config_color_white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -80,19 +81,19 @@
                         android:text="2018-03-25 19:29:21"
                         android:textColor="@color/text_black9" />
 
-                    <TextView
-                        android:id="@+id/tv_information_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:text="这是资讯内容"
-                        android:textColor="@color/text_black6" />
                 </LinearLayout>
             </ScrollView>
 
         </LinearLayout>
+
+        <ListView
+            android:id="@+id/lv_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:divider="@color/qmui_config_color_white"
+            android:dividerHeight="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </LinearLayout>

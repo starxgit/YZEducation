@@ -138,6 +138,9 @@
         <activity
             android:name=".activity.MistakeDetailActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.AllInformationActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

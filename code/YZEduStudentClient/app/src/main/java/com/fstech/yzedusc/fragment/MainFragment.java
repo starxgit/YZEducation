@@ -13,12 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.fstech.yzedusc.R;
+import com.fstech.yzedusc.activity.AllInformationActivity;
 import com.fstech.yzedusc.activity.CourseIntroduceActivity;
 import com.fstech.yzedusc.activity.InformationDetailActivity;
+import com.fstech.yzedusc.activity.MainActivity;
 import com.fstech.yzedusc.adapter.InformationListAdapter;
 import com.fstech.yzedusc.bean.BannerBean;
 import com.fstech.yzedusc.bean.InformationBean;
@@ -61,6 +64,7 @@ public class MainFragment extends Fragment {
     private List<InformationBean> listItems_information;
     private ScrollView sv_main;
     private Handler handler;
+    private RelativeLayout re_more_top;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,6 +112,15 @@ public class MainFragment extends Fragment {
         adapter = new InformationListAdapter(getActivity(), listItems_information);
         lv_information.setAdapter(adapter);
         listItems_banner = new ArrayList<BannerBean>();
+        re_more_top = (RelativeLayout) getActivity().findViewById(R.id.re_more_top);
+        re_more_top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),AllInformationActivity.class);
+                intent.putExtra("type", 0);
+                startActivity(intent);
+            }
+        });
 
         lv_information.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -185,7 +198,6 @@ public class MainFragment extends Fragment {
         String url = Constant.BASE_DB_URL + "platform/information";
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", "1");
-        Log.e("r1","请求资讯列表");
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
