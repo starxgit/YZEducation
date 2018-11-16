@@ -86,10 +86,10 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
     * */
     private void initData() {
         application = (YZEduApplication) getActivity().getApplication();
-        if (application.getUser_id() != 0) {
-            if (application.getStudent_name() != null) {
-                tv_name.setText(application.getStudent_name());
-                final String img = application.getUser_avatar();
+        if (application.getToken() != null) {
+            if (application.getUserName() != null) {
+                tv_name.setText(application.getUserName());
+                final String img = application.getAvatar();
                 // 显示图片
                 ThreadUtil.runInThread(new Runnable() {
                     @Override
@@ -103,15 +103,13 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
                         });
                     }
                 });
-            } else {
-                tv_name.setText("用户" + application.getUser_id());
             }
         }
 
     }
 
     private boolean checkLogin() {
-        if (application.getUser_id() == 0) {
+        if (application.getToken() == null) {
             Toast.makeText(getActivity(), R.string.please_login_first, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -124,7 +122,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
     * 否则进入登录页
     * */
     private void userMain() {
-        if (application.getUser_id() != 0) {
+        if (application.getToken() != null) {
             Intent intent = new Intent(getActivity(), UserInfoActivity.class);
             startActivity(intent);
         } else {

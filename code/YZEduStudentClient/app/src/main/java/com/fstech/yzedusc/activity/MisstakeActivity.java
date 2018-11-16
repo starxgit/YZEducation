@@ -65,12 +65,12 @@ public class MisstakeActivity extends AppCompatActivity {
     * */
     private void initData() {
         YZEduApplication application = (YZEduApplication) getApplication();
-        list = application.getMistakes();
-        for (int i = 0; i < list.size(); i++) {
-            Map<String, Object> li = new HashMap<String, Object>();
-            li.put("question", list.get(i).getExam_item_question());
-            listItems.add(li);
-        }
+//        list = application.getMistakes();
+//        for (int i = 0; i < list.size(); i++) {
+//            Map<String, Object> li = new HashMap<String, Object>();
+//            li.put("question", list.get(i).getExam_item_question());
+//            listItems.add(li);
+//        }
         adapter.notifyDataSetChanged();
     }
 

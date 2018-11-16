@@ -106,7 +106,7 @@ public class SchoolFragment extends Fragment {
     * */
     private void checkLogin() {
         application = (YZEduApplication) getActivity().getApplication();
-        if (application.getUser_id() == 0) {
+        if (application.getToken() == null) {
             Toast.makeText(getActivity(), R.string.please_login_first, Toast.LENGTH_SHORT).show();
             // 转到登录页
             Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -160,10 +160,10 @@ public class SchoolFragment extends Fragment {
     * */
     private void initData() {
         school_id = -1;
-        if (application.getSchool_id() != 0) {
-            tv_school_name.setText(application.getSchool_name());
-            school_id = application.getSchool_id();
-        }
+//        if (application.getSchool_id() != 0) {
+//            tv_school_name.setText(application.getSchool_name());
+//            school_id = application.getSchool_id();
+//        }
 
         setInformations();
         setAnnouncements();

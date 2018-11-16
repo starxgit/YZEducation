@@ -62,7 +62,7 @@ public class ExamActivity extends Activity {
     private void initData() {
         application = (YZEduApplication) getApplication();
         acosid = "1";
-        userid = application.getUser_id() + "";
+        userid = "120110040225";
     }
 
 

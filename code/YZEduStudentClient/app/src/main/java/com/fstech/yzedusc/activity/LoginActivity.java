@@ -10,8 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EdgeEffect;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +17,6 @@ import android.widget.Toast;
 import com.fstech.yzedusc.R;
 import com.fstech.yzedusc.application.YZEduApplication;
 import com.fstech.yzedusc.bean.StudentBean;
-import com.fstech.yzedusc.bean.UserBean;
 import com.fstech.yzedusc.util.CacheActivityUtil;
 import com.fstech.yzedusc.util.CallBackUtil;
 import com.fstech.yzedusc.util.Constant;
@@ -28,7 +25,6 @@ import com.fstech.yzedusc.view.ClearEditText;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundLinearLayout;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -123,16 +119,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editor.putString("pass", etPassword.getText().toString());
         editor.commit();
         YZEduApplication application = (YZEduApplication) getApplication();
-        application.setSchool_id(studentBean.getSchool_id());
-        application.setSchool_name(studentBean.getSchool_name());
-        application.setStudent_id(studentBean.getStudent_id());
-        application.setStudent_name(studentBean.getStudent_name());
-        application.setStudent_number(studentBean.getStudent_number());
-        application.setUser_age(studentBean.getUser_age());
-        application.setUser_avatar(studentBean.getUser_avatar());
-        application.setUser_sex(studentBean.getUser_sex());
-        application.setUser_id(studentBean.getUser_id());
-        application.setUser_phone(studentBean.getUser_phone());
+        // TODO 登录逻辑
         CacheActivityUtil.finishSingleActivityByClass(MainActivity.class);
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);

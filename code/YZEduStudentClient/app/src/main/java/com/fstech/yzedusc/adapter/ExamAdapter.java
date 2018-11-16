@@ -170,11 +170,11 @@ public class ExamAdapter extends BaseAdapter {
                     mb.setExam_item_option4(D);
                     mb.setExam_item_answer(trueans);
                     mb.setStudent_answer(myans);
-                    if(!application.getMistakes().contains(mb)) {
-                        application.getMistakes().add(mb);
-                    }
+//                    if(!application.getMistakes().contains(mb)) {
+//                        application.getMistakes().add(mb);
+//                    }
                     finalLv.tv_cuo.setVisibility(View.GONE);
-                    Log.e("mb",application.getMistakes().toString());
+//                    Log.e("mb",application.getMistakes().toString());
                 }
             });
 

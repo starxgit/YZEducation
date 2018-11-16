@@ -26,7 +26,6 @@ public class TokenUtil {
         arr.add(faculty_id);
         arr.add(school_id);
         String arrString = arr.toString();
-        System.out.println(arrString);
         token = Base64.encode(arrString.getBytes());
         return token;
     }

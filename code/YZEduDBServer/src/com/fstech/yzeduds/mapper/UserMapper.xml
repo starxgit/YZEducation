@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fstech.yzeduds.mapper.UserMapper">
+
+	<!-- 账号查找用户 -->
+	<select id="findUserByAccount" parameterType="String" resultMap="UserBean">
+		select
+		user.user_id,user_account,user_password,user_phone,user_sex,user_age,user_avatar,
+		student_id,student_name,student_number,class_id,faculty_id,school_id
+		from user
+		left join student on
+		user.user_id = student.user_id
+		where user_account = #{user_account}
+	</select>
+	<!-- 用户信息模型类 -->
+	<resultMap id="UserBean" type="com.fstech.yzeduds.model.UserBean">
+		<id column="user_id" jdbcType="INTEGER" property="user_id" />
+		<result column="user_password" jdbcType="VARCHAR" property="user_password" />
+		<result column="user_phone" jdbcType="VARCHAR" property="user_phone" />
+		<result column="user_sex" jdbcType="VARCHAR" property="user_sex" />
+		<result column="user_age" jdbcType="INTEGER" property="user_sex" />
+		<result column="user_avatar" jdbcType="VARCHAR" property="user_avatar" />
+		<result column="student_name" jdbcType="VARCHAR" property="student_name" />
+		<result column="school_id" jdbcType="INTEGER" property="school_id" />
+		<result column="student_id" jdbcType="INTEGER" property="student_id" />
+		<result column="class_id" jdbcType="INTEGER" property="class_id" />
+		<result column="faculty_id" jdbcType="INTEGER" property="faculty_id" />
+	</resultMap>
+
+	<!-- id查找用户 -->
+	<select id="findUserById" parameterType="int" resultMap="UserBean">
+		select
+		user.user_id,user_account,user_password,user_phone,user_sex,user_age,user_avatar,
+		student_id,student_name,student_number,class_id,faculty_id,school_id
+		from user
+		left join student on
+		user.user_id = student.user_id
+		where user_id = #{user_id}
+	</select>
+
+
+
+</mapper>

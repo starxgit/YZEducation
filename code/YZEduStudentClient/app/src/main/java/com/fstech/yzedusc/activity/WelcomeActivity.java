@@ -121,16 +121,16 @@ public class WelcomeActivity extends AppCompatActivity {
  * */
     private void loginScucess() {
         YZEduApplication application = (YZEduApplication) getApplication();
-        application.setSchool_id(studentBean.getSchool_id());
-        application.setSchool_name(studentBean.getSchool_name());
-        application.setStudent_id(studentBean.getStudent_id());
-        application.setStudent_name(studentBean.getStudent_name());
-        application.setStudent_number(studentBean.getStudent_number());
-        application.setUser_age(studentBean.getUser_age());
-        application.setUser_avatar(studentBean.getUser_avatar());
-        application.setUser_sex(studentBean.getUser_sex());
-        application.setUser_id(studentBean.getUser_id());
-        application.setUser_phone(studentBean.getUser_phone());
+//        application.setSchool_id(studentBean.getSchool_id());
+//        application.setSchool_name(studentBean.getSchool_name());
+//        application.setStudent_id(studentBean.getStudent_id());
+//        application.setStudent_name(studentBean.getStudent_name());
+//        application.setStudent_number(studentBean.getStudent_number());
+//        application.setUser_age(studentBean.getUser_age());
+//        application.setUser_avatar(studentBean.getUser_avatar());
+//        application.setUser_sex(studentBean.getUser_sex());
+//        application.setUser_id(studentBean.getUser_id());
+//        application.setUser_phone(studentBean.getUser_phone());
     }
 
 }

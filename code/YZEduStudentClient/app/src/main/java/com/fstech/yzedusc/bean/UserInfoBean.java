@@ -1,24 +1,24 @@
-package com.fstech.yzeduds.model;
+package com.fstech.yzedusc.bean;
 
 /**
- * 用户基本登录信息的模型类
- * Created By shaoxin On 2018-11-16
- * */
+ * Created by shaoxin on 11/16/18.
+ * 用户基本信息的模型类
+ */
+
 public class UserInfoBean {
-    
     // 用户可以看到的参数
     private String student_name;
     private String teacher_name;
     private String user_account;
     private String user_avatar;
     private int user_type;  // 用户类型，1学生，2教师，3其他用户
-    
+
     public UserInfoBean() {
         super();
     }
 
     public UserInfoBean(String student_name, String teacher_name,
-            String user_account, String user_avatar, int user_type) {
+                        String user_account, String user_avatar, int user_type) {
         super();
         this.student_name = student_name;
         this.teacher_name = teacher_name;
@@ -74,6 +74,4 @@ public class UserInfoBean {
                 + ", user_avatar=" + user_avatar + ", user_type=" + user_type
                 + "]";
     }
-    
-    
 }

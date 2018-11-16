@@ -91,7 +91,7 @@ public class LearnLikeActivity extends AppCompatActivity {
 
     private void initData() {
         YZEduApplication application = (YZEduApplication) getApplication();
-        userid = application.getUser_id()+"";
+        userid = "120110040225";
     }
 
     private void setListContent() {

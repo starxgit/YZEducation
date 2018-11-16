@@ -8,10 +8,10 @@ package com.fstech.yzedusc.util;
 public class Constant {
 
     // 这个是服务器的IP地址
-    public static final String SERVER_IP = "http://118.89.29.44";
+//    public static final String SERVER_IP = "http://118.89.29.44";
 
     // 本地IP地址
-//    public static final String SERVER_IP = "http://192.168.199.173";
+    public static final String SERVER_IP = "http://192.168.199.175";
 
     // 数据服务器1的IP地址
     public static final String DB_SERVER_IP1 = "http://47.101.36.60";

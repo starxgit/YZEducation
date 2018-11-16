@@ -33,7 +33,6 @@ public class PlatformController {
      * */
     @RequestMapping(value = "banner", method = RequestMethod.GET)
     public void banner(HttpServletResponse response){
-        response.setContentType("text/html;charset=utf-8");
         List<BannerBean> bannerList = bannerDao.bannerList();
         ResponseUtil.normalResponse(response, bannerList);
     }
@@ -44,7 +43,6 @@ public class PlatformController {
     @RequestMapping(value = "information", method = RequestMethod.GET)
     public void information(@RequestParam Integer page,
             HttpServletResponse response) {
-        response.setContentType("text/html;charset=utf-8");
         List<InformationBean> informationList = informationDao
                 .platformInformations((page - 1)
                         * Constant.INFORMATION_PAGE_SIZE,
@@ -58,7 +56,6 @@ public class PlatformController {
     @RequestMapping(value = "informationDetail", method = RequestMethod.GET)
     public void informationDetail(@RequestParam Integer infomation_id,
             HttpServletResponse response){
-        response.setContentType("text/html;charset=utf-8");
         List<InformationContentBean> contentList = informationDao
                 .platformInformationContent(infomation_id);
         ResponseUtil.normalResponse(response, contentList);

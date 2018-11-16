@@ -113,7 +113,7 @@ public class CourseIntroduceActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 YZEduApplication application = (YZEduApplication) getApplication();
-                if (application.getUser_id() == 0) {
+                if (application.getToken() == null) {
                     Toast.makeText(CourseIntroduceActivity.this, R.string.please_login_first, Toast.LENGTH_SHORT).show();
                 } else {
                     // TODO 选课

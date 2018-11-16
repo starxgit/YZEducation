@@ -188,7 +188,7 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
 
     private boolean checkLogin() {
         YZEduApplication application = (YZEduApplication) getActivity().getApplication();
-        if (application.getUser_id() == 0) {
+        if (application.getToken() == null) {
             Toast.makeText(getActivity(), R.string.please_login_first, Toast.LENGTH_SHORT).show();
             return false;
         }
