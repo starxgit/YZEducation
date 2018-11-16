@@ -61,7 +61,7 @@
                     android:background="@null"
                     android:ems="12"
                     android:gravity="center"
-                    android:hint="@string/please_input_phone"
+                    android:hint="@string/please_input_account"
                     android:inputType="number"
                     android:maxLength="12" />
 

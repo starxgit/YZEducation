@@ -91,18 +91,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
                 tv_name.setText(application.getUserName());
                 final String img = application.getAvatar();
                 // 显示图片
-                ThreadUtil.runInThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        int state = DownloadTools.downloadImg(img);
-                        ThreadUtil.runInUIThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ImageUitl.SimpleShowImage(img, iv_avatar);
-                            }
-                        });
-                    }
-                });
+                ImageUitl.showNetImage(iv_avatar,img);
             }
         }
 

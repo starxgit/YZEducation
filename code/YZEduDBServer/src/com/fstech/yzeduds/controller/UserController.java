@@ -31,7 +31,7 @@ public class UserController {
      * @String account
      * @param password
      * */
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     public void loginByAccount(HttpServletResponse response,
             @RequestParam String account, @RequestParam String password) {
         UserBean user = userDao.findUserByAccount(account);
@@ -47,6 +47,7 @@ public class UserController {
                 if(user.getSchool_id() > 0){
                     // 学生用户
                     userType =1;
+                    studentName =user.getStudent_name();
                     student_id = user.getStudent_id();
                     schoolId = user.getSchool_id();
                     class_id = user.getClass_id();
@@ -65,7 +66,7 @@ public class UserController {
                 ResponseUtil.errorResponse(response, null, 1002, "账号或密码错误");
             }
         } else {
-            ResponseUtil.errorResponse(response, null, 1001, "用户不存在");
+            ResponseUtil.errorResponse(response, null, 1001, "该用户不存在");
         }
     }
 

@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.fstech.yzedusc.R;
 import com.fstech.yzedusc.application.YZEduApplication;
-import com.fstech.yzedusc.bean.StudentBean;
+import com.fstech.yzedusc.bean.UserInfoBean;
 import com.fstech.yzedusc.util.CacheActivityUtil;
 import com.fstech.yzedusc.util.CallBackUtil;
 import com.fstech.yzedusc.util.Constant;
@@ -48,10 +48,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private QMUIRoundLinearLayout qrlLogin;
     private TextView tvSchoolLogin;
     private ProgressBar progressBar;
-    private Handler handler;
     SharedPreferences perPreferences;
     SharedPreferences.Editor editor;
-    private StudentBean studentBean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,25 +57,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         initView();
         initData();
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    // 数据加载完成
-                    case 1:
-                        if (studentBean != null) {
-                            loginScucess();
-                        } else {
-                            Toast.makeText(LoginActivity.this, R.string.system_error, Toast.LENGTH_SHORT).show();
-                        }
-                        progressBar.setVisibility(View.GONE);
-                        qrlLogin.setClickable(true);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
     }
 
     private void initView() {
@@ -113,13 +92,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     /*
     * 登录成功的方法
     * */
-    private void loginScucess() {
+    private void loginScucess(UserInfoBean userInfo,String token) {
         Toast.makeText(LoginActivity.this, R.string.login_success, Toast.LENGTH_SHORT).show();
         editor.putString("mphone", etAccount.getText().toString());
         editor.putString("pass", etPassword.getText().toString());
         editor.commit();
         YZEduApplication application = (YZEduApplication) getApplication();
-        // TODO 登录逻辑
+        // TODO
+        int userType = userInfo.getUser_type();
+        application.setAvatar(userInfo.getUser_avatar());
+        application.setUser_type(userType);
+        application.setToken(token);
+        if(userType==1){
+            // 学生用户
+            application.setUserName(userInfo.getStudent_name());
+        }else if(userType==3){
+            // 自由人用户
+            application.setUserName("用户"+userInfo.getUser_account());
+        }
         CacheActivityUtil.finishSingleActivityByClass(MainActivity.class);
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
@@ -166,16 +156,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressBar.setVisibility(View.VISIBLE);
         qrlLogin.setClickable(false);
         // 登录
-        String url = Constant.BASE_DB_URL1 + "general/AccountLogin";
+        String url = Constant.BASE_DB_URL + "user/login";
         Map<String, String> map = new HashMap<String, String>();
-        map.put("user_account", account);
+        map.put("account", account);
         map.put("password", password);
-        map.put("user_type", Constant.TYPE_STUDENT);
         OkhttpUtil.okHttpPost(url, map, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
                 Toast.makeText(LoginActivity.this, R.string.server_response_error, Toast.LENGTH_SHORT).show();
-                handler.sendMessage(handler.obtainMessage(1));
             }
 
             @Override
@@ -184,24 +172,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     ObjectMapper objectMapper = new ObjectMapper();
                     JSONObject jobj = new JSONObject(response);
                     int result_code = jobj.getInt("result_code");
-                    if (result_code == 81) {
+                    if (result_code == 0) {
                         // 正确情况
                         JSONObject jsonObject = jobj.getJSONObject("return_data");
+                        JSONObject userInfo = jsonObject.getJSONObject("userInfo");
+                        String token = jsonObject.getString("token");
                         try {
-                            studentBean = objectMapper.readValue(jsonObject.toString(), StudentBean.class);
+                            UserInfoBean userInfoBean = objectMapper.readValue(userInfo.toString(), UserInfoBean.class);
+                            loginScucess(userInfoBean,token);
                         } catch (IOException e) {
                             Log.e("io", e.getMessage());
                             e.printStackTrace();
                         }
-                        handler.sendMessage(handler.obtainMessage(1));
                     } else {
                         // 错误情况
                         Toast.makeText(LoginActivity.this, jobj.getString("message"), Toast.LENGTH_SHORT).show();
-                        handler.sendMessage(handler.obtainMessage(1));
                     }
                 } catch (JSONException e) {
                     Log.e("json", e.getMessage());
                     e.printStackTrace();
+                }finally {
+                    progressBar.setVisibility(View.GONE);
+                    qrlLogin.setClickable(true);
                 }
             }
         });
