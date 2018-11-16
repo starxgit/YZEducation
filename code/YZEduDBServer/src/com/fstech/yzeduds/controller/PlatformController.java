@@ -18,6 +18,7 @@ import com.fstech.yzeduds.model.BannerBean;
 import com.fstech.yzeduds.model.InformationBean;
 import com.fstech.yzeduds.model.InformationContentBean;
 import com.fstech.yzeduds.util.Constant;
+import com.fstech.yzeduds.util.ResponseUtil;
 
 @Controller
 @RequestMapping("/platform")
@@ -31,14 +32,10 @@ public class PlatformController {
      * 获取首页Banner列表的方法
      * */
     @RequestMapping(value = "banner", method = RequestMethod.GET)
-    public void banner(HttpServletResponse response) throws Exception {
+    public void banner(HttpServletResponse response){
         response.setContentType("text/html;charset=utf-8");
         List<BannerBean> bannerList = bannerDao.bannerList();
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("return_data", bannerList);
-        jsonObject.put("result_code", Constant.RESULT_CODE_SUCCESS);
-        jsonObject.put("message", Constant.MESSAGE_SUCCESS);
-        response.getWriter().println(jsonObject.toString());
+        ResponseUtil.normalResponse(response, bannerList);
     }
 
     /**
@@ -46,17 +43,13 @@ public class PlatformController {
      * */
     @RequestMapping(value = "information", method = RequestMethod.GET)
     public void information(@RequestParam Integer page,
-            HttpServletResponse response) throws Exception {
+            HttpServletResponse response) {
         response.setContentType("text/html;charset=utf-8");
         List<InformationBean> informationList = informationDao
                 .platformInformations((page - 1)
                         * Constant.INFORMATION_PAGE_SIZE,
                         Constant.INFORMATION_PAGE_SIZE);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("return_data", informationList);
-        jsonObject.put("result_code", Constant.RESULT_CODE_SUCCESS);
-        jsonObject.put("message", Constant.MESSAGE_SUCCESS);
-        response.getWriter().println(jsonObject.toString());
+        ResponseUtil.normalResponse(response, informationList);
     }
 
     /**
@@ -64,15 +57,11 @@ public class PlatformController {
      * */
     @RequestMapping(value = "informationDetail", method = RequestMethod.GET)
     public void informationDetail(@RequestParam Integer infomation_id,
-            HttpServletResponse response) throws Exception {
+            HttpServletResponse response){
         response.setContentType("text/html;charset=utf-8");
         List<InformationContentBean> contentList = informationDao
                 .platformInformationContent(infomation_id);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("return_data", contentList);
-        jsonObject.put("result_code", Constant.RESULT_CODE_SUCCESS);
-        jsonObject.put("message", Constant.MESSAGE_SUCCESS);
-        response.getWriter().println(jsonObject.toString());
+        ResponseUtil.normalResponse(response, contentList);
     }
 
 }
