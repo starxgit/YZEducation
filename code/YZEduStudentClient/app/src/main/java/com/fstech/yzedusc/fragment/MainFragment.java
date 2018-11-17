@@ -62,8 +62,6 @@ public class MainFragment extends Fragment {
     private MyListView lv_information;
     private InformationListAdapter adapter;
     private List<InformationBean> listItems_information;
-    private ScrollView sv_main;
-    private Handler handler;
     private RelativeLayout re_more_top;
 
     @Override
@@ -78,24 +76,6 @@ public class MainFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         initView();
         initData();
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    // banner 数据加载完成
-                    case 0:
-                        setBanner();
-                        break;
-                    // 资讯数据加载完成
-                    case 1:
-//                        Log.e("informationsize", listItems_information.size() + "");
-                        adapter.notifyDataSetChanged();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
     }
 
     /*
@@ -107,7 +87,6 @@ public class MainFragment extends Fragment {
         vp_banner = (BannerView) getActivity().findViewById(R.id.vp_banner);
         viewList = new ArrayList<View>();
         lv_information = (MyListView) getActivity().findViewById(R.id.lv_information);
-        sv_main = (ScrollView) getActivity().findViewById(R.id.sv_main);
         listItems_information = new ArrayList<InformationBean>();
         adapter = new InformationListAdapter(getActivity(), listItems_information);
         lv_information.setAdapter(adapter);
@@ -128,6 +107,7 @@ public class MainFragment extends Fragment {
                 InformationBean ib = listItems_information.get(i);
                 Intent intent = new Intent(getActivity(), InformationDetailActivity.class);
                 intent.putExtra("ib", ib);
+                intent.putExtra("type", 0);
                 startActivity(intent);
             }
         });
@@ -206,7 +186,6 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onResponse(String response) {
-                Log.e("response", response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     int result_code = jsonObject.getInt("result_code");
@@ -219,7 +198,7 @@ public class MainFragment extends Fragment {
                             InformationBean ib = objectMapper.readValue(jobj.toString(), InformationBean.class);
                             listItems_information.add(ib);
                         }
-                        handler.sendMessage(handler.obtainMessage(1));
+                        adapter.notifyDataSetChanged();
                     } else {
                         String message = jsonObject.getString("message");
                         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
@@ -248,7 +227,6 @@ public class MainFragment extends Fragment {
     * */
     private void getBanners() {
         String url = Constant.BASE_DB_URL + "platform/banner";
-        Log.e("r2","请求Banner列表");
         OkhttpUtil.okHttpGet(url, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -257,7 +235,6 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onResponse(String response) {
-                Log.e("response", response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     int result_code = jsonObject.getInt("result_code");
@@ -270,7 +247,7 @@ public class MainFragment extends Fragment {
                             BannerBean bannerBean = objectMapper.readValue(jobj.toString(), BannerBean.class);
                             listItems_banner.add(bannerBean);
                         }
-                        handler.sendMessage(handler.obtainMessage(0));
+                        setBanner();
                     } else {
                         String message = jsonObject.getString("message");
                         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();

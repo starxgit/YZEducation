@@ -31,5 +31,11 @@ public class InformationDao implements InformationMapper{
             int infomation_id) {
         return informationMapper.platformInformationContent(infomation_id);
     }
+
+    @Override
+    public List<InformationContentBean> schoolInformationContent(
+            int infomation_id) {
+        return informationMapper.schoolInformationContent(infomation_id);
+    }
     
 }

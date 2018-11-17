@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fstech.yzeduds.mapper.InformationMapper">
-	
+
 	<!-- 平台资讯列表 -->
 	<select id="platformInformations" resultMap="PlatformInfomation">
 		select
@@ -11,20 +11,20 @@
 		gmt_create
 		from
 		platform_information
-		order by gmt_create desc
+		order by
+		gmt_create desc
 		limit #{0},#{1}
 	</select>
-	<!-- 资讯模型类 -->
+	<!-- 平台资讯模型类 -->
 	<resultMap id="PlatformInfomation" type="com.fstech.yzeduds.model.InformationBean">
 		<id column="platform_information_id" jdbcType="INTEGER" property="information_id" />
 		<result column="platform_information_title" jdbcType="VARCHAR"
 			property="information_title" />
 		<result column="platform_information_cover" jdbcType="VARCHAR"
 			property="information_cover" />
-		<result column="gmt_create" jdbcType="VARCHAR"
-			property="information_date" />
+		<result column="gmt_create" jdbcType="VARCHAR" property="information_date" />
 	</resultMap>
-	
+
 	<!-- 平台资讯详情 -->
 	<select id="platformInformationContent" resultMap="PlatformInfomationContent">
 		select
@@ -34,17 +34,66 @@
 		from
 		platform_information_content
 		where platform_information_id = #{0}
-		order by gmt_create desc
+		order
+		by gmt_create desc
 	</select>
-	<!-- 资讯详情模型类 -->
-	<resultMap id="PlatformInfomationContent" type="com.fstech.yzeduds.model.InformationContentBean">
+	<!-- 平台资讯详情模型类 -->
+	<resultMap id="PlatformInfomationContent"
+		type="com.fstech.yzeduds.model.InformationContentBean">
 		<id column="platform_content_id" jdbcType="INTEGER" property="platform_content_id" />
 		<result column="platform_content_img" jdbcType="VARCHAR"
 			property="platform_content_img" />
 		<result column="platform_content_text" jdbcType="VARCHAR"
 			property="platform_content_text" />
-		<result column="gmt_create" jdbcType="VARCHAR"
-			property="platform_content_date" />
+		<result column="gmt_create" jdbcType="VARCHAR" property="platform_content_date" />
+	</resultMap>
+
+	<!-- 院校资讯列表 -->
+	<select id="schoolInformations" resultMap="SchoolInfomation">
+		select
+		school_information_id,
+		school_information_title,
+		school_information_cover,
+		gmt_create
+		from
+		school_information
+		where
+		school_id = #{0}
+		order by
+		gmt_create desc
+		limit #{1},#{2}
+	</select>
+	<!-- 院校资讯模型类 -->
+	<resultMap id="SchoolInfomation" type="com.fstech.yzeduds.model.InformationBean">
+		<id column="school_information_id" jdbcType="INTEGER" property="information_id" />
+		<result column="school_information_title" jdbcType="VARCHAR"
+			property="information_title" />
+		<result column="school_information_cover" jdbcType="VARCHAR"
+			property="information_cover" />
+		<result column="gmt_create" jdbcType="VARCHAR" property="information_date" />
+	</resultMap>
+
+	<!-- 院校资讯详情 -->
+	<select id="schoolInformationContent" resultMap="schoolInformationContent">
+		select
+		school_content_img,
+		school_content_text,
+		gmt_create
+		from
+		school_information_content
+		where school_information_id = #{0}
+		order
+		by gmt_create desc
+	</select>
+	<!-- 院校资讯详情模型类 -->
+	<resultMap id="schoolInformationContent"
+		type="com.fstech.yzeduds.model.InformationContentBean">
+		<id column="school_content_id" jdbcType="INTEGER" property="school_content_id" />
+		<result column="school_content_img" jdbcType="VARCHAR"
+			property="platform_content_img" />
+		<result column="school_content_text" jdbcType="VARCHAR"
+			property="platform_content_text" />
+		<result column="gmt_create" jdbcType="VARCHAR" property="platform_content_date" />
 	</resultMap>
 
 

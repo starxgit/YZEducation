@@ -16,11 +16,11 @@ import com.fstech.yzedusc.bean.InformationBean;
 import com.fstech.yzedusc.util.CallBackUtil;
 import com.fstech.yzedusc.util.Constant;
 import com.fstech.yzedusc.util.OkhttpUtil;
+import com.fstech.yzedusc.util.TokenUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.impl.RefreshHeaderWrapper;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -76,7 +76,9 @@ public class AllInformationActivity extends AppCompatActivity {
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(this));
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(this));
         page = 1;
+
     }
+
 
     /*
     * 初始化动作
@@ -105,6 +107,7 @@ public class AllInformationActivity extends AppCompatActivity {
                 InformationBean ib = listItemsInformation.get(i);
                 Intent intent = new Intent(AllInformationActivity.this, InformationDetailActivity.class);
                 intent.putExtra("ib", ib);
+                intent.putExtra("type", type);
                 startActivity(intent);
             }
         });
@@ -120,6 +123,7 @@ public class AllInformationActivity extends AppCompatActivity {
         String url = Constant.BASE_DB_URL + urlList[type];
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", page + "");
+        map.put("token",TokenUtil.getToken(AllInformationActivity.this));
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {

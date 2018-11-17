@@ -15,6 +15,7 @@ import com.fstech.yzeduds.dao.UserDao;
 import com.fstech.yzeduds.model.UserBean;
 import com.fstech.yzeduds.model.UserInfoBean;
 import com.fstech.yzeduds.util.CreateMD5;
+import com.fstech.yzeduds.util.ErrorCode;
 import com.fstech.yzeduds.util.ResponseUtil;
 import com.fstech.yzeduds.util.TokenUtil;
 
@@ -44,10 +45,10 @@ public class UserController {
                 int student_id = -1;
                 int class_id = -1;
                 int faculty_id = -1;
-                if(user.getSchool_id() > 0){
+                if (user.getSchool_id() > 0) {
                     // 学生用户
-                    userType =1;
-                    studentName =user.getStudent_name();
+                    userType = 1;
+                    studentName = user.getStudent_name();
                     student_id = user.getStudent_id();
                     schoolId = user.getSchool_id();
                     class_id = user.getClass_id();
@@ -55,18 +56,22 @@ public class UserController {
                 }
                 // 其他用户，非教师
                 UserInfoBean userInfoBean = new UserInfoBean(studentName, null,
-                        user.getUser_account(), user.getUser_avatar(),
-                        userType);
-                String token = TokenUtil.enCodeToken(user.getUser_id(), student_id, -1, class_id, faculty_id, schoolId);
+                        user.getUser_account(), user.getUser_avatar(), userType);
+                String token = TokenUtil.enCodeToken(user.getUser_id(),
+                        student_id, -1, class_id, faculty_id, schoolId);
                 JSONObject return_data = new JSONObject();
                 return_data.put("token", token);
                 return_data.put("userInfo", userInfoBean);
                 ResponseUtil.normalResponse(response, return_data);
             } else {
-                ResponseUtil.errorResponse(response, null, 1002, "账号或密码错误");
+                ResponseUtil.errorResponse(response, null,
+                        ErrorCode.CODE_PASSWORD_WRONG,
+                        ErrorCode.MESSAGE_PASSWORD_WRONG);
             }
         } else {
-            ResponseUtil.errorResponse(response, null, 1001, "该用户不存在");
+            ResponseUtil.errorResponse(response, null,
+                    ErrorCode.CODE_USER_NOT_EXIST,
+                    ErrorCode.MESSAGE_USER_NOT_EXIT);
         }
     }
 

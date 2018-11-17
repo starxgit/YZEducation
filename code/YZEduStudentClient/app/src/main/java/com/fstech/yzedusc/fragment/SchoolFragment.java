@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fstech.yzedusc.R;
+import com.fstech.yzedusc.activity.AllInformationActivity;
 import com.fstech.yzedusc.activity.InformationDetailActivity;
 import com.fstech.yzedusc.activity.LoginActivity;
 import com.fstech.yzedusc.activity.MyCourseActivity;
@@ -66,8 +68,8 @@ public class SchoolFragment extends Fragment {
     private AnnouncementListAdapter announcement_adapter;
     private List<AnnouncementBean> listItems_announcement;
     private YZEduApplication application;
-    private int school_id;
-    private Handler handler;
+    private LinearLayout ll_more_information;
+    private RelativeLayout re_more_circle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,23 +83,6 @@ public class SchoolFragment extends Fragment {
         checkLogin();
         initView();
         initData();
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    // 资讯列表加载完成
-                    case 1:
-                        information_adapter.notifyDataSetChanged();
-                        break;
-                    // 公告列表
-                    case 2:
-                        announcement_adapter.notifyDataSetChanged();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
     }
 
     /*
@@ -127,6 +112,9 @@ public class SchoolFragment extends Fragment {
         lv_announcement = (MyListView) getActivity().findViewById(R.id.lv_school_announcement);
         lv_circle = (MyListView) getActivity().findViewById(R.id.lv_school_circle);
         re_school_background = (RelativeLayout) getActivity().findViewById(R.id.re_school_background);
+        ll_more_information = (LinearLayout)getActivity().findViewById(R.id.ll_more_information);
+        re_more_circle = (RelativeLayout) getActivity().findViewById(R.id.re_more_circle);
+
         //调用 TabHost.setup()
         tabhost.setup();
         //创建Tab标签
@@ -148,6 +136,16 @@ public class SchoolFragment extends Fragment {
                 InformationBean ib = listItems_information.get(i);
                 Intent intent = new Intent(getActivity(), InformationDetailActivity.class);
                 intent.putExtra("ib", ib);
+                intent.putExtra("type", 1);
+                startActivity(intent);
+            }
+        });
+
+        ll_more_information.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AllInformationActivity.class);
+                intent.putExtra("type", 1);
                 startActivity(intent);
             }
         });
@@ -159,118 +157,114 @@ public class SchoolFragment extends Fragment {
     * 无返回
     * */
     private void initData() {
-        school_id = -1;
-//        if (application.getSchool_id() != 0) {
-//            tv_school_name.setText(application.getSchool_name());
-//            school_id = application.getSchool_id();
-//        }
+        if (application.getUser_type() == 1) {
+            tv_school_name.setText("有学校");
+            String token = application.getToken();
+            setInformations(token);
+            setAnnouncements(token);
+        } else {
+            tv_school_name.setText("无登录用户院校信息");
+        }
 
-        setInformations();
-        setAnnouncements();
     }
 
     /*
     * 设置资讯列表
     * */
-    public void setInformations() {
-        String url = Constant.BASE_DB_URL1 + "school/Information";
-        Map<String, String> map = new HashMap<>();
-        map.put("school_id", school_id + "");
-        map.put("page_id", 1 + "");
-//        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
-//            @Override
-//            public void onFailure(Call call, Exception e) {
-//                Log.e("fail", "okhttp请求失败");
-//            }
-//
-//            @Override
-//            public void onResponse(String response) {
-//                Log.e("response", response);
-//                try {
-//                    JSONObject jsonObject = new JSONObject(response);
-//                    int result_code = jsonObject.getInt("result_code");
-//                    if (result_code == 0) {
-//                        // 返回正确的情况
-//                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
-//                        ObjectMapper objectMapper = new ObjectMapper();
-//                        for (int i = 0; i < jsonArray.length(); i++) {
-////                            Log.e("informationsize", listItems_information.size() + "," + i + "," + jsonArray.length());
-//                            JSONObject jobj = jsonArray.getJSONObject(i);
-//                            InformationBean ib = objectMapper.readValue(jobj.toString(), InformationBean.class);
-//                            listItems_information.add(ib);
-//                        }
-//                        handler.sendMessage(handler.obtainMessage(1));
-//                    } else {
-//                        String message = jsonObject.getString("message");
-//                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-//                    }
-//                } catch (JSONException e) {
-//                    Log.e("Json", e.getMessage());
-//                    e.printStackTrace();
-//                } catch (JsonParseException e) {
-//                    Log.e("error", e.getMessage());
-//                    e.printStackTrace();
-//                } catch (JsonMappingException e) {
-//                    e.printStackTrace();
-//                    Log.e("error", e.getMessage());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    Log.e("error", e.getMessage());
-//                }
-//            }
-//        });
+    public void setInformations(String token) {
+        String url = Constant.BASE_DB_URL + "school/information";
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("page", "1");
+        map.put("token", token);
+        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Toast.makeText(getActivity(), R.string.server_response_error, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int result_code = jsonObject.getInt("result_code");
+                    if (result_code == 0) {
+                        // 返回正确的情况
+                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jobj = jsonArray.getJSONObject(i);
+                            InformationBean ib = objectMapper.readValue(jobj.toString(), InformationBean.class);
+                            listItems_information.add(ib);
+                        }
+                        information_adapter.notifyDataSetChanged();
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    Log.e("Json", e.getMessage());
+                    e.printStackTrace();
+                } catch (JsonParseException e) {
+                    Log.e("error", e.getMessage());
+                    e.printStackTrace();
+                } catch (JsonMappingException e) {
+                    e.printStackTrace();
+                    Log.e("error", e.getMessage());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("error", e.getMessage());
+                }
+            }
+        });
     }
 
     /*
     * 设置公告列表
     * */
-    public void setAnnouncements() {
-        String url = Constant.BASE_DB_URL1 + "school/Announcement";
-        Map<String, String> map = new HashMap<>();
-        map.put("school_id", school_id + "");
-        map.put("page_id", 1 + "");
-//        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
-//            @Override
-//            public void onFailure(Call call, Exception e) {
-//                Log.e("fail", "okhttp请求失败");
-//            }
-//
-//            @Override
-//            public void onResponse(String response) {
-//                Log.e("response", response);
-//                try {
-//                    JSONObject jsonObject = new JSONObject(response);
-//                    int result_code = jsonObject.getInt("result_code");
-//                    if (result_code == 0) {
-//                        // 返回正确的情况
-//                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
-//                        ObjectMapper objectMapper = new ObjectMapper();
-//                        for (int i = 0; i < jsonArray.length(); i++) {
-////                            Log.e("informationsize", listItems_information.size() + "," + i + "," + jsonArray.length());
-//                            JSONObject jobj = jsonArray.getJSONObject(i);
-//                            AnnouncementBean ab= objectMapper.readValue(jobj.toString(), AnnouncementBean.class);
-//                            listItems_announcement.add(ab);
-//                        }
-//                        handler.sendMessage(handler.obtainMessage(2));
-//                    } else {
-//                        String message = jsonObject.getString("message");
-//                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-//                    }
-//                } catch (JSONException e) {
-//                    Log.e("Json", e.getMessage());
-//                    e.printStackTrace();
-//                } catch (JsonParseException e) {
-//                    Log.e("error", e.getMessage());
-//                    e.printStackTrace();
-//                } catch (JsonMappingException e) {
-//                    e.printStackTrace();
-//                    Log.e("error", e.getMessage());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    Log.e("error", e.getMessage());
-//                }
-//            }
-//        });
+    public void setAnnouncements(String token) {
+        String url = Constant.BASE_DB_URL + "school/announcement";
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("token", token);
+        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Toast.makeText(getActivity(), R.string.server_response_error, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int result_code = jsonObject.getInt("result_code");
+                    if (result_code == 0) {
+                        // 返回正确的情况
+                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jobj = jsonArray.getJSONObject(i);
+                            AnnouncementBean ab = objectMapper.readValue(jobj.toString(), AnnouncementBean.class);
+                            listItems_announcement.add(ab);
+                        }
+                        announcement_adapter.notifyDataSetChanged();
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    Log.e("Json", e.getMessage());
+                    e.printStackTrace();
+                } catch (JsonParseException e) {
+                    Log.e("error", e.getMessage());
+                    e.printStackTrace();
+                } catch (JsonMappingException e) {
+                    e.printStackTrace();
+                    Log.e("error", e.getMessage());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("error", e.getMessage());
+                }
+            }
+        });
     }
 
     /*

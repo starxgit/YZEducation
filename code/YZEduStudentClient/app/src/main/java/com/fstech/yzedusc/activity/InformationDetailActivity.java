@@ -41,6 +41,7 @@ import okhttp3.Call;
  */
 
 public class InformationDetailActivity extends AppCompatActivity {
+    private final String urlList[] = {"platform/informationDetail", "school/informationDetail"};
     // 定义UI对象
     private TextView tv_information_title;
     private TextView tv_information_date;
@@ -50,6 +51,7 @@ public class InformationDetailActivity extends AppCompatActivity {
     private List<InformationContentBean> listContent;
     private InformationDetailAdapter informartonDetailAdapter;
     private int informationId;
+    private int type;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +72,7 @@ public class InformationDetailActivity extends AppCompatActivity {
         lv_content = (ListView) findViewById(R.id.lv_content);
         listContent = new ArrayList<>();
         informartonDetailAdapter = new InformationDetailAdapter(InformationDetailActivity.this, listContent);
-//        lv_content.setAdapter(informartonDetailAdapter);
+        lv_content.setAdapter(informartonDetailAdapter);
     }
 
     /*
@@ -81,6 +83,7 @@ public class InformationDetailActivity extends AppCompatActivity {
         informationBean = new InformationBean();
         Intent intent = getIntent();
         informationBean = (InformationBean) intent.getSerializableExtra("ib");
+        type = intent.getIntExtra("type", 0);
         if (informationBean != null) {
             informationId = informationBean.getInformation_id();
         }
@@ -101,14 +104,14 @@ public class InformationDetailActivity extends AppCompatActivity {
     /*
     * 设置内容数据
     * */
-    private void setListContent(){
-        Map<String,String> map = new HashMap<>();
-        map.put("infomation_id",informationId+"");
-        String url = Constant.BASE_DB_URL + "platform/informationDetail";
+    private void setListContent() {
+        Map<String, String> map = new HashMap<>();
+        map.put("infomation_id", informationId + "");
+        final String url = Constant.BASE_DB_URL + urlList[type];
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
-                Toast.makeText(InformationDetailActivity.this,R.string.server_response_error,Toast.LENGTH_SHORT).show();
+                Toast.makeText(InformationDetailActivity.this, R.string.server_response_error, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -125,23 +128,23 @@ public class InformationDetailActivity extends AppCompatActivity {
                             InformationContentBean icb = objectMapper.readValue(jobj.toString(), InformationContentBean.class);
                             listContent.add(icb);
                         }
-                        lv_content.setAdapter(informartonDetailAdapter);
+                        informartonDetailAdapter.notifyDataSetChanged();
                     } else {
                         String message = jsonObject.getString("message");
                         Toast.makeText(InformationDetailActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Log.e("JsonError",e.getMessage());
+                    Log.e("JsonError", e.getMessage());
                 } catch (JsonParseException e) {
                     e.printStackTrace();
-                    Log.e("JsonPraseError",e.getMessage());
+                    Log.e("JsonPraseError", e.getMessage());
                 } catch (JsonMappingException e) {
                     e.printStackTrace();
-                    Log.e("JsonMappingError",e.getMessage());
+                    Log.e("JsonMappingError", e.getMessage());
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.e("IOError",e.getMessage());
+                    Log.e("IOError", e.getMessage());
                 }
             }
         });

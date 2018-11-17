@@ -7,11 +7,19 @@ import com.fstech.yzeduds.model.InformationContentBean;
 
 public interface InformationMapper {
     // 获取平台资讯列表
-    public List<InformationBean> platformInformations(int currIndex,int pageSize);
+    public List<InformationBean> platformInformations(int currIndex,
+            int pageSize);
+
     // 获取院校资讯列表
-    public List<InformationBean> schoolInformations(int schoolId,int currIndex,int pageSize);
-    
+    public List<InformationBean> schoolInformations(int schoolId,
+            int currIndex, int pageSize);
+
     // 获取平台资讯详情
-    public List<InformationContentBean> platformInformationContent(int infomation_id);
-    
+    public List<InformationContentBean> platformInformationContent(
+            int infomation_id);
+
+    // 获取院校资讯详情
+    public List<InformationContentBean> schoolInformationContent(
+            int infomation_id);
+
 }
