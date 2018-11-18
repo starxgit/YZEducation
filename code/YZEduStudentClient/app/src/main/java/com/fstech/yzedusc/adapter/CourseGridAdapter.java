@@ -78,19 +78,7 @@ public class CourseGridAdapter extends BaseAdapter {
         vh.course_sum.setText("共 " + str_course_sum + " 课时");
 
         final ViewHolder finalVh = vh;
-        ThreadUtil.runInThread(new Runnable() {
-            @Override
-            public void run() {
-                int state = DownloadTools.downloadImg(str_course_iamge);
-                ThreadUtil.runInUIThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ImageUitl.SimpleShowImage(str_course_iamge, finalVh.course_image);
-                    }
-                });
-            }
-        });
-
+        ImageUitl.showNetImage(vh.course_image,str_course_iamge);
         return convertView;
     }
 

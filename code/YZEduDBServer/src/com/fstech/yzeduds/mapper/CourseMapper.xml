@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fstech.yzeduds.mapper.CourseMapper">
+
+	<!-- 最新课程列表 -->
+	<select id="newCourseList" resultMap="CourseBean">
+		select * from(
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish,course.gmt_create
+		from course
+		left join
+		teacher on course.course_teacher = teacher.teacher_id
+		where
+		course.school_id = -1 and course.faculty_id = -1 and course.class_id=
+		-1
+		union
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish,course.gmt_create
+		from course
+		left join
+		teacher on course.course_teacher = teacher.teacher_id
+		where
+		course.school_id = #{school_id} and course.faculty_id = -1
+		and
+		course.class_id= -1
+		union
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish,course.gmt_create
+		from course
+		left join
+		teacher on course.course_teacher = teacher.teacher_id
+		where
+		course.school_id = #{school_id} and course.faculty_id = #{faculty_id}
+		and course.class_id= -1
+		union
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish ,course.gmt_create
+		from course
+		left join
+		teacher on course.course_teacher = teacher.teacher_id
+		where
+		course.school_id = #{school_id} and course.faculty_id = #{faculty_id}
+		and course.class_id= #{class_id}
+		)as temp
+		order by gmt_create desc
+		limit
+		#{currIndex},#{pageSize}
+	</select>
+
+	<!-- 热门课程列表 -->
+	<select id="topCourseList" resultMap="CourseBean">
+		select * from(
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish,course.gmt_create
+		from course
+		left join
+		teacher on course.course_teacher = teacher.teacher_id
+		where
+		course.school_id = -1 and course.faculty_id = -1 and course.class_id=
+		-1
+		union
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish,course.gmt_create
+		from course
+		left join
+		teacher on course.course_teacher = teacher.teacher_id
+		where
+		course.school_id = #{school_id} and course.faculty_id = -1
+		and
+		course.class_id= -1
+		union
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish,course.gmt_create
+		from course
+		left join
+		teacher on course.course_teacher = teacher.teacher_id
+		where
+		course.school_id = #{school_id} and course.faculty_id = #{faculty_id}
+		and course.class_id= -1
+		union
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish ,course.gmt_create
+		from course
+		left join
+		teacher on course.course_teacher = teacher.teacher_id
+		where
+		course.school_id = #{school_id} and course.faculty_id = #{faculty_id}
+		and course.class_id= #{class_id}
+		)as temp
+		order by course_learn_student
+		desc
+		limit
+		#{currIndex},#{pageSize}
+	</select>
+
+	<!-- 搜索课程列表 -->
+	<select id="searchCourseList" resultMap="CourseBean">
+		select * from(
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish,course.gmt_create
+		from course
+		left join
+		teacher on course.course_teacher = teacher.teacher_id
+		where
+		course.school_id = -1 and course.faculty_id = -1 and course.class_id=
+		-1
+		union
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish,course.gmt_create
+		from course
+		left join
+		teacher on course.course_teacher = teacher.teacher_id
+		where
+		course.school_id = #{school_id} and course.faculty_id = -1
+		and
+		course.class_id= -1
+		union
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish,course.gmt_create
+		from course
+		left join
+		teacher on course.course_teacher = teacher.teacher_id
+		where
+		course.school_id = #{school_id} and course.faculty_id = #{faculty_id}
+		and course.class_id= -1
+		union
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish ,course.gmt_create
+		from course
+		left join
+		teacher on course.course_teacher = teacher.teacher_id
+		where
+		course.school_id = #{school_id} and course.faculty_id = #{faculty_id}
+		and course.class_id= #{class_id}
+		)as temp
+		where course_name like
+		#{keyword}
+		or course_introduce like #{keyword}
+		or course_teacher like
+		#{keyword}
+		limit #{currIndex},#{pageSize}
+	</select>
+
+
+	<!-- 课程模型类 -->
+	<resultMap id="CourseBean" type="com.fstech.yzeduds.model.CourseBean">
+		<id column="course_id" jdbcType="INTEGER" property="course_id" />
+		<result column="course_code" jdbcType="VARCHAR" property="course_code" />
+		<result column="course_name" jdbcType="VARCHAR" property="course_name" />
+		<result column="course_introduce" jdbcType="VARCHAR" property="course_introduce" />
+		<result column="course_teacher" jdbcType="VARCHAR" property="course_teacher" />
+		<result column="course_sum_student" jdbcType="INTEGER"
+			property="course_sum_student" />
+		<result column="course_learn_student" jdbcType="INTEGER"
+			property="course_learn_student" />
+		<result column="course_cover" jdbcType="VARCHAR" property="course_cover" />
+		<result column="course_sum" jdbcType="INTEGER" property="course_sum" />
+		<result column="course_type" jdbcType="INTEGER" property="course_type" />
+		<result column="course_price" jdbcType="DECIMAL" property="course_price" />
+		<result column="course_finish" jdbcType="INTEGER" property="course_finish" />
+	</resultMap>
+
+	<!-- 查看课程分类列表 -->
+	<select id="classificationList" resultType="com.fstech.yzeduds.model.ClassificationBean">
+		SELECT
+		classification_id,classification_name,classification_own FROM
+		classification where classification_own = #{cfa_id}
+	</select>
+
+	<!-- 该分类下的课程列表 -->
+	<select id="courseListByClassification" resultMap="CourseBean">
+		select * from(
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish,course.gmt_create,course_classification
+		from course left join teacher on course.course_teacher =
+		teacher.teacher_id
+		where
+		course.school_id = -1 and course.faculty_id =
+		-1 and course.class_id=
+		-1
+		union
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish,course.gmt_create,course_classification
+		from course
+		left join
+		teacher on course.course_teacher =
+		teacher.teacher_id
+		where
+		course.school_id = #{school_id} and
+		course.faculty_id = -1
+		and
+		course.class_id= -1
+		union
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish,course.gmt_create,course_classification
+		from course
+		left join
+		teacher on course.course_teacher =
+		teacher.teacher_id
+		where
+		course.school_id = #{school_id} and
+		course.faculty_id = #{faculty_id}
+		and course.class_id= -1
+		union
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish ,course.gmt_create,course_classification
+		from course
+		left join
+		teacher on course.course_teacher =
+		teacher.teacher_id
+		where
+		course.school_id = #{school_id} and
+		course.faculty_id = #{faculty_id}
+		and course.class_id= #{class_id}
+		)as
+		temp
+		where course_classification = #{course_classification}
+		limit
+		#{currIndex},#{pageSize}
+	</select>
+
+</mapper>

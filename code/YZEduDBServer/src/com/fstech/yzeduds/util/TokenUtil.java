@@ -7,8 +7,7 @@ import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingExcepti
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 /**
- * Created By shaoxin On 2018-11-15 
- * 用户凭证工具类
+ * Created By shaoxin On 2018-11-15 用户凭证工具类
  * */
 public class TokenUtil {
 
@@ -101,12 +100,13 @@ public class TokenUtil {
         }
         return schoolId;
     }
-    
+
     /**
      * 解码的核心类
+     * 
      * @param token
      * @return arrayList
-     *  */
+     * */
     @SuppressWarnings("finally")
     private static List<Integer> decode(String token) {
         ArrayList<Integer> arrayList = new ArrayList<>();
@@ -124,7 +124,5 @@ public class TokenUtil {
         } finally {
             return arrayList;
         }
-
     }
-
 }

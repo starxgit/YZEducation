@@ -62,7 +62,7 @@ public class MainFragment extends Fragment {
     private MyListView lv_information;
     private InformationListAdapter adapter;
     private List<InformationBean> listItems_information;
-    private RelativeLayout re_more_top;
+    private RelativeLayout re_more_info;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,8 +91,8 @@ public class MainFragment extends Fragment {
         adapter = new InformationListAdapter(getActivity(), listItems_information);
         lv_information.setAdapter(adapter);
         listItems_banner = new ArrayList<BannerBean>();
-        re_more_top = (RelativeLayout) getActivity().findViewById(R.id.re_more_top);
-        re_more_top.setOnClickListener(new View.OnClickListener() {
+        re_more_info = (RelativeLayout) getActivity().findViewById(R.id.re_more_info);
+        re_more_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),AllInformationActivity.class);

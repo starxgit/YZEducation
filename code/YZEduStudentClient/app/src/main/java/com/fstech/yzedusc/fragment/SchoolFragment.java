@@ -2,6 +2,7 @@ package com.fstech.yzedusc.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,8 +29,10 @@ import com.fstech.yzedusc.adapter.InformationListAdapter;
 import com.fstech.yzedusc.application.YZEduApplication;
 import com.fstech.yzedusc.bean.AnnouncementBean;
 import com.fstech.yzedusc.bean.InformationBean;
+import com.fstech.yzedusc.bean.SchoolBean;
 import com.fstech.yzedusc.util.CallBackUtil;
 import com.fstech.yzedusc.util.Constant;
+import com.fstech.yzedusc.util.ImageUitl;
 import com.fstech.yzedusc.util.OkhttpUtil;
 import com.fstech.yzedusc.view.MyListView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
@@ -112,7 +115,7 @@ public class SchoolFragment extends Fragment {
         lv_announcement = (MyListView) getActivity().findViewById(R.id.lv_school_announcement);
         lv_circle = (MyListView) getActivity().findViewById(R.id.lv_school_circle);
         re_school_background = (RelativeLayout) getActivity().findViewById(R.id.re_school_background);
-        ll_more_information = (LinearLayout)getActivity().findViewById(R.id.ll_more_information);
+        ll_more_information = (LinearLayout) getActivity().findViewById(R.id.ll_more_information);
         re_more_circle = (RelativeLayout) getActivity().findViewById(R.id.re_more_circle);
 
         //调用 TabHost.setup()
@@ -158,20 +161,72 @@ public class SchoolFragment extends Fragment {
     * */
     private void initData() {
         if (application.getUser_type() == 1) {
-            tv_school_name.setText("有学校");
+
             String token = application.getToken();
+            Log.e("token",token);
             setInformations(token);
             setAnnouncements(token);
+            setSchoolInfo(token);
         } else {
             tv_school_name.setText("无登录用户院校信息");
         }
 
     }
 
+    /**
+     * 设置院校基本信息的方法
+     *
+     * @author shaoxin
+     * @date 2018-11-17
+     */
+    private void setSchoolInfo(String token) {
+        String url = Constant.BASE_DB_URL + "school/schoolInfo";
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("token", token);
+        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Toast.makeText(getActivity(), R.string.server_response_error, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int result_code = jsonObject.getInt("result_code");
+                    if (result_code == 0) {
+                        // 返回正确的情况
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        SchoolBean schoolBean = objectMapper.readValue(jsonObject.get("return_data").toString(),
+                                SchoolBean.class);
+                        tv_school_name.setText(schoolBean.getSchool_name());
+                        ImageUitl.showNetImage(iv_school_image,schoolBean.getSchool_badge());
+                        ImageUitl.setBackground(re_school_background,schoolBean.getSchool_background());
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    Log.e("Json", e.getMessage());
+                    e.printStackTrace();
+                } catch (JsonParseException e) {
+                    Log.e("error", e.getMessage());
+                    e.printStackTrace();
+                } catch (JsonMappingException e) {
+                    e.printStackTrace();
+                    Log.e("error", e.getMessage());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("error", e.getMessage());
+                }
+            }
+        });
+    }
+
     /*
     * 设置资讯列表
     * */
-    public void setInformations(String token) {
+    private void setInformations(String token) {
         String url = Constant.BASE_DB_URL + "school/information";
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", "1");
@@ -221,7 +276,7 @@ public class SchoolFragment extends Fragment {
     /*
     * 设置公告列表
     * */
-    public void setAnnouncements(String token) {
+    private void setAnnouncements(String token) {
         String url = Constant.BASE_DB_URL + "school/announcement";
         Map<String, String> map = new HashMap<String, String>();
         map.put("token", token);
@@ -270,7 +325,7 @@ public class SchoolFragment extends Fragment {
     /*
     * 设置学友圈列表
     * */
-    public void setCircleList() {
+    private void setCircleList() {
 
     }
 

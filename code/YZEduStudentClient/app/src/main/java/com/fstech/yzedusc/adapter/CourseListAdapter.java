@@ -95,19 +95,7 @@ public class CourseListAdapter extends BaseAdapter {
         vh.tv_course_price.setText(course_price);
 
         final ViewHolder finalVh = vh;
-        ThreadUtil.runInThread(new Runnable() {
-            @Override
-            public void run() {
-                int state = DownloadTools.downloadImg(course_cover);
-                ThreadUtil.runInUIThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ImageUitl.SimpleShowImage(course_cover, finalVh.iv_course_image);
-                    }
-                });
-            }
-        });
-
+        ImageUitl.showNetImage(vh.iv_course_image,course_cover);
         return convertView;
     }
 

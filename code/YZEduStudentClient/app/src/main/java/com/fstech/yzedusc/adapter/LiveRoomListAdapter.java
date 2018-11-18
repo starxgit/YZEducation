@@ -86,18 +86,7 @@ public class LiveRoomListAdapter extends BaseAdapter {
         final String course_cover = lb.getLive_room_image();
         // 设置图片
         final ViewHolder finalVh = vh;
-        ThreadUtil.runInThread(new Runnable() {
-            @Override
-            public void run() {
-                int state = DownloadTools.downloadImg(course_cover);
-                ThreadUtil.runInUIThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ImageUitl.SimpleShowImage(course_cover, finalVh.iv_image);
-                    }
-                });
-            }
-        });
+        ImageUitl.showNetImage(vh.iv_image,course_cover);
 
         return convertView;
     }

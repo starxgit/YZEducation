@@ -54,7 +54,7 @@
                 android:dividerHeight="0dp" />
 
             <RelativeLayout
-                android:id="@+id/re_more_top"
+                android:id="@+id/re_more_info"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/grey9">

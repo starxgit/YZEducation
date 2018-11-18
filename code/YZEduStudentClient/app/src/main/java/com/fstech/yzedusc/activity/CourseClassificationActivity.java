@@ -53,7 +53,6 @@ public class CourseClassificationActivity extends AppCompatActivity implements V
     private ClearEditText et_search;
     private List<ClassificationBean> listItems_cb;
     private QMUIFloatLayout fl_content;
-    private Handler handler;
     private final int draws[] = {R.drawable.round_btn_blue_bg, R.drawable.round_btn_pink_bg, R.drawable.round_btn_qing_bg,
             R.drawable.round_btn_yellow_bg, R.drawable.round_btn_green_bg};
 
@@ -62,20 +61,7 @@ public class CourseClassificationActivity extends AppCompatActivity implements V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_classification);
         initView();
-        listItems_cb = getClassfivations(-1, 0);
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    // 列表数据加载完成
-                    case 0:
-                        initData();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
+        listItems_cb = getClassfivations(-1);
     }
 
     /*
@@ -117,7 +103,7 @@ public class CourseClassificationActivity extends AppCompatActivity implements V
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String cfa_id = listItems_cb.get(finalI).getClassification_id()+ "";
+                    String cfa_id = listItems_cb.get(finalI).getClassification_id() + "";
                     Intent intent = new Intent(CourseClassificationActivity.this, CourseCfaResultActivity.class);
                     intent.putExtra("cfa_id", cfa_id);
                     startActivity(intent);
@@ -131,9 +117,9 @@ public class CourseClassificationActivity extends AppCompatActivity implements V
     *  @param cfa_own , 返回消息
      *  返回分类对象的列表
     * */
-    private List<ClassificationBean> getClassfivations(int cfa_own, final int msg) {
+    private List<ClassificationBean> getClassfivations(int cfa_own) {
         final List<ClassificationBean> list = new ArrayList<ClassificationBean>();
-        String url = Constant.BASE_DB_URL + "Classifications";
+        String url = Constant.BASE_DB_URL + "course/classification";
         Map<String, String> map = new HashMap<String, String>();
         map.put("classification_own", cfa_own + "");
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
@@ -144,7 +130,6 @@ public class CourseClassificationActivity extends AppCompatActivity implements V
 
             @Override
             public void onResponse(String response) {
-                Log.e("response", response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     int result_code = jsonObject.getInt("result_code");
@@ -156,7 +141,7 @@ public class CourseClassificationActivity extends AppCompatActivity implements V
                             ClassificationBean cb = objectMapper.readValue(jobj.toString(), ClassificationBean.class);
                             list.add(cb);
                         }
-                        handler.sendMessage(handler.obtainMessage(msg));
+                        initData();
                     } else {
                         String message = jsonObject.getString("message");
                         Toast.makeText(CourseClassificationActivity.this, message, Toast.LENGTH_SHORT).show();

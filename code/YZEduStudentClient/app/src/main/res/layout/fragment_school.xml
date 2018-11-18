@@ -33,8 +33,7 @@
             <RelativeLayout
                 android:id="@+id/re_school_background"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@drawable/m_top_img">
+                android:layout_height="200dp">
 
                 <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                     android:id="@+id/iv_school_image"
@@ -45,8 +44,7 @@
                     android:layout_marginLeft="20dp"
                     app:qmui_border_color="@color/Write"
                     app:qmui_border_width="0dp"
-                    app:qmui_is_circle="true"
-                    app:srcCompat="@drawable/newmsg01" />
+                    app:qmui_is_circle="true" />
 
                 <TextView
                     android:id="@+id/tv_school_name"
