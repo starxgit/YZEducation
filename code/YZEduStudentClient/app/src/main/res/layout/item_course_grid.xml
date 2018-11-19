@@ -17,7 +17,6 @@
             android:id="@+id/item_course_grid_iv_image"
             android:layout_width="140dp"
             android:layout_height="105dp"
-            android:src="@drawable/makalong"
             app:qmui_border_color="@color/Write"
             app:qmui_border_width="0dp"
             app:qmui_corner_radius="@dimen/dimen_9dp"

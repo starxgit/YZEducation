@@ -253,7 +253,6 @@ public class CourseCfaResultActivity extends AppCompatActivity implements View.O
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jobj = jsonArray.getJSONObject(i);
                             CourseBean cb = objectMapper.readValue(jobj.toString(), CourseBean.class);
-                            cb.setCourse_sum(Constant.ARR_COURSE_SUM_HOUR[cb.getCourse_id() % Constant.ARR_COURSE_SUM_HOUR.length]);
                             listItems_course.add(cb);
                         }
                         handler.sendMessage(handler.obtainMessage(1));

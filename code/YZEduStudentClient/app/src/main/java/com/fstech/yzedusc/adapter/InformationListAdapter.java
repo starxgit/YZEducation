@@ -93,8 +93,7 @@ public class InformationListAdapter extends BaseAdapter {
             vh.iv_information_image.setVisibility(View.GONE);
         } else {
             vh.iv_information_image.setVisibility(View.VISIBLE);
-            final ViewHolder finalVh = vh;
-            ImageUitl.showNetImage(finalVh.iv_information_image,information_image);
+            ImageUitl.showNetImage(vh.iv_information_image,information_image);
         }
 
         return convertView;

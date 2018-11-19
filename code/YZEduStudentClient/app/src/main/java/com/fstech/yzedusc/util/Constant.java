@@ -42,15 +42,9 @@ public class Constant {
     public static final int PAGE_FOUR = 3;
     public static final int PAGE_FIVE = 4;
 
-    // GridView放视频的数量
+    // GridView放图片的数量
     public static final int GRID_SIZE = 4;
 
     public static final String TEMP_BASE_URL = "http://www.fstechnology.cn:8080/XiankeM/";
 
-    // 临时数据
-    public static final int[] ARR_COURSE_SUM_HOUR = {12, 5, 17, 19, 28, 16, 39, 18, 13, 21};
-    public static final String[] ARR_TEACHER_NAME = {"林冲", "王白", "李伟", "李青", "张小兰", "章笑笑", "廖家辉", "何晓欢"};
-
-    // 学生类型的基本类型
-    public static final String TYPE_STUDENT = "1";
 }

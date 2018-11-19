@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fstech.yzeduds.mapper.TaskMapper">
+
+	<!-- 属于这门实训课程的任务列表 -->
+	<select id="findListByCourseId" resultType="com.fstech.yzeduds.model.LessonBean">
+		select
+		task_id as
+		lesson_id,course_id,task_title as lesson_title,
+		task_desc as lesson_video_url
+		from task where course_id = #{courseId}
+		order by gmt_create asc
+	</select>
+
+</mapper>

@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fstech.yzeduds.mapper.CourseMapper">
-
+	<!-- 查看课程详情 -->
+	<select id="findByCourseId" resultMap="CourseBean">
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish
+		from course left join teacher on
+		course.course_teacher = teacher.teacher_id
+		where course_id =
+		#{course_id}
+	</select>
 	<!-- 最新课程列表 -->
 	<select id="newCourseList" resultMap="CourseBean">
 		select * from(
@@ -58,7 +69,6 @@
 		limit
 		#{currIndex},#{pageSize}
 	</select>
-
 	<!-- 热门课程列表 -->
 	<select id="topCourseList" resultMap="CourseBean">
 		select * from(
@@ -116,7 +126,6 @@
 		limit
 		#{currIndex},#{pageSize}
 	</select>
-
 	<!-- 搜索课程列表 -->
 	<select id="searchCourseList" resultMap="CourseBean">
 		select * from(
@@ -176,8 +185,6 @@
 		#{keyword}
 		limit #{currIndex},#{pageSize}
 	</select>
-
-
 	<!-- 课程模型类 -->
 	<resultMap id="CourseBean" type="com.fstech.yzeduds.model.CourseBean">
 		<id column="course_id" jdbcType="INTEGER" property="course_id" />
@@ -202,12 +209,12 @@
 		classification_id,classification_name,classification_own FROM
 		classification where classification_own = #{cfa_id}
 	</select>
-
 	<!-- 该分类下的课程列表 -->
 	<select id="courseListByClassification" resultMap="CourseBean">
 		select * from(
 		select
-		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_id,course_code,course_name,course_introduce,teacher_name
+		as
 		course_teacher,
 		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
 		course_price,course_finish,course.gmt_create,course_classification
@@ -267,4 +274,51 @@
 		#{currIndex},#{pageSize}
 	</select>
 
+	<!-- 学生-课程关系 -->
+	<select id="isLearnCourse" resultType="integer">
+		select count(*) from
+		my_course where user_id = #{user_id} and course_id = #{course_id};
+	</select>
+
+	<!-- 我的课程列表 -->
+	<select id="findCourseByUserId" resultMap="CourseBean">
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish,course.gmt_create
+		from course
+		left join
+		teacher on course.course_teacher = teacher.teacher_id
+		where course_id
+		in(
+		select course_id from my_course where user_id = #{user_id}
+		);
+	</select>
+
+	<!-- 插入选课记录 -->
+	<insert id="addMyCourse">
+		insert into
+		my_course(user_id,course_id,gmt_create,gmt_modified)
+		values(#{user_id},#{course_id},now(),now());
+	</insert>
+
+	<!-- 删除选课记录 -->
+	<delete id="delMyCourse">
+		delete from
+		my_course where course_id= #{course_id}
+		and
+		user_id= #{user_id} limit 1;
+	</delete>
+
+	<!-- 课程学习人数自减 -->
+	<update id="decreCourseLearnNum">
+		update course set course_learn_student =
+		course_learn_student - 1 where course_id = #{course_id}
+	</update>
+	<!-- 课程学习人数自增 -->
+	<update id="increCourseLearnNum">
+		update course set course_learn_student =
+		course_learn_student + 1 where course_id = #{course_id}
+	</update>
 </mapper>

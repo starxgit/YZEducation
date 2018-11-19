@@ -76,8 +76,6 @@ public class CourseGridAdapter extends BaseAdapter {
         vh.course_name.setText(str_course_name);
         vh.course_learn.setText(str_course_learn_student + str_course_sum_student + " 人学习");
         vh.course_sum.setText("共 " + str_course_sum + " 课时");
-
-        final ViewHolder finalVh = vh;
         ImageUitl.showNetImage(vh.course_image,str_course_iamge);
         return convertView;
     }

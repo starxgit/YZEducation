@@ -183,7 +183,6 @@ public class CourseFragment extends Fragment implements View.OnClickListener {
                         for (int i = 0; i < Constant.GRID_SIZE; i++) {
                             JSONObject jobj = jsonArray.getJSONObject(i);
                             CourseBean courseBean = objectMapper.readValue(jobj.toString(), CourseBean.class);
-                            courseBean.setCourse_sum(Constant.ARR_COURSE_SUM_HOUR[courseBean.getCourse_id() % Constant.ARR_COURSE_SUM_HOUR.length]);
                             list_new.add(courseBean);
                         }
                         adapter_new.notifyDataSetChanged();
@@ -236,8 +235,6 @@ public class CourseFragment extends Fragment implements View.OnClickListener {
                         for (int i = 0; i < Constant.GRID_SIZE; i++) {
                             JSONObject jobj = jsonArray.getJSONObject(i);
                             CourseBean courseBean = objectMapper.readValue(jobj.toString(), CourseBean.class);
-                            // TODO 取消预定设置
-                            courseBean.setCourse_sum(Constant.ARR_COURSE_SUM_HOUR[courseBean.getCourse_id() % Constant.ARR_COURSE_SUM_HOUR.length]);
                             list_top.add(courseBean);
                         }
                         adapter_top.notifyDataSetChanged();
