@@ -6,22 +6,31 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fstech.yzedusc.R;
+import com.fstech.yzedusc.activity.CourseCfaResultActivity;
 import com.fstech.yzedusc.activity.CourseIntroduceActivity;
+import com.fstech.yzedusc.activity.CourseLearnActivity;
 import com.fstech.yzedusc.activity.GradeQueryActivity;
 import com.fstech.yzedusc.activity.MyCourseActivity;
 import com.fstech.yzedusc.activity.MyPracticalActivity;
 import com.fstech.yzedusc.activity.MyTaskActivity;
+import com.fstech.yzedusc.activity.PracticalLearnActivity;
+import com.fstech.yzedusc.adapter.CourseListAdapter;
 import com.fstech.yzedusc.application.YZEduApplication;
+import com.fstech.yzedusc.bean.CourseBean;
 import com.fstech.yzedusc.bean.HappyReadBean;
 import com.fstech.yzedusc.bean.InformationBean;
 import com.fstech.yzedusc.util.CallBackUtil;
@@ -31,6 +40,14 @@ import com.fstech.yzedusc.util.DownloadTools;
 import com.fstech.yzedusc.util.ImageUitl;
 import com.fstech.yzedusc.util.OkhttpUtil;
 import com.fstech.yzedusc.util.ThreadUtil;
+import com.fstech.yzedusc.util.TokenUtil;
+import com.fstech.yzedusc.view.ClearEditText;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -48,23 +65,18 @@ import java.util.Map;
 import okhttp3.Call;
 
 /**
- * Created by shaoxin on 18-3-25.
+ * Created by shaoxin on 18-11-20.
  * 学习界面的Fragment
  */
 
-public class LearnFragment extends Fragment implements View.OnClickListener {
+public class LearnFragment extends Fragment {
     // 定义UI对象
-    private RelativeLayout re_mycourse;
-    private RelativeLayout re_practical;
-    private RelativeLayout re_task;
-    private RelativeLayout re_grade;
-
-    private ImageView iv_read_image;
-    private TextView tv_read_title;
-    private TextView tv_read_date;
-
-    private List<HappyReadBean> listItems;
-    private Handler handler;
+    private ClearEditText etSearch;
+    private SmartRefreshLayout smartRefresh;
+    private ListView lvMyCourse;
+    private CourseListAdapter courseListAdapter;
+    private List<CourseBean> myCourseList;
+    private List<CourseBean> myCourseList_re;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,158 +89,137 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
         super.onActivityCreated(savedInstanceState);
         initView();
         initData();
-        handler = new Handler() {
+    }
+
+    /**
+     * 初始化视图
+     */
+    private void initView() {
+        // 找到UI对象
+        etSearch = (ClearEditText) getActivity().findViewById(R.id.cet_search);
+        smartRefresh = (SmartRefreshLayout) getActivity().findViewById(R.id.smart_refresh);
+        lvMyCourse = (ListView) getActivity().findViewById(R.id.lv_my_course);
+        // 初始化
+        myCourseList = new ArrayList<>();
+        myCourseList_re = new ArrayList<>();
+        courseListAdapter = new CourseListAdapter(getActivity(), myCourseList);
+        lvMyCourse.setAdapter(courseListAdapter);
+        // 设置样式
+        smartRefresh.setRefreshHeader(new ClassicsHeader(getActivity()));
+        smartRefresh.setRefreshFooter(new ClassicsFooter(getActivity()));
+        // 设置动作
+        lvMyCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    // 数据加载完成
-                    case 1:
-                        Log.e("listites", listItems.size() + "");
-                        if (listItems.size() > 0) {
-                            HappyReadBean hb = listItems.get(0);
-                            tv_read_title.setText(hb.getHappy_read_title());
-                            final String img = hb.getHappy_read_img();
-                            Log.e("image", img);
-                            // 使用线程工具类设置banner图片
-                            ThreadUtil.runInThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    int state = DownloadTools.downloadImg(img);
-                                    ThreadUtil.runInUIThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            ImageUitl.SimpleShowImage(img, iv_read_image);
-                                        }
-                                    });
-                                }
-                            });
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                CourseBean cb = myCourseList.get(i);
+                int type = cb.getCourse_type();
+                if (type == 3) {
+                    // 综合实训
+                    Intent intent = new Intent(getActivity(), PracticalLearnActivity.class);
+                    intent.putExtra("cb",cb);
+                    startActivity(intent);
+                } else {
+                    // 课程学习
+                    Intent intent = new Intent(getActivity(), CourseLearnActivity.class);
+                    intent.putExtra("cb",cb);
+                    startActivity(intent);
+                }
+
+            }
+        });
+        smartRefresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                initData();
+            }
+        });
+        // 监听输入
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String key = etSearch.getText().toString();
+                selectCourse(key);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        String url = Constant.BASE_DB_URL + "course/myList";
+        String token = TokenUtil.getToken(getActivity());
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("token", token);
+        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Log.e("fail", "okhttp请求失败");
+                Toast.makeText(getActivity(), R.string.server_response_error, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(String response) {
+                Log.e("response", response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int result_code = jsonObject.getInt("result_code");
+                    if (result_code == 0) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        myCourseList.clear();
+                        myCourseList_re.clear();
+                        etSearch.setText("");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jobj = jsonArray.getJSONObject(i);
+                            CourseBean cb = objectMapper.readValue(jobj.toString(), CourseBean.class);
+                            myCourseList.add(cb);
+                            myCourseList_re.add(cb);
                         }
-                        break;
-                    default:
-                        break;
+                        courseListAdapter.notifyDataSetChanged();
+                        smartRefresh.finishRefresh();
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    Log.e("json", e.getLocalizedMessage());
+                    e.printStackTrace();
+                } catch (JsonParseException e) {
+                    Log.e("json", e.getLocalizedMessage());
+                    e.printStackTrace();
+                } catch (JsonMappingException e) {
+                    Log.e("Mapping", e.getLocalizedMessage());
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Log.e("IO", e.getLocalizedMessage());
+                    e.printStackTrace();
                 }
             }
-        };
+        });
     }
 
-    /*
-    * 初始化视图
-    * 无参数
-    * 无返回
-    * */
-    private void initView() {
-        re_mycourse = (RelativeLayout) getActivity().findViewById(R.id.main_re_mycourse);
-        re_practical = (RelativeLayout) getActivity().findViewById(R.id.main_re_practical);
-        re_task = (RelativeLayout) getActivity().findViewById(R.id.main_re_task);
-        re_grade = (RelativeLayout) getActivity().findViewById(R.id.main_re_grade);
-
-        iv_read_image = (ImageView) getActivity().findViewById(R.id.iv_read_image);
-        tv_read_date = (TextView) getActivity().findViewById(R.id.tv_read_date);
-        tv_read_date.setText(DateUtil.NowDate());
-        tv_read_title = (TextView) getActivity().findViewById(R.id.tv_read_title);
-
-        re_mycourse.setOnClickListener(this);
-        re_practical.setOnClickListener(this);
-        re_task.setOnClickListener(this);
-        re_grade.setOnClickListener(this);
-
-
-    }
-
-    /*
-    * 初始化数据
-    * 无参数
-    * 无返回
-    * */
-    private void initData() {
-        listItems = new ArrayList<>();
-        String url = Constant.BASE_DB_URL1 + "platform/HappyRead";
-//        OkhttpUtil.okHttpGet(url, new CallBackUtil.CallBackString() {
-//            @Override
-//            public void onFailure(Call call, Exception e) {
-//                Log.e("fail", "okhttp请求失败");
-//            }
-//
-//            @Override
-//            public void onResponse(String response) {
-//                Log.e("response", response);
-//                try {
-//                    JSONObject jsonObject = new JSONObject(response);
-//                    int result_code = jsonObject.getInt("result_code");
-//                    if (result_code == 0) {
-//                        // 返回正确的情况
-//                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
-//                        ObjectMapper objectMapper = new ObjectMapper();
-//                        for (int i = 0; i < jsonArray.length(); i++) {
-//                            JSONObject jobj = jsonArray.getJSONObject(i);
-//                            HappyReadBean hb = objectMapper.readValue(jobj.toString(), HappyReadBean.class);
-//                            listItems.add(hb);
-//                        }
-//                        handler.sendMessage(handler.obtainMessage(1));
-//                    } else {
-//                        String message = jsonObject.getString("message");
-//                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-//                    }
-//                } catch (JSONException e) {
-//                    Log.e("Json", e.getMessage());
-//                    e.printStackTrace();
-//                } catch (JsonParseException e) {
-//                    Log.e("error", e.getMessage());
-//                    e.printStackTrace();
-//                } catch (JsonMappingException e) {
-//                    e.printStackTrace();
-//                    Log.e("error", e.getMessage());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    Log.e("error", e.getMessage());
-//                }
-//            }
-//        });
-    }
-
-    private boolean checkLogin() {
-        YZEduApplication application = (YZEduApplication) getActivity().getApplication();
-        if (application.getToken() == null) {
-            Toast.makeText(getActivity(), R.string.please_login_first, Toast.LENGTH_SHORT).show();
-            return false;
+    /**
+     * 课程列表筛选的方法，对大小写还有问题
+     */
+    private void selectCourse(String key) {
+        myCourseList.clear();
+        for (CourseBean cb : myCourseList_re) {
+            if (cb.getCourse_name().contains(key)) {
+                myCourseList.add(cb);
+            }
         }
-        return true;
+        courseListAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.main_re_mycourse:
-                if (checkLogin() == true) {
-                    // 转到我的课程
-                    Intent intent0 = new Intent(getActivity(), MyCourseActivity.class);
-                    startActivity(intent0);
-                }
-                break;
-            case R.id.main_re_practical:
-                if (checkLogin() == true) {
-                    // 转到我的实训
-                    Intent intent1 = new Intent(getActivity(), MyPracticalActivity.class);
-                    startActivity(intent1);
-                }
-                break;
-            case R.id.main_re_task:
-                if (checkLogin() == true) {
-                    // 转到我的任务
-                    Intent intent2 = new Intent(getActivity(), MyTaskActivity.class);
-                    startActivity(intent2);
-                }
-                break;
-            case R.id.main_re_grade:
-                if (checkLogin() == true) {
-                    // 转到成绩查询
-                    Intent intent3 = new Intent(getActivity(), GradeQueryActivity.class);
-                    startActivity(intent3);
-                }
-                break;
-            default:
-                break;
-        }
-    }
 
 }

@@ -21,7 +21,7 @@ public class LessonDao implements LessonMapper{
     }
 
     @Override
-    public List<knowledge> findListByLessonId(int lessonId) {
+    public List<String> findListByLessonId(int lessonId) {
         return lessonMapper.findListByLessonId(lessonId);
     }
 

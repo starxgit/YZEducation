@@ -224,4 +224,14 @@ public class CourseController {
         }
     }
 
+    /**
+     * 课程知识点列表
+     * */
+    @RequestMapping(value = "knowledgeList", method = RequestMethod.GET)
+    public void knowledgeList(@RequestParam Integer lesson_id,
+            HttpServletResponse response) {
+        List<String> knowledgeList = lessonDao.findListByLessonId(lesson_id);
+        ResponseUtil.normalResponse(response, knowledgeList);
+    }
+
 }

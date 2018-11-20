@@ -12,6 +12,6 @@ public interface LessonMapper {
     public List<LessonBean> findListByCourseId(@Param("courseId") int courseId);
 
     // 属于这节课的知识点列表
-    public List<knowledge> findListByLessonId(int lessonId);
+    public List<String> findListByLessonId(@Param("lessonId") int lessonId);
 
 }

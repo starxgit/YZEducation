@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,6 +68,7 @@ public class CourseIntroduceActivity extends AppCompatActivity {
     private List<LessonBean> listItems;
     private LessonListAdapter adapter_lesson;
     private String course_id;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +89,8 @@ public class CourseIntroduceActivity extends AppCompatActivity {
         Log.e("course_id", course_id);
         CacheActivityUtil.addActivity(CourseIntroduceActivity.this);
         iv_course_image = (QMUIRadiusImageView) findViewById(R.id.iv_course_image);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
         tv_course_name = (TextView) findViewById(R.id.tv_course_name);
         tv_learn_num = (TextView) findViewById(R.id.tv_learn_num);
         tv_sumhour = (TextView) findViewById(R.id.tv_sum_hour);
@@ -112,11 +116,17 @@ public class CourseIntroduceActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 YZEduApplication application = (YZEduApplication) getApplication();
-                if (application.getToken() == null) {
+                String token = application.getToken();
+                if (token == null) {
                     Toast.makeText(CourseIntroduceActivity.this, R.string.please_login_first, Toast.LENGTH_SHORT).show();
                 } else {
-                    // TODO 选课
-                    Toast.makeText(CourseIntroduceActivity.this, "现在不是选课时间！", Toast.LENGTH_SHORT).show();
+                    String strOption = bn_option.getText().toString();
+                    if (strOption.equals("报名选课")) {
+                        joinCourse(token);
+                    } else {
+                        quitCourse(token);
+                    }
+
                 }
             }
         });
@@ -215,6 +225,7 @@ public class CourseIntroduceActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, Exception e) {
                 Log.e("fail", "okhttp请求失败");
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -226,9 +237,9 @@ public class CourseIntroduceActivity extends AppCompatActivity {
                         JSONObject jobj = jsonObject.getJSONObject("return_data");
                         JSONObject courseInfo = jobj.getJSONObject("courseBean");
                         int isLearn = jobj.getInt("isLearn");
-                        if(isLearn==1){
+                        if (isLearn == 1) {
                             bn_option.setText("退选课程");
-                        }else{
+                        } else {
                             bn_option.setText("报名选课");
                         }
                         ObjectMapper objectMapper = new ObjectMapper();
@@ -247,7 +258,7 @@ public class CourseIntroduceActivity extends AppCompatActivity {
                             tv_course_price.setText("免费");
                         }
                         final String str_course_cover = courseBean.getCourse_cover();
-                        ImageUitl.showNetImage(iv_course_image,str_course_cover);
+                        ImageUitl.showNetImage(iv_course_image, str_course_cover);
                     } else {
                         String message = jsonObject.getString("message");
                         Toast.makeText(CourseIntroduceActivity.this, message, Toast.LENGTH_SHORT).show();
@@ -264,6 +275,91 @@ public class CourseIntroduceActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     Log.e("IO出错", e.getLocalizedMessage());
                     e.printStackTrace();
+                } finally {
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    /**
+     * 报名选课
+     */
+    private void joinCourse(String token) {
+        progressBar.setVisibility(View.VISIBLE);
+        bn_option.setClickable(false);
+        String url = Constant.BASE_DB_URL + "course/joinCourse";
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("course_id", course_id);
+        map.put("token", token);
+        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Toast.makeText(CourseIntroduceActivity.this, R.string.server_response_error, Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                bn_option.setClickable(true);
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int result_code = jsonObject.getInt("result_code");
+                    if (result_code == 0) {
+                        bn_option.setText("退选课程");
+                        Toast.makeText(CourseIntroduceActivity.this, "选课成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(CourseIntroduceActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("json创建出错", e.getLocalizedMessage());
+                } finally {
+                    progressBar.setVisibility(View.GONE);
+                    bn_option.setClickable(true);
+                }
+            }
+        });
+
+    }
+
+    /**
+     * 退选课程
+     */
+    private void quitCourse(String token) {
+        progressBar.setVisibility(View.VISIBLE);
+        bn_option.setClickable(false);
+        String url = Constant.BASE_DB_URL + "course/quitCourse";
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("course_id", course_id);
+        map.put("token", token);
+        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Toast.makeText(CourseIntroduceActivity.this, R.string.server_response_error, Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                bn_option.setClickable(true);
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int result_code = jsonObject.getInt("result_code");
+                    if (result_code == 0) {
+                        bn_option.setText("报名选课");
+                        Toast.makeText(CourseIntroduceActivity.this, "退课成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(CourseIntroduceActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("json创建出错", e.getLocalizedMessage());
+                } finally {
+                    progressBar.setVisibility(View.GONE);
+                    bn_option.setClickable(true);
                 }
             }
         });

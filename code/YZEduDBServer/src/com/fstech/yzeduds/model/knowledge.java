@@ -7,7 +7,7 @@ import java.io.Serializable;
  * 知识点的模型类
  */
 
-public class knowledge implements Serializable {
+public class knowledge{
     private int knowledge_id;               // 知识点Id
     private String knowledge_content;       // 知识点内容
     private int knowledge_rank;             // 知识点重要级别

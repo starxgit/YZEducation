@@ -6,8 +6,17 @@
 	<select id="findListByCourseId" resultType="com.fstech.yzeduds.model.LessonBean">
 		select
 		lesson_id,course_id,lesson_title,lesson_video_url
-		from lesson where course_id = #{courseId}
+		from lesson where
+		course_id = #{courseId}
 		order by gmt_create asc
+	</select>
+
+	<!-- 这节课的知识点列表 -->
+	<select id="findListByLessonId" resultType="String">
+		select knowledge_content from knowledge
+		where
+		lesson_id = #{lessonId}
+		order by knowledge_rank desc;
 	</select>
 
 </mapper>

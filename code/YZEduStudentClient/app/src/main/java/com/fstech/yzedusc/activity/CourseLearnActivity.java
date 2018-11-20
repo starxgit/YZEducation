@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,12 +51,12 @@ public class CourseLearnActivity extends AppCompatActivity implements View.OnCli
     private ImageView iv_course_cover;
     private LinearLayout ll_material;
     private LinearLayout ll_misstake;
-    private LinearLayout ll_exam;
     private LinearLayout ll_detail;
     private ListView lv_catalog;
     private CourseBean cb;
     private List<LessonBean> listItems;
     private LessonListAdapter adapter_lesson;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,16 +82,15 @@ public class CourseLearnActivity extends AppCompatActivity implements View.OnCli
         iv_course_cover = (ImageView) findViewById(R.id.iv_course_cover);
         ll_material = (LinearLayout) findViewById(R.id.ll_material);
         ll_misstake = (LinearLayout) findViewById(R.id.ll_misstake);
-        ll_exam = (LinearLayout) findViewById(R.id.ll_exam);
         ll_detail = (LinearLayout) findViewById(R.id.ll_detail);
         lv_catalog = (ListView) findViewById(R.id.lv_catalog);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         listItems = new ArrayList<>();
         adapter_lesson = new LessonListAdapter(CourseLearnActivity.this, listItems);
         lv_catalog.setAdapter(adapter_lesson);
 
         ll_material.setOnClickListener(this);
         ll_misstake.setOnClickListener(this);
-        ll_exam.setOnClickListener(this);
         ll_detail.setOnClickListener(this);
 
         lv_catalog.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -113,19 +113,7 @@ public class CourseLearnActivity extends AppCompatActivity implements View.OnCli
         Intent intent = getIntent();
         cb = (CourseBean) intent.getSerializableExtra("cb");
         tv_title.setText(cb.getCourse_name());
-        final String str_course_cover = cb.getCourse_cover();
-        ThreadUtil.runInThread(new Runnable() {
-            @Override
-            public void run() {
-                int state = DownloadTools.downloadImg(str_course_cover);
-                ThreadUtil.runInUIThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ImageUitl.SimpleShowImage(str_course_cover, iv_course_cover);
-                    }
-                });
-            }
-        });
+        ImageUitl.showNetImage(iv_course_cover, cb.getCourse_cover());
         getCatalogs(cb.getCourse_id() + "");
     }
 
@@ -135,18 +123,20 @@ public class CourseLearnActivity extends AppCompatActivity implements View.OnCli
    * 无返回
    * */
     private void getCatalogs(String course_id) {
-        String url = Constant.BASE_DB_URL + "CourseCatalog";
+        progressBar.setVisibility(View.VISIBLE);
+        String url = Constant.BASE_DB_URL + "course/catalog";
         Map<String, String> map = new HashMap<String, String>();
         map.put("course_id", course_id);
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
                 Log.e("fail", "okhttp请求失败");
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onResponse(String response) {
-                Log.e("response", response);
+//                Log.e("response", response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     int result_code = jsonObject.getInt("result_code");
@@ -176,6 +166,8 @@ public class CourseLearnActivity extends AppCompatActivity implements View.OnCli
                 } catch (IOException e) {
                     Log.e("IO", e.getLocalizedMessage());
                     e.printStackTrace();
+                } finally {
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
@@ -196,18 +188,9 @@ public class CourseLearnActivity extends AppCompatActivity implements View.OnCli
                 intent1.putExtra("course_id", cb.getCourse_id() + "");
                 startActivity(intent1);
                 break;
-            case R.id.ll_exam:
-                Log.e("click", "exam");
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(CourseLearnActivity.this, "当前课程暂无可用的考试！", Toast.LENGTH_SHORT).show();
-                    }
-                }, 1000);
-                break;
             case R.id.ll_detail:
                 Log.e("click", "overview");
-                Intent intent3 = new Intent(CourseLearnActivity.this, CourseOverViewActivity.class);
+                Intent intent3 = new Intent(CourseLearnActivity.this, CourseIntroduceActivity.class);
                 intent3.putExtra("course_id", cb.getCourse_id() + "");
                 startActivity(intent3);
                 break;

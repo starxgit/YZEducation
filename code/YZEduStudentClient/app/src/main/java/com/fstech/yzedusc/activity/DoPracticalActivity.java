@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fstech.yzedusc.R;
+import com.fstech.yzedusc.bean.LessonBean;
 
 /**
  * Created by shaoxin on 18-4-16.
@@ -23,6 +24,9 @@ import com.fstech.yzedusc.R;
 public class DoPracticalActivity extends AppCompatActivity {
     private Button bn_chose;
     private TextView tv_file_path;
+    private LessonBean lessonBean;
+    private TextView tv_title;
+    private TextView tv_content;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +38,8 @@ public class DoPracticalActivity extends AppCompatActivity {
 
     private void initView() {
         bn_chose = (Button) findViewById(R.id.bn_chose);
+        tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_content = (TextView)findViewById(R.id.tv_content);
         tv_file_path = (TextView) findViewById(R.id.tv_file_path);
         bn_chose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +53,10 @@ public class DoPracticalActivity extends AppCompatActivity {
     }
 
     private void initData() {
-
+        Intent intent = getIntent();
+        lessonBean = (LessonBean) intent.getSerializableExtra("lb");
+        tv_title.setText(lessonBean.getLesson_title());
+        tv_content.setText(lessonBean.getLesson_video_url());
     }
 
     @SuppressWarnings("deprecation")
@@ -77,14 +86,15 @@ public class DoPracticalActivity extends AppCompatActivity {
     }
 
     /*
-* 返回上一级
-* xml布局文件里面调用
-* */
+    * 返回上一级
+    * xml布局文件里面调用
+    * */
     public void back(View view) {
         finish();
     }
 
     public void submit(View view) {
+        // TODO 提交文件
         Toast.makeText(DoPracticalActivity.this, "提交成功！", Toast.LENGTH_SHORT).show();
         finish();
     }

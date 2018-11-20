@@ -172,7 +172,7 @@ public class CourseFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onResponse(String response) {
-                Log.e("newCourseResponse", response);
+//                Log.e("newCourseResponse", response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     int result_code = jsonObject.getInt("result_code");
@@ -224,7 +224,7 @@ public class CourseFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onResponse(String response) {
-                Log.e("TopCourseResponse", response);
+//                Log.e("TopCourseResponse", response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     int result_code = jsonObject.getInt("result_code");
