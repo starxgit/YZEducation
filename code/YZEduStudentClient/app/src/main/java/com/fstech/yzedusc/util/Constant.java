@@ -8,16 +8,13 @@ package com.fstech.yzedusc.util;
 public class Constant {
 
     // 这个是服务器的IP地址
-//    public static final String SERVER_IP = "http://118.89.29.44";
+    public static final String SERVER_IP = "https://www.fstechnology.cn";
 
     // 本地IP地址
-    public static final String SERVER_IP = "http://192.168.199.175";
-
-    // 数据服务器1的IP地址
-    public static final String DB_SERVER_IP1 = "http://47.101.36.60";
+//    public static final String SERVER_IP = "http://192.168.199.175";
 
     // 设置服务器端口
-    public static final String SERVER_PORT = "8080";
+    public static final String SERVER_PORT = "8443";
 
     // 基础数据请求地址
     public static final String BASE_DB_URL = SERVER_IP + ":" + SERVER_PORT + "/YZEduDBServer/";
@@ -31,9 +28,6 @@ public class Constant {
     // 基础视频请求路径
     public static final String BASE_VIDEO_URL = "http://cdn.fstechnology.cn/YZEduResources/videos/";
 
-    // 基础数据请求路径2
-//    public static final String BASE_DB_URL1 = SERVER_IP + ":" + SERVER_PORT + "/YZEdu-1.0/";
-    public static final String BASE_DB_URL1 = DB_SERVER_IP1 + "/YZEdu-1.0/";
 
     //几个代表页面的常量，代表第几个Fragment
     public static final int PAGE_ONE = 0;
