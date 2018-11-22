@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fstech.yzeduds.mapper.ExamMapper">
+
+	<!-- 这节课的习题列表（只有题目和选项） -->
+	<select id="findExamByLessonId" resultMap="BaseExamBean">
+		select
+		exam_id,exam_type,question,option1,option2,option3,option4
+		from exam
+		where lesson_id = #{lesson_id}
+	</select>
+	<!-- 课程习题模型类 -->
+	<resultMap id="BaseExamBean" type="com.fstech.yzeduds.model.ExamBean">
+		<id column="exam_id" jdbcType="INTEGER" property="exam_id" />
+		<result column="exam_type" jdbcType="INTEGER" property="exam_type" />
+		<result column="question" jdbcType="VARCHAR" property="question" />
+		<result column="option1" jdbcType="VARCHAR" property="option1" />
+		<result column="option2" jdbcType="VARCHAR" property="option2" />
+		<result column="option3" jdbcType="VARCHAR" property="option3" />
+		<result column="option4" jdbcType="VARCHAR" property="option4" />
+	</resultMap>
+
+	<!-- 学生是否做过这节课的题目 -->
+	<select id="isDoExamByLesson" resultType="Integer">
+		select count(*) from
+		my_exam
+		where user_id = #{user_id}
+		and exam_id in(
+		select exam_id from
+		exam
+		where lesson_id = #{lesson_id});
+	</select>
+
+	<!-- 学生完成题目情况列表（包括学生答案和正确答案） -->
+	<select id="studentExamByLessonId" resultMap="StudentMyExamBean">
+		select
+		my_exam_id,my_exam.exam_id,exam_type,my_exam_state,question,
+		option1,option2,option3,option4,student_ans,answer
+		from exam
+		left join
+		my_exam on exam.exam_id = my_exam.exam_id
+		where user_id = #{user_id}
+		and lesson_id = #{lesson_id}
+	</select>
+	<!-- 我完成的课程习题模型类 -->
+	<resultMap id="StudentMyExamBean" type="com.fstech.yzeduds.model.MyExamBean">
+		<id column="my_exam_id" jdbcType="INTEGER" property="my_exam_id" />
+		<result column="exam_id" jdbcType="INTEGER" property="exam_id" />
+		<result column="exam_type" jdbcType="INTEGER" property="exam_type" />
+		<result column="my_exam_state" jdbcType="INTEGER" property="my_exam_state" />
+		<result column="question" jdbcType="VARCHAR" property="question" />
+		<result column="option1" jdbcType="VARCHAR" property="option1" />
+		<result column="option2" jdbcType="VARCHAR" property="option2" />
+		<result column="option3" jdbcType="VARCHAR" property="option3" />
+		<result column="option4" jdbcType="VARCHAR" property="option4" />
+		<result column="student_ans" jdbcType="VARCHAR" property="student_ans" />
+		<result column="answer" jdbcType="VARCHAR" property="answer" />
+	</resultMap>
+
+	<!-- 添加提交学生做题记录 -->
+	<insert id="addMyExam">
+		insert into
+		my_exam(user_id,exam_id,student_ans,gmt_create,gmt_modified)
+		values(#{user_id},#{exam_id},#{student_ans},now(),now());
+	</insert>
+	
+	<!-- 批改作业 -->
+	<update id="updateCheckMyExam">
+		update my_exam set my_exam_state = #{my_exam_state}
+		where my_exam_id = #{my_exam_id}
+	</update>
+</mapper>
