@@ -10,7 +10,7 @@
 		where lesson_id = #{lesson_id}
 	</select>
 	<!-- 课程习题模型类 -->
-	<resultMap id="BaseExamBean" type="com.fstech.yzeduds.model.ExamBean">
+	<resultMap id="BaseExamBean" type="com.fstech.yzeduds.model.MyExamBean">
 		<id column="exam_id" jdbcType="INTEGER" property="exam_id" />
 		<result column="exam_type" jdbcType="INTEGER" property="exam_type" />
 		<result column="question" jdbcType="VARCHAR" property="question" />

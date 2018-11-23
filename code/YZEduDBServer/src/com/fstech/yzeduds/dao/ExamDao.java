@@ -15,7 +15,7 @@ public class ExamDao implements ExamMapper {
     private ExamMapper examMapper;
 
     @Override
-    public List<ExamBean> findExamByLessonId(int lesson_id) {
+    public List<MyExamBean> findExamByLessonId(int lesson_id) {
         return examMapper.findExamByLessonId(lesson_id);
     }
 

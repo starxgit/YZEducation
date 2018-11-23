@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,15 +18,16 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.fstech.yzedusc.R;
-import com.fstech.yzedusc.application.YZEduApplication;
-import com.fstech.yzedusc.bean.MistakeBean;
+import com.fstech.yzedusc.bean.MyExamBean;
+import com.fstech.yzedusc.util.Constant;
 
 
 public class ExamAdapter extends BaseAdapter {
     private Context context;
-    private List<Map<String, Object>> listItems;
-    private List<Map<String, Object>> answers;
+    private List<MyExamBean> listItems;
     private LayoutInflater listContainer;
+    private int isDo;
+    private List<Map<String, Object>> answer_list;
 
     public final class ListItemView {
         public TextView tv_question;
@@ -41,11 +43,12 @@ public class ExamAdapter extends BaseAdapter {
         public TextView tv_cuo;
     }
 
-    public ExamAdapter(Context context, List<Map<String, Object>> listItems, List<Map<String, Object>> answers) {
+    public ExamAdapter(Context context, List<MyExamBean> listItems, int isDo, List<Map<String, Object>> answer_list) {
         this.context = context;
         listContainer = LayoutInflater.from(context);
         this.listItems = listItems;
-        this.answers = answers;
+        this.isDo = isDo;
+        this.answer_list = answer_list;
     }
 
     @Override
@@ -82,102 +85,107 @@ public class ExamAdapter extends BaseAdapter {
             lv.ll_ans = (LinearLayout) convertView.findViewById(R.id.ll_ans);
             lv.tv_cuo = (TextView) convertView.findViewById(R.id.tv_cuo);
             //设置空间集到convertView
-            final String trueans = listItems.get(position).get("trueans").toString();
-            final String myans = listItems.get(position).get("myans").toString();
-            if (trueans.equals("no")) {
+
+            final MyExamBean meb = listItems.get(position);   // 得到问题对象
+
+            // 必定显示内容
+            lv.tv_question.setText(position + 1 + "." + meb.getQuestion());  // 问题题目
+            lv.tv_trueans.setText(meb.getAnswer());     // 正确答案
+            lv.tv_myans.setText(meb.getStudent_ans());  // 我的答案
+            lv.tv_cuo.setText(Constant.QUESTION_STATE[meb.getMy_exam_state()]); // 状态
+            int examType = meb.getExam_type();
+            switch (examType) {
+                case 0:
+                    // 选择题
+                    lv.rg_answer.setVisibility(View.VISIBLE);
+                    lv.et_tiankong.setVisibility(View.GONE);
+                    lv.rd_a.setText("A." + meb.getOption1());
+                    lv.rd_b.setText("B." + meb.getOption2());
+                    lv.rd_c.setText("C." + meb.getOption3());
+                    lv.rd_d.setText("D." + meb.getOption4());
+                    break;
+                case 1:
+                    // 填空题
+                    lv.rg_answer.setVisibility(View.GONE);
+                    if (isDo == 0) {
+                        lv.et_tiankong.setVisibility(View.VISIBLE);
+                    } else {
+                        lv.et_tiankong.setVisibility(View.GONE);
+                    }
+                    break;
+                case 2:
+                    // 主观题
+                    lv.rg_answer.setVisibility(View.GONE);
+                    if (isDo == 0) {
+                        lv.et_tiankong.setVisibility(View.VISIBLE);
+                    } else {
+                        lv.et_tiankong.setVisibility(View.GONE);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            // 如果没有做过，答案栏不显示,输入框不显示
+            if (isDo == 0) {
                 lv.ll_ans.setVisibility(View.GONE);
+
             } else {
                 lv.ll_ans.setVisibility(View.VISIBLE);
-                lv.tv_trueans.setText(listItems.get(position).get("trueans").toString());
-                lv.tv_myans.setText(listItems.get(position).get("myans").toString());
-                if (listItems.get(position).get("trueans").toString().equals(listItems.get(position).get("myans").toString())) {
-                    lv.tv_cuo.setVisibility(View.GONE);
-                } else {
-                    lv.tv_cuo.setVisibility(View.VISIBLE);
-                }
             }
 
-            final String question = listItems.get(position).get("question").toString();
-            final String A = "A. " + listItems.get(position).get("A").toString();
-            final String B = "B. " + listItems.get(position).get("B").toString();
-            final String C = "C. " + listItems.get(position).get("C").toString();
-            final String D = "D. " + listItems.get(position).get("D").toString();
-            final String exam_id = listItems.get(position).get("exam_id").toString();
-            lv.tv_question.setText(question);
-            lv.rd_a.setText(A);
-            lv.rd_b.setText(B);
-            lv.rd_c.setText(C);
-            lv.rd_d.setText(D);
-
-            if (listItems.get(position).get("A").equals("")) {
-                lv.rg_answer.setVisibility(View.GONE);
-                lv.et_tiankong.setVisibility(View.VISIBLE);
-
-
-            } else {
-                lv.rg_answer.setVisibility(View.VISIBLE);
-                lv.et_tiankong.setVisibility(View.GONE);
-            }
-
-
+            // 选择题点击时的业务逻辑
             lv.rd_a.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//					Log.e("A", A);
-                    answers.get(position).clear();
-                    answers.get(position).put("ms", "A");
-                    answers.get(position).put("exam_id", exam_id);
+                    answer_list.get(position).clear();
+                    answer_list.get(position).put("my_ans", "A");
+                    answer_list.get(position).put("exam_id", meb.getExam_id());
                 }
             });
             lv.rd_b.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//					Log.e("B", B);
-                    answers.get(position).clear();
-                    answers.get(position).put("ms", "B");
-                    answers.get(position).put("exam_id", exam_id);
+                    answer_list.get(position).clear();
+                    answer_list.get(position).put("my_ans", "B");
+                    answer_list.get(position).put("exam_id", meb.getExam_id());
                 }
             });
             lv.rd_c.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//					Log.e("C", C);
-                    answers.get(position).clear();
-                    answers.get(position).put("ms", "C");
-                    answers.get(position).put("exam_id", exam_id);
+                    answer_list.get(position).clear();
+                    answer_list.get(position).put("my_ans", "C");
+                    answer_list.get(position).put("exam_id", meb.getExam_id());
                 }
             });
             lv.rd_d.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//					Log.e("D", D);
-                    answers.get(position).clear();
-                    answers.get(position).put("ms", "D");
-                    answers.get(position).put("exam_id", exam_id);
+                    answer_list.get(position).clear();
+                    answer_list.get(position).put("my_ans", "D");
+                    answer_list.get(position).put("exam_id", meb.getExam_id());
                 }
             });
-
             final ListItemView finalLv = lv;
-            lv.tv_cuo.setOnClickListener(new OnClickListener() {
+            // 填空题或主观题输入动作
+            lv.et_tiankong.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void onClick(View view) {
-                    YZEduApplication application = (YZEduApplication) context.getApplicationContext();
-                    MistakeBean mb = new MistakeBean();
-                    mb.setExam_item_question(question);
-                    mb.setExam_item_option1(A);
-                    mb.setExam_item_option2(B);
-                    mb.setExam_item_option3(C);
-                    mb.setExam_item_option4(D);
-                    mb.setExam_item_answer(trueans);
-                    mb.setStudent_answer(myans);
-//                    if(!application.getMistakes().contains(mb)) {
-//                        application.getMistakes().add(mb);
-//                    }
-                    finalLv.tv_cuo.setVisibility(View.GONE);
-//                    Log.e("mb",application.getMistakes().toString());
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    String str = finalLv.et_tiankong.getText().toString();
+                    answer_list.get(position).clear();
+                    answer_list.get(position).put("my_ans", str);
+                    answer_list.get(position).put("exam_id", meb.getExam_id());
                 }
             });
-
 
             convertView.setTag(lv);
         } else {

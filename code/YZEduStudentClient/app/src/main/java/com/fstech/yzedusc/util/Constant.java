@@ -41,4 +41,7 @@ public class Constant {
 
     public static final String TEMP_BASE_URL = "http://www.fstechnology.cn:8080/XiankeM/";
 
+    // 问题状态数组
+    public static String QUESTION_STATE[] = {"待批改","正确","添加到错题","不全对"};
+
 }

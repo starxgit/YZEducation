@@ -87,7 +87,7 @@ public class LessonLearnActivity extends AppCompatActivity implements View.OnCli
 
     private void setKnowledgeList() {
         String url = Constant.BASE_DB_URL + "course/knowledgeList";
-        final Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>();
         map.put("lesson_id", lb.getLesson_id() + "");
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
             @Override
@@ -148,6 +148,7 @@ public class LessonLearnActivity extends AppCompatActivity implements View.OnCli
             case R.id.ll_exercise:
                 Log.e("click", "exercise");
                 Intent intent = new Intent(LessonLearnActivity.this, ExamActivity.class);
+                intent.putExtra("lesson_id",lb.getLesson_id());
                 startActivity(intent);
                 break;
             case R.id.ll_disscuss:

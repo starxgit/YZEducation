@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import com.fstech.yzeduds.dao.ExamDao;
 import com.fstech.yzeduds.model.ExamBean;
 import com.fstech.yzeduds.model.MyExamBean;
+import com.fstech.yzeduds.util.ErrorCode;
 import com.fstech.yzeduds.util.ResponseUtil;
 import com.fstech.yzeduds.util.TokenUtil;
 
@@ -26,33 +27,6 @@ public class LearnController {
     @Autowired
     private ExamDao examDao;
 
-    @RequestMapping(value = "test", method = RequestMethod.GET)
-    public void test(HttpServletResponse response) {
-
-        JSONArray answer_list = new JSONArray();
-        JSONObject item1 = new JSONObject();
-        item1.put("exam_id", 2);
-        item1.put("student_ans", "A");
-        JSONObject item2 = new JSONObject();
-        item2.put("exam_id", 3);
-        item2.put("student_ans", "A");
-        JSONObject item3 = new JSONObject();
-        item3.put("exam_id", 4);
-        item3.put("student_ans", "A");
-        JSONObject item4 = new JSONObject();
-        item4.put("exam_id", 5);
-        item4.put("student_ans", "JVM虚拟机");
-        JSONObject item5 = new JSONObject();
-        item5.put("exam_id", 6);
-        item5.put("student_ans", "不知道");
-        answer_list.add(item1);
-        answer_list.add(item2);
-        answer_list.add(item3);
-        answer_list.add(item4);
-        answer_list.add(item5);
-        System.out.println(answer_list.toString());
-    }
-
     /**
      * 一节课的课后习题列表
      * */
@@ -60,11 +34,11 @@ public class LearnController {
     public void examList(@RequestParam Integer lesson_id,
             @RequestParam String token, HttpServletResponse response) {
         int user_id = TokenUtil.decodeUserId(token);
-        int isDo = examDao.isDoExamByLesson(user_id, lesson_id);
+        int isDo = examDao.isDoExamByLesson(lesson_id, user_id);
         JSONObject return_data = new JSONObject();
         return_data.put("isDo", isDo);
         if (isDo == 0) {
-            List<ExamBean> examBeans = examDao.findExamByLessonId(lesson_id);
+            List<MyExamBean> examBeans = examDao.findExamByLessonId(lesson_id);
             return_data.put("exam_list", examBeans);
         } else {
             List<MyExamBean> myExamBeans = examDao.studentExamByLessonId(
@@ -77,21 +51,28 @@ public class LearnController {
     /**
      * 提交我的答案
      * */
-    @RequestMapping(value = "submitMyExam", method = RequestMethod.GET)
+    @RequestMapping(value = "submitMyExam", method = RequestMethod.POST)
     public void submitMyExam(@RequestParam Integer lesson_id,
-            @RequestParam String token, HttpServletResponse response) {
-        String answers = "[{'student_ans':'A','exam_id':2},{'student_ans':'A','exam_id':3},{'student_ans':'A','exam_id':4},{'student_ans':'JVM','exam_id':5},{'student_ans':'不知道','exam_id':6}]";
+            @RequestParam String answers, @RequestParam String token,
+            HttpServletResponse response) {
         int user_id = TokenUtil.decodeUserId(token);
-        // TODO 使用Json数组上传答案，从字符串解析出数组，再遍历插入
-        JSONArray jsonArray = JSONArray.fromObject(answers);;
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JSONObject item = jsonArray.getJSONObject(i);
-            int exam_id = item.getInt("exam_id");
-            String student_ans = item.getString("student_ans");
-            examDao.addMyExam(user_id, exam_id, student_ans);
+        int isDo = examDao.isDoExamByLesson(lesson_id, user_id);
+        if (isDo == 0) {
+            // TODO 使用Json数组上传答案，从字符串解析出数组，再遍历插入
+            JSONArray jsonArray = JSONArray.fromObject(answers);
+            for (int i = 0; i < jsonArray.size(); i++) {
+                JSONObject item = jsonArray.getJSONObject(i);
+                int exam_id = item.getInt("exam_id");
+                String student_ans = item.getString("my_ans");
+                examDao.addMyExam(user_id, exam_id, student_ans);
+            }
+            ResponseUtil.normalResponse(response, null);
+            autoCheck(user_id, lesson_id);
+        } else {
+            ResponseUtil.errorResponse(response, null,
+                    ErrorCode.CODE_HAVE_DONE_EXAM,
+                    ErrorCode.MESSAGE_HAVE_DONE_EXAM);
         }
-        ResponseUtil.normalResponse(response, null);
-        autoCheck(user_id, lesson_id);
     }
 
     /**

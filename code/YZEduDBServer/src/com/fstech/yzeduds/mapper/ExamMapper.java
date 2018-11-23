@@ -9,7 +9,7 @@ import com.fstech.yzeduds.model.MyExamBean;
 
 public interface ExamMapper {
     // 获取这节课的题目列表
-    public List<ExamBean> findExamByLessonId(@Param("lesson_id") int lesson_id);
+    public List<MyExamBean> findExamByLessonId(@Param("lesson_id") int lesson_id);
 
     // 学生是否做过这节课的题目
     public int isDoExamByLesson(@Param("lesson_id") int lesson_id,

@@ -21,28 +21,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="public Static void main(String args[])"
-            android:textSize="12sp" />
+            android:textColor="@color/text_black3"
+            android:textSize="14sp" />
 
         <RadioButton
             android:id="@+id/radioButton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="private static void main(String args[])"
-            android:textSize="12sp" />
+            android:textColor="@color/text_black3"
+            android:textSize="14sp" />
 
         <RadioButton
             android:id="@+id/radioButton3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="public static void Main(string args[])"
-            android:textSize="12sp" />
+            android:textColor="@color/text_black3"
+            android:textSize="14sp" />
 
         <RadioButton
             android:id="@+id/radioButton4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="public static void main(String args[])"
-            android:textSize="12sp" />
+            android:textColor="@color/text_black3"
+            android:textSize="14sp" />
 
     </RadioGroup>
 
@@ -50,6 +54,7 @@
         android:id="@+id/et_tiankong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/text_black6"
         android:editable="true"
         android:focusable="true"
         android:inputType="text" />
@@ -87,12 +92,12 @@
 
         <TextView
             android:id="@+id/tv_cuo"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:textColor="@color/qmui_config_color_blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="[添加到错题]" />
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="[添加到错题]"
+            android:textColor="@color/qmui_config_color_blue" />
 
     </LinearLayout>
 

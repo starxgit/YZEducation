@@ -2,34 +2,20 @@ package com.fstech.yzedusc.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fstech.yzedusc.R;
-import com.fstech.yzedusc.adapter.ExamAdapter;
 import com.fstech.yzedusc.adapter.ExamAdapter2;
 import com.fstech.yzedusc.application.YZEduApplication;
 import com.fstech.yzedusc.bean.MistakeBean;
-import com.fstech.yzedusc.util.CallBackUtil;
-import com.fstech.yzedusc.util.Constant;
-import com.fstech.yzedusc.util.OkhttpUtil;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import okhttp3.Call;
 
 /**
  * Created by shaoxin on 18-5-31.

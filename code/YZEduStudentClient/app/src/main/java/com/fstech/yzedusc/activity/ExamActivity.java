@@ -1,42 +1,50 @@
 package com.fstech.yzedusc.activity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fstech.yzedusc.R;
 import com.fstech.yzedusc.adapter.ExamAdapter;
 import com.fstech.yzedusc.application.YZEduApplication;
+import com.fstech.yzedusc.bean.LessonBean;
+import com.fstech.yzedusc.bean.MyExamBean;
 import com.fstech.yzedusc.util.CallBackUtil;
 import com.fstech.yzedusc.util.Constant;
 import com.fstech.yzedusc.util.OkhttpUtil;
+import com.fstech.yzedusc.util.TokenUtil;
 
 import okhttp3.Call;
 
 public class ExamActivity extends Activity {
     private ListView lv_exam;
-    private List<Map<String, Object>> listItems;
-    private List<Map<String, Object>> answers;
     private TextView tv_submit;
     private ExamAdapter adapter;
-    private String acosid, userid;
-    private int hasDone = 0;
-    private YZEduApplication application;
+    private List<MyExamBean> listItems;
+    private int lesson_id;
+    private ProgressBar progressBar;
+    private List<Map<String, Object>> answer_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,111 +53,156 @@ public class ExamActivity extends Activity {
         setContentView(R.layout.activity_exam);
         initView();
         initData();
-        try {
-            questionList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        getExamList();
     }
 
+    /**
+     * 初始化视图
+     */
     private void initView() {
         lv_exam = (ListView) findViewById(R.id.lv_exam);
         tv_submit = (TextView) findViewById(R.id.tv_submit);
-        listItems = new ArrayList<Map<String, Object>>();
-        answers = new ArrayList<Map<String, Object>>();
-    }
-
-    private void initData() {
-        application = (YZEduApplication) getApplication();
-        acosid = "1";
-        userid = "120110040225";
-    }
-
-
-    private void hiddenSubmit() {
-        if (hasDone == 0) {
-            tv_submit.setVisibility(View.VISIBLE);
-        } else {
-            tv_submit.setVisibility(View.GONE);
-        }
-    }
-
-    public void back(View v) {
-        finish();
-    }
-
-    public void submit(View v) {
-        for (int i = 0; i < answers.size(); i++) {
-            String ans = answers.get(i).get("ms").toString();
-            String eid = answers.get(i).get("exam_id").toString();
-            try {
-                subans(eid, ans);
-            } catch (Exception e) {
-                e.printStackTrace();
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        listItems = new ArrayList<>();
+        answer_list = new ArrayList<>();
+        tv_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submit();
             }
-        }
-        Toast.makeText(ExamActivity.this, "已提交！", Toast.LENGTH_SHORT).show();
-        finish();
+        });
     }
 
-    private void questionList() throws Exception {
-        String url = Constant.TEMP_BASE_URL + "exam/qlist";
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        Intent intent = getIntent();
+        lesson_id = intent.getIntExtra("lesson_id", -1);
+
+    }
+
+    /**
+     * 获取题目及用户习题完成情况的方法
+     */
+    private void getExamList() {
+        setLock();
+        String url = Constant.BASE_DB_URL + "learn/examList";
+        String token = TokenUtil.getToken(ExamActivity.this);
         Map<String, String> map = new HashMap<String, String>();
-        map.put("acosid", acosid);
-        map.put("userid", userid);
-        OkhttpUtil.okHttpPost(url, map, new CallBackUtil.CallBackString() {
+        map.put("lesson_id", lesson_id + "");
+        map.put("token", token);
+        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
-                Toast.makeText(ExamActivity.this, R.string.server_response_error, Toast.LENGTH_SHORT).show();
+                Log.e("error", "okHttpRequestError");
             }
 
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONObject jobj = new JSONObject(response);
-                    JSONArray ja = jobj.getJSONArray("qlist");
-                    for (int i = 0; i < ja.length(); i++) {
-                        JSONObject exam = ja.getJSONObject(i);
-                        Map<String, Object> listItem = new HashMap<String, Object>();
-                        listItem.put("exam_id", exam.getString("exam_id"));
-                        listItem.put("question", exam.getString("question"));
-                        listItem.put("A", exam.get("ans_a"));
-                        listItem.put("B", exam.get("ans_b"));
-                        listItem.put("C", exam.get("ans_c"));
-                        listItem.put("D", exam.get("ans_d"));
-                        listItem.put("trueans", exam.getString("trueans"));
-                        if (!exam.getString("trueans").equals("no")) hasDone = 1;
-                        listItem.put("myans", exam.getString("myans"));
-                        listItems.add(listItem);
-                        answers.add(listItem);
+                    JSONObject jsonObject = new JSONObject(response);
+                    int result_code = jsonObject.getInt("result_code");
+                    if (result_code == 0) {
+                        JSONObject return_data = jsonObject.getJSONObject("return_data");
+                        int isDo = return_data.getInt("isDo");
+                        if (isDo == 0) {
+                            tv_submit.setVisibility(View.VISIBLE);
+                        }
+                        JSONArray jsonArray = return_data.getJSONArray("exam_list");
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jobj = jsonArray.getJSONObject(i);
+                            MyExamBean eb = objectMapper.readValue(jobj.toString(), MyExamBean.class);
+                            listItems.add(eb);
+                            Map<String, Object> map = new HashMap<>();
+                            answer_list.add(map);
+                        }
+                        adapter = new ExamAdapter(ExamActivity.this, listItems, isDo, answer_list);
+                        lv_exam.setAdapter(adapter);
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(ExamActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
-                    hiddenSubmit();
-                    adapter = new ExamAdapter(ExamActivity.this, listItems, answers);
-                    lv_exam.setAdapter(adapter);
                 } catch (JSONException e) {
+                    Log.e("json", e.getLocalizedMessage());
                     e.printStackTrace();
-                    Log.e("err", e.getMessage());
+                } catch (JsonParseException e) {
+                    Log.e("json", e.getLocalizedMessage());
+                    e.printStackTrace();
+                } catch (JsonMappingException e) {
+                    Log.e("mapping", e.getLocalizedMessage());
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Log.e("IO", e.getLocalizedMessage());
+                    e.printStackTrace();
+                } finally {
+                    relaseLock();
                 }
             }
         });
     }
 
-    private void subans(String examid, String myans) throws Exception {
-        String url = Constant.TEMP_BASE_URL + "exam/subans";
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("userid", userid);
-        map.put("examid", examid);
-        map.put("myans", myans);
-        OkhttpUtil.okHttpPost(url, map, new CallBackUtil.CallBackString() {
-            @Override
-            public void onFailure(Call call, Exception e) {
-                Toast.makeText(ExamActivity.this, R.string.server_response_error, Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onResponse(String response) {
-            }
-        });
+    public void back(View v) {
+        finish();
+    }
+
+    private void submit() {
+        // 获取学生回答
+        try {
+            JSONArray answerArray = new JSONArray(answer_list.toString());
+            String answers = answerArray.toString();
+            // 提交答案
+            setLock();
+            String url = Constant.BASE_DB_URL + "learn/submitMyExam";
+            String token = TokenUtil.getToken(ExamActivity.this);
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("lesson_id", lesson_id + "");
+            map.put("answers", answers);
+            map.put("token", token);
+            OkhttpUtil.okHttpPost(url, map, new CallBackUtil.CallBackString() {
+                @Override
+                public void onFailure(Call call, Exception e) {
+                    Toast.makeText(ExamActivity.this,R.string.server_response_error,Toast.LENGTH_SHORT).show();
+                    relaseLock();
+                }
+                @Override
+                public void onResponse(String response) {
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(response);
+                        int result_code = jsonObject.getInt("result_code");
+                        if (result_code == 0) {
+                            Toast.makeText(ExamActivity.this,R.string.submit_success,Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }finally {
+                        relaseLock();
+                    }
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 设置锁的方法
+     */
+    private void setLock() {
+        progressBar.setVisibility(View.VISIBLE);
+        tv_submit.setClickable(false);
+    }
+
+    /**
+     * 释放锁的方法
+     */
+    private void relaseLock() {
+        progressBar.setVisibility(View.GONE);
+        tv_submit.setClickable(true);
     }
 
 }

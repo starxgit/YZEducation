@@ -26,4 +26,7 @@ public class ErrorCode {
     
     public static final int CODE_MY_COURSE_IS_EXIST = 1007;
     public static final String MESSAGE_MY_COURSE_IS_EXIST = "选课失败，您已经参加该课程";
+    
+    public static final int CODE_HAVE_DONE_EXAM = 1008;
+    public static final String MESSAGE_HAVE_DONE_EXAM = "提交失败，您已经提交过该联系";
 }
