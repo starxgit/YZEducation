@@ -1,21 +1,14 @@
 package com.fstech.yzedusc.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.fstech.yzedusc.R;
-import com.fstech.yzedusc.application.YZEduApplication;
-import com.fstech.yzedusc.bean.MistakeBean;
 
 import java.util.List;
 import java.util.Map;

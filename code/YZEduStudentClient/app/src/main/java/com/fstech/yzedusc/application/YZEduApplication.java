@@ -1,12 +1,8 @@
 package com.fstech.yzedusc.application;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.app.Application;
-
-import com.fstech.yzedusc.bean.MistakeBean;
 
 public class YZEduApplication extends Application implements Serializable{
 	private static final long serialVersionUID = 1L;

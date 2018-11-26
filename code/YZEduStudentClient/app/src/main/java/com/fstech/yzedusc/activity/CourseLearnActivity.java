@@ -2,7 +2,6 @@ package com.fstech.yzedusc.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,10 +20,8 @@ import com.fstech.yzedusc.bean.CourseBean;
 import com.fstech.yzedusc.bean.LessonBean;
 import com.fstech.yzedusc.util.CallBackUtil;
 import com.fstech.yzedusc.util.Constant;
-import com.fstech.yzedusc.util.DownloadTools;
 import com.fstech.yzedusc.util.ImageUitl;
 import com.fstech.yzedusc.util.OkhttpUtil;
-import com.fstech.yzedusc.util.ThreadUtil;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -184,7 +181,7 @@ public class CourseLearnActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.ll_misstake:
                 Log.e("click", "misstake");
-                Intent intent1 = new Intent(CourseLearnActivity.this, MisstakeActivity.class);
+                Intent intent1 = new Intent(CourseLearnActivity.this, MistakeActivity.class);
                 intent1.putExtra("course_id", cb.getCourse_id() + "");
                 startActivity(intent1);
                 break;

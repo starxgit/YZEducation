@@ -148,7 +148,8 @@ public class LessonLearnActivity extends AppCompatActivity implements View.OnCli
             case R.id.ll_exercise:
                 Log.e("click", "exercise");
                 Intent intent = new Intent(LessonLearnActivity.this, ExamActivity.class);
-                intent.putExtra("lesson_id",lb.getLesson_id());
+                intent.putExtra("lesson_id", lb.getLesson_id());
+                intent.putExtra("course_id", lb.getCourse_id());
                 startActivity(intent);
                 break;
             case R.id.ll_disscuss:

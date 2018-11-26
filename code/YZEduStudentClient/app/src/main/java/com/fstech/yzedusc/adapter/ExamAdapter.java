@@ -1,11 +1,14 @@
 package com.fstech.yzedusc.adapter;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,10 +19,20 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fstech.yzedusc.R;
+import com.fstech.yzedusc.activity.MistakeDetailActivity;
 import com.fstech.yzedusc.bean.MyExamBean;
+import com.fstech.yzedusc.util.CallBackUtil;
 import com.fstech.yzedusc.util.Constant;
+import com.fstech.yzedusc.util.OkhttpUtil;
+import com.fstech.yzedusc.util.TokenUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import okhttp3.Call;
 
 
 public class ExamAdapter extends BaseAdapter {
@@ -28,6 +41,7 @@ public class ExamAdapter extends BaseAdapter {
     private LayoutInflater listContainer;
     private int isDo;
     private List<Map<String, Object>> answer_list;
+    private int course_id;
 
     public final class ListItemView {
         public TextView tv_question;
@@ -43,12 +57,14 @@ public class ExamAdapter extends BaseAdapter {
         public TextView tv_cuo;
     }
 
-    public ExamAdapter(Context context, List<MyExamBean> listItems, int isDo, List<Map<String, Object>> answer_list) {
+    public ExamAdapter(Context context, List<MyExamBean> listItems, int isDo, int course_id,
+                       List<Map<String, Object>> answer_list) {
         this.context = context;
         listContainer = LayoutInflater.from(context);
         this.listItems = listItems;
         this.isDo = isDo;
         this.answer_list = answer_list;
+        this.course_id = course_id;
     }
 
     @Override
@@ -186,12 +202,52 @@ public class ExamAdapter extends BaseAdapter {
                     answer_list.get(position).put("exam_id", meb.getExam_id());
                 }
             });
+            // 错题可以添加到错题
+            lv.tv_cuo.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (meb.getMy_exam_state() == 2 || meb.getMy_exam_state() == 3) {
+                        addToMistake(meb.getMy_exam_id());
+                    }
+                }
+            });
 
             convertView.setTag(lv);
         } else {
             lv = (ListItemView) convertView.getTag();
         }
         return convertView;
+    }
+
+    private void addToMistake(int my_exam_id) {
+        String token = TokenUtil.getToken((Activity) context);
+        String url = Constant.BASE_DB_URL + "learn/addToMistake";
+        Map<String, String> map = new HashMap<>();
+        map.put("course_id", course_id + "");
+        map.put("my_exam_id", my_exam_id + "");
+        map.put("token", token);
+        OkhttpUtil.okHttpPost(url, map, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Toast.makeText(context, R.string.server_response_error, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int result_code = jsonObject.getInt("result_code");
+                    if (result_code == 0) {
+                        Toast.makeText(context, R.string.add_to_mistake_success, Toast.LENGTH_SHORT).show();
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 }

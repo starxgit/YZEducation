@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import com.fstech.yzeduds.dao.ExamDao;
+import com.fstech.yzeduds.dao.MistakeDao;
 import com.fstech.yzeduds.model.ExamBean;
+import com.fstech.yzeduds.model.MistakeBean;
 import com.fstech.yzeduds.model.MyExamBean;
 import com.fstech.yzeduds.util.ErrorCode;
 import com.fstech.yzeduds.util.ResponseUtil;
@@ -26,6 +28,8 @@ import com.fstech.yzeduds.util.TokenUtil;
 public class LearnController {
     @Autowired
     private ExamDao examDao;
+    @Autowired
+    private MistakeDao mistakeDao;
 
     /**
      * 一节课的课后习题列表
@@ -106,6 +110,67 @@ public class LearnController {
                 }
             }
         }).start();
+    }
+
+    /**
+     * 我的错题列表
+     * */
+    @RequestMapping(value = "myMistakeList", method = RequestMethod.GET)
+    public void myMistakeList(@RequestParam Integer course_id,
+            @RequestParam String token, HttpServletResponse response) {
+        int user_id = TokenUtil.decodeUserId(token);
+        List<MistakeBean> mistakeList = mistakeDao.findMistakeList(user_id,
+                course_id);
+        ResponseUtil.normalResponse(response, mistakeList);
+    }
+
+    /**
+     * 添加到我的错题
+     * */
+    @RequestMapping(value = "addToMistake", method = RequestMethod.POST)
+    public void addToMistake(@RequestParam Integer course_id,
+            @RequestParam Integer my_exam_id, @RequestParam String token,
+            HttpServletResponse response) {
+        int user_id = TokenUtil.decodeUserId(token);
+        int isMistake = mistakeDao.mistakeIsExist(user_id, my_exam_id);
+        if (isMistake > 0) {
+            ResponseUtil.errorResponse(response, null,
+                    ErrorCode.CODE_HAVE_ADD_MISTAKE,
+                    ErrorCode.MESSAGE_HAVE_ADD_MISTAKE);
+        } else {
+            mistakeDao.addToMyMistake(user_id, my_exam_id, course_id);
+            ResponseUtil.normalResponse(response, null);
+        }
+    }
+
+    /**
+     * 从我的错题列表移除
+     * */
+    @RequestMapping(value = "removeFromMistake", method = RequestMethod.POST)
+    public void removeFromMistake(@RequestParam Integer mistake_id,
+            @RequestParam Integer my_exam_id, @RequestParam String token,
+            HttpServletResponse response) {
+        int user_id = TokenUtil.decodeUserId(token);
+        int isMistake = mistakeDao.mistakeIsExist(user_id, my_exam_id);
+        if (isMistake == 0) {
+            ResponseUtil.errorResponse(response, null,
+                    ErrorCode.CODE_NEVER_ADD_MISTAKE,
+                    ErrorCode.MESSAGE_NEVER_ADD_MISTAKE);
+        } else {
+            mistakeDao.removeFromMyMistake(mistake_id);
+            ResponseUtil.normalResponse(response, null);
+        }
+    }
+
+    /**
+     * 查看错题详情
+     * */
+    @RequestMapping(value = "mistakeDetail", method = RequestMethod.GET)
+    public void mistakeDetail(@RequestParam Integer my_exam_id,
+            @RequestParam String token, HttpServletResponse response) {
+        int user_id = TokenUtil.decodeUserId(token);
+        MyExamBean mistakeBean = mistakeDao.MistakeDetail(user_id, my_exam_id);
+        ResponseUtil.normalResponse(response, mistakeBean);
     }
 
 }

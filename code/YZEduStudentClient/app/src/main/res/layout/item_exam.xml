@@ -54,10 +54,10 @@
         android:id="@+id/et_tiankong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_black6"
         android:editable="true"
         android:focusable="true"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textColor="@color/text_black6" />
 
     <LinearLayout
         android:id="@+id/ll_ans"
@@ -90,15 +90,15 @@
             android:layout_height="wrap_content"
             android:text="D" />
 
-        <TextView
-            android:id="@+id/tv_cuo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="[添加到错题]"
-            android:textColor="@color/qmui_config_color_blue" />
-
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_cuo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:text="[添加到错题]"
+        android:textColor="@color/qmui_config_color_blue" />
 
 </LinearLayout>

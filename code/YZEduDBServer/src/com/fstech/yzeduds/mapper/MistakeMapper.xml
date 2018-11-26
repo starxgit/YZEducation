@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fstech.yzeduds.mapper.MistakeMapper">
+
+	<!-- 查看我的错题列表 -->
+	<select id="findMistakeList" resultType="com.fstech.yzeduds.model.MistakeBean">
+		select
+		mistake_id,mistake.my_exam_id,note,question,mistake.gmt_create as
+		mistake_time,exam_type
+		from yzedu.mistake left join my_exam on
+		mistake.my_exam_id
+		=my_exam.my_exam_id
+		left join exam on my_exam.exam_id
+		= exam.exam_id
+		where mistake.course_id = #{course_id} and
+		mistake.user_id = #{user_id}
+		order by mistake_id desc
+	</select>
+
+	<!-- 添加到我的错题 -->
+	<insert id="addToMyMistake">
+		insert into
+		mistake(user_id,course_id,my_exam_id,gmt_create,gmt_modified)
+		values(#{user_id},#{course_id},#{my_exam_id},now(),now());
+	</insert>
+
+	<!-- 从我的错题移除 -->
+	<delete id="removeFromMyMistake">
+		delete from mistake where mistake_id = #{mistake_id}
+	</delete>
+
+	<!-- 查看我的错题详情 -->
+	<select id="MistakeDetail" resultMap="StudentMyExamBean">
+		select
+		mistake_id as lesson_id,
+		my_exam.exam_id,exam_type,my_exam_state,question,
+		option1,option2,option3,option4,student_ans,answer
+		from mistake
+		left join my_exam on mistake.my_exam_id = my_exam.my_exam_id
+		left join exam on exam.exam_id = my_exam.exam_id
+		where mistake.user_id = #{user_id} and mistake.my_exam_id = #{my_exam_id}
+	</select>
+	<!-- 我完成的课程习题模型类 -->
+	<resultMap id="StudentMyExamBean" type="com.fstech.yzeduds.model.MyExamBean">
+		<id column="lesson_id" jdbcType="INTEGER" property="lesson_id" />
+		<result column="my_exam_id" jdbcType="INTEGER" property="my_exam_id" />
+		<result column="exam_id" jdbcType="INTEGER" property="exam_id" />
+		<result column="exam_type" jdbcType="INTEGER" property="exam_type" />
+		<result column="my_exam_state" jdbcType="INTEGER" property="my_exam_state" />
+		<result column="question" jdbcType="VARCHAR" property="question" />
+		<result column="option1" jdbcType="VARCHAR" property="option1" />
+		<result column="option2" jdbcType="VARCHAR" property="option2" />
+		<result column="option3" jdbcType="VARCHAR" property="option3" />
+		<result column="option4" jdbcType="VARCHAR" property="option4" />
+		<result column="student_ans" jdbcType="VARCHAR" property="student_ans" />
+		<result column="answer" jdbcType="VARCHAR" property="answer" />
+	</resultMap>
+
+	<!-- 这题错题是否存在 -->
+	<select id="mistakeIsExist" resultType="Integer">
+		select count(*) from
+		mistake where user_id = #{user_id} and my_exam_id = #{my_exam_id}
+	</select>
+</mapper>

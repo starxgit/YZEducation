@@ -1,4 +1,4 @@
-package com.fstech.yzedusc.bean;
+package com.fstech.yzeduds.model;
 
 public class MistakeBean {
     private int mistake_id; // 错题id

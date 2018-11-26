@@ -90,5 +90,8 @@
     <string name="login_success">登录成功！</string>
     <string name="mo_more_content">没有更多内容啦！</string>
     <string name="submit_success">提交成功</string>
+    <string name="remove_mistake">移出错题</string>
+    <string name="remove_success">移除成功，请刷新页面</string>
+    <string name="add_to_mistake_success">添加成功，可在错题查看</string>
 
 </resources>

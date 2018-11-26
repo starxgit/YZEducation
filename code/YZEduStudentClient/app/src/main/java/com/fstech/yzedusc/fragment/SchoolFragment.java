@@ -65,14 +65,14 @@ public class SchoolFragment extends Fragment {
     private RelativeLayout re_school_background;
     private MyListView lv_information;
     private MyListView lv_announcement;
-    private MyListView lv_circle;
+//    private MyListView lv_circle;
     private InformationListAdapter information_adapter;
     private List<InformationBean> listItems_information;
     private AnnouncementListAdapter announcement_adapter;
     private List<AnnouncementBean> listItems_announcement;
     private YZEduApplication application;
     private LinearLayout ll_more_information;
-    private RelativeLayout re_more_circle;
+//    private RelativeLayout re_more_circle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -113,17 +113,17 @@ public class SchoolFragment extends Fragment {
         tabhost = (TabHost) getActivity().findViewById(R.id.main_school_tab);
         lv_information = (MyListView) getActivity().findViewById(R.id.lv_school_information);
         lv_announcement = (MyListView) getActivity().findViewById(R.id.lv_school_announcement);
-        lv_circle = (MyListView) getActivity().findViewById(R.id.lv_school_circle);
+//        lv_circle = (MyListView) getActivity().findViewById(R.id.lv_school_circle);
         re_school_background = (RelativeLayout) getActivity().findViewById(R.id.re_school_background);
         ll_more_information = (LinearLayout) getActivity().findViewById(R.id.ll_more_information);
-        re_more_circle = (RelativeLayout) getActivity().findViewById(R.id.re_more_circle);
+//        re_more_circle = (RelativeLayout) getActivity().findViewById(R.id.re_more_circle);
 
         //调用 TabHost.setup()
         tabhost.setup();
         //创建Tab标签
-        tabhost.addTab(tabhost.newTabSpec("one").setIndicator("资讯").setContent(R.id.ll_school_information));
         tabhost.addTab(tabhost.newTabSpec("two").setIndicator("公告").setContent(R.id.ll_school_announcement));
-        tabhost.addTab(tabhost.newTabSpec("three").setIndicator("学友圈").setContent(R.id.ll_school_circle));
+        tabhost.addTab(tabhost.newTabSpec("one").setIndicator("资讯").setContent(R.id.ll_school_information));
+//        tabhost.addTab(tabhost.newTabSpec("three").setIndicator("学友圈").setContent(R.id.ll_school_circle));
 
         listItems_information = new ArrayList<InformationBean>();
         information_adapter = new InformationListAdapter(getActivity(), listItems_information);

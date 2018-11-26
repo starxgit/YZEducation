@@ -42,7 +42,7 @@ public class ExamActivity extends Activity {
     private TextView tv_submit;
     private ExamAdapter adapter;
     private List<MyExamBean> listItems;
-    private int lesson_id;
+    private int lesson_id,course_id;
     private ProgressBar progressBar;
     private List<Map<String, Object>> answer_list;
 
@@ -79,7 +79,7 @@ public class ExamActivity extends Activity {
     private void initData() {
         Intent intent = getIntent();
         lesson_id = intent.getIntExtra("lesson_id", -1);
-
+        course_id = intent.getIntExtra("course_id", -1);
     }
 
     /**
@@ -118,7 +118,7 @@ public class ExamActivity extends Activity {
                             Map<String, Object> map = new HashMap<>();
                             answer_list.add(map);
                         }
-                        adapter = new ExamAdapter(ExamActivity.this, listItems, isDo, answer_list);
+                        adapter = new ExamAdapter(ExamActivity.this, listItems, isDo,course_id, answer_list);
                         lv_exam.setAdapter(adapter);
                     } else {
                         String message = jsonObject.getString("message");

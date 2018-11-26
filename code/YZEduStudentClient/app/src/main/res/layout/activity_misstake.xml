@@ -31,9 +31,25 @@
 
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/lv_mistakes"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/lv_mistakes"
+            android:divider="@color/Write"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
 
 </LinearLayout>

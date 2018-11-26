@@ -1,5 +1,7 @@
 package com.fstech.yzedusc.util;
 
+import com.fstech.yzedusc.R;
+
 /**
  * Created by shaoxin on 18-3-25.
  * 这是一个存放常量的类
@@ -42,6 +44,13 @@ public class Constant {
     public static final String TEMP_BASE_URL = "http://www.fstechnology.cn:8080/XiankeM/";
 
     // 问题状态数组
-    public static String QUESTION_STATE[] = {"待批改","正确","添加到错题","不全对"};
+    public static String QUESTION_STATE[] = {"待批改", "正确", "[添加到错题]", "不全对"};
+
+    // 题目类型数组
+    public static String EXAM_TYPE[] = {"选择题", "填空题", "主观题"};
+
+    // 标签颜色列表
+    public static int LABLE_DRABLES[] = {R.drawable.lable_btn_qing_bg, R.drawable.lable_btn_pink_bg,
+            R.drawable.lable_btn_yellow_bg, R.drawable.lable_btn_blue_bg, R.drawable.lable_btn_red_bg};
 
 }

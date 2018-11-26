@@ -120,7 +120,7 @@
             android:name=".activity.CourseDisscussActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.MisstakeActivity"
+            android:name=".activity.MistakeActivity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.LoginActivity"
