@@ -34,4 +34,10 @@ public class ErrorCode {
     
     public static final int CODE_NEVER_ADD_MISTAKE = 1010;
     public static final String MESSAGE_NEVER_ADD_MISTAKE = "移除失败，这题不在错题中";
+    
+    public static final int CODE_NOT_YOUR_COMMINICATION = 1011;
+    public static final String MESSAGE_NOT_YOUR_COMMINICATION = "删除失败，只能删除自己发的课程交流";
+    
+    public static final int CODE_NOT_YOUR_COMMENT = 1012;
+    public static final String MESSAGE_NOT_YOUR_COMMENT = "删除失败，只能删除自己发的评论";
 }

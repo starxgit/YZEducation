@@ -130,22 +130,6 @@
                 android:layout_marginRight="15dp"
                 android:text="3"
                 android:textColor="@color/grey_blue" />
-
-            <ImageView
-                android:id="@+id/zan1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/dianzan" />
-
-            <TextView
-                android:id="@+id/tv1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="6"
-                android:textColor="@color/grey_blue" />
         </LinearLayout>
     </LinearLayout>
 
@@ -241,22 +225,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="15dp"
                 android:text="2"
-                android:textColor="@color/grey_blue" />
-
-            <ImageView
-                android:id="@+id/zan2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/dianzan" />
-
-            <TextView
-                android:id="@+id/tv2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="10"
                 android:textColor="@color/grey_blue" />
         </LinearLayout>
     </LinearLayout>

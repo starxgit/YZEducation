@@ -35,7 +35,7 @@
 		from user
 		left join student on
 		user.user_id = student.user_id
-		where user_id = #{user_id}
+		where user.user_id = #{user_id}
 	</select>
 
 
