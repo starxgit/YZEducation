@@ -54,14 +54,29 @@ public class ImageUitl {
 
                 @Override
                 public void onResponse(Bitmap bm) {
+                    Log.e("req",url);
                     LruCacheUtils.getInstance().addBitmapToMemoryCache(url, bm);
-                    iv.setImageBitmap(bm);
+                    // 加载完成后再从缓存池读取，不直接读取网络请求图片
+                    showCacheImage(iv, url);
                 }
             });
         } else {
             iv.setImageBitmap(bm);
         }
     }
+
+    /**
+     * 显示缓存图片的方法
+     * @param iv  要显示那个组件
+     * @param url 图片地址
+     */
+    public static void showCacheImage(final ImageView iv, final String url) {
+        Bitmap bm = LruCacheUtils.getInstance().get(url);
+        if (bm != null) {
+            iv.setImageBitmap(bm);
+        }
+    }
+
 
     /**
      * 设置背景图片缓存的工具类

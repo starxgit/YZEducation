@@ -172,7 +172,7 @@ public class CommunicationController {
     /**
      * 删除我的评论
      * */
-    @RequestMapping(value = "delComment", method = RequestMethod.GET)
+    @RequestMapping(value = "delComment", method = RequestMethod.POST)
     public void delComment(@RequestParam String token,
             @RequestParam int comment_id, HttpServletResponse response) {
         int user_id = TokenUtil.decodeUserId(token);

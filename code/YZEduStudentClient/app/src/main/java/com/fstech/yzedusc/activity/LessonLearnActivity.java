@@ -155,6 +155,7 @@ public class LessonLearnActivity extends AppCompatActivity implements View.OnCli
             case R.id.ll_disscuss:
                 Log.e("click", "disscuss");
                 Intent intent1 = new Intent(LessonLearnActivity.this, CourseDisscussActivity.class);
+                intent1.putExtra("lesson_id", lb.getLesson_id());
                 startActivity(intent1);
                 break;
             default:
