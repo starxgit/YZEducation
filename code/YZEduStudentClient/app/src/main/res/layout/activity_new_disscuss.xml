@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -31,13 +32,33 @@
 
     </RelativeLayout>
 
-    <EditText
-        android:layout_marginTop="20dp"
-        android:id="@+id/editText"
+    <TextView
+        android:layout_marginTop="15dp"
         android:layout_width="300dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:text="请输入话题内容" />
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_marginTop="10dp"
+        android:layout_width="300dp"
+        android:background="@color/grey2"
         android:layout_gravity="center_horizontal"
         android:layout_height="200dp"
         android:ems="10"
         android:inputType="text" />
+
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/bn_submit"
+        android:layout_width="280dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="@string/submit"
+        android:textColor="@color/Write"
+        android:layout_marginTop="30dp"
+        app:qmui_backgroundColor="@color/qmui_config_color_blue"
+        app:qmui_radius="5dp" />
 
 </LinearLayout>

@@ -6,7 +6,8 @@
 		select
 		communication_id,lesson_id,communication_author,communication_content,
 		comment_num,gmt_create as communication_time from communication where
-		lesson_id = #{lesson_id}
+		lesson_id = #{lesson_id} and communication_del = 0 
+		order by communication.gmt_modified desc
 	</select>
 
 	<!-- 一个课程交流的评论内容 -->
@@ -16,7 +17,8 @@
 		communication_comment_content,gmt_create as communication_comment_time
 		from communication_comment
 		where communication_id =
-		#{communication_id};
+		#{communication_id} and communication_comment_del = 0
+		order by communication_comment.gmt_modified desc
 	</select>
 
 	<!-- 添加课程交流 -->

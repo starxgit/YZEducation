@@ -93,5 +93,6 @@
     <string name="remove_mistake">移出错题</string>
     <string name="remove_success">移除成功，请刷新页面</string>
     <string name="add_to_mistake_success">添加成功，可在错题查看</string>
+    <string name="i_will_comment_too">我也说一句</string>
 
 </resources>

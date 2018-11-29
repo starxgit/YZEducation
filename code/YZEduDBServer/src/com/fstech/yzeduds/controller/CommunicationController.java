@@ -179,7 +179,7 @@ public class CommunicationController {
         if(communicationDao.isMyComment(comment_id, user_id)>0){
             int result = communicationDao.delComment(comment_id);
             if (result > 0) {
-                communicationDao.delComment(comment_id);
+                communicationDao.decreCommentNum(comment_id);
                 ResponseUtil.normalResponse(response, null);
             } else {
                 ResponseUtil.errorResponse(response, null,

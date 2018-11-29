@@ -1,7 +1,6 @@
 package com.fstech.yzedusc.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,33 +8,31 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.fstech.yzedusc.R;
-import com.fstech.yzedusc.bean.CommunicationBean;
-import com.fstech.yzedusc.bean.TaskBean;
+import com.fstech.yzedusc.bean.CommunicationCommentBean;
 import com.fstech.yzedusc.util.ImageUitl;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import java.util.List;
 
 /**
- * Created by shaoxin on 18-11-28.
- * 课程交流列表的适配器
+ * Created by shaoxin on 11/29/18.
+ * 课程交流评论适配器
  */
 
-public class CommunicationAdapter extends BaseAdapter {
-
+public class CommentAdapter extends BaseAdapter {
     private Context context;
-    private List<CommunicationBean> listItems;
+    private List<CommunicationCommentBean> listItems;
     private LayoutInflater listContainer;
 
     public final class ViewHolder {
         public QMUIRadiusImageView iv_avatar;
         public TextView tv_name;
-        public TextView tv_text;
+        public TextView tv_delete;
         public TextView tv_time;
-        public TextView tv_comment_num;
+        public TextView tv_text;
     }
 
-    public CommunicationAdapter(Context context, List<CommunicationBean> listItems) {
+    public CommentAdapter(Context context, List<CommunicationCommentBean> listItems) {
         this.context = context;
         listContainer = LayoutInflater.from(context);
         this.listItems = listItems;
@@ -58,28 +55,32 @@ public class CommunicationAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vh = null;
+        CommentAdapter.ViewHolder vh = null;
         if (convertView == null) {
-            vh = new ViewHolder();
-            convertView = listContainer.inflate(R.layout.item_communication, null);
+            vh = new CommentAdapter.ViewHolder();
+            convertView = listContainer.inflate(R.layout.item_desscuss, null);
             //获得控件对象
             vh.iv_avatar = (QMUIRadiusImageView) convertView.findViewById(R.id.iv_avatar);
             vh.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
-            vh.tv_text = (TextView) convertView.findViewById(R.id.tv_text);
+            vh.tv_delete = (TextView) convertView.findViewById(R.id.tv_delete);
             vh.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
-            vh.tv_comment_num = (TextView) convertView.findViewById(R.id.tv_comment_num);
+            vh.tv_text = (TextView) convertView.findViewById(R.id.tv_text);
             //设置空间集到convertView
             convertView.setTag(vh);
         } else {
-            vh = (ViewHolder) convertView.getTag();
+            vh = (CommentAdapter.ViewHolder) convertView.getTag();
         }
-
-        CommunicationBean cb = listItems.get(position);
-        vh.tv_name.setText(cb.getNick_name());
-        vh.tv_text.setText(cb.getCommunication_content());
-        vh.tv_time.setText(cb.getCommunication_time());
-        vh.tv_comment_num.setText(cb.getComment_num()+"");
-        ImageUitl.showNetImage(vh.iv_avatar, cb.getAvatar());
+        CommunicationCommentBean ccb = listItems.get(position);
+        vh.tv_name.setText(ccb.getAuthor_name());
+        vh.tv_time.setText(ccb.getCommunication_comment_time());
+        vh.tv_text.setText(ccb.getCommunication_comment_content());
+        ImageUitl.showNetImage(vh.iv_avatar, ccb.getAuthor_avatar());
+        int isMy = ccb.getIsMy();
+        if (isMy == 1) {
+            vh.tv_delete.setVisibility(View.VISIBLE);
+        } else {
+            vh.tv_delete.setVisibility(View.GONE);
+        }
 
         return convertView;
     }

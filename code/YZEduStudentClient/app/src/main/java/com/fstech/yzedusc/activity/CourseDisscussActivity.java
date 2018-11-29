@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.fstech.yzedusc.R;
 import com.fstech.yzedusc.adapter.CommunicationAdapter;
 import com.fstech.yzedusc.bean.CommunicationBean;
+import com.fstech.yzedusc.util.CacheActivityUtil;
 import com.fstech.yzedusc.util.CallBackUtil;
 import com.fstech.yzedusc.util.Constant;
 import com.fstech.yzedusc.util.OkhttpUtil;
@@ -59,6 +61,7 @@ public class CourseDisscussActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_disscuss);
+        CacheActivityUtil.addActivity(CourseDisscussActivity.this);
         initView();
         initData();
     }
@@ -76,13 +79,24 @@ public class CourseDisscussActivity extends AppCompatActivity {
         tv_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO 到提问题页面
+                Intent intent = new Intent(CourseDisscussActivity.this, NewDisscussActivity.class);
+                intent.putExtra("lesson_id",lesson_id);
+                startActivity(intent);
             }
         });
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 getCommunicationList();
+            }
+        });
+        lv_communication.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(CourseDisscussActivity.this,DisscussDetail.class);
+                intent.putExtra("lesson_id",lesson_id);
+                intent.putExtra("communication",listItems.get(position));
+                startActivity(intent);
             }
         });
     }
@@ -119,7 +133,7 @@ public class CourseDisscussActivity extends AppCompatActivity {
                         // 返回正确的情况
                         JSONArray jsonArray = jsonObject.getJSONArray("return_data");
                         ObjectMapper objectMapper = new ObjectMapper();
-                        for (int i = 0; i < Constant.GRID_SIZE; i++) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jobj = jsonArray.getJSONObject(i);
                             CommunicationBean courseBean = objectMapper.readValue(jobj.toString(), CommunicationBean.class);
                             listItems.add(courseBean);

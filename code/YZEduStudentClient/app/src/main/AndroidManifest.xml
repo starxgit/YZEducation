@@ -141,6 +141,14 @@
         <activity
             android:name=".activity.AllInformationActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.NewDisscussActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.DisscussDetail"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppThemeQmui"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
