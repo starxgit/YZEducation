@@ -21,9 +21,15 @@ public class UserDao implements UserMapper{
     }
 
     @Override
-    public void updateUser(int user_id, String password, String phone,
-            int user_age, String user_sex, String user_avatar) {
-        userMapper.updateUser(user_id, password, phone, user_age, user_sex, user_avatar);
+    public int updateUser(int user_id, String phone, int user_age,
+            String user_sex, String user_avatar) {
+        return userMapper.updateUser(user_id, phone, user_age, user_sex, user_avatar);
+    }
+
+    @Override
+    public int updatePassword(int user_id, int password) {
+        // TODO Auto-generated method stub
+        return 0;
     }
     
     

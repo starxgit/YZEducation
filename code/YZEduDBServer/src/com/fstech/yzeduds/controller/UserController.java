@@ -84,7 +84,15 @@ public class UserController {
     @RequestMapping(value = "info", method = RequestMethod.GET)
     public void UserInfo(HttpServletResponse response,
             @RequestParam String token) {
-
+        int user_id = TokenUtil.decodeUserId(token);
+        UserBean user = userDao.findUserById(user_id);
+        if (user != null) {
+            ResponseUtil.normalResponse(response, user);
+        } else {
+            ResponseUtil.errorResponse(response, null,
+                    ErrorCode.CODE_USER_NOT_EXIST,
+                    ErrorCode.MESSAGE_USER_NOT_EXIT);
+        }
     }
 
     /**
@@ -94,18 +102,29 @@ public class UserController {
      * @param token
      * */
     @RequestMapping(value = "modify", method = RequestMethod.POST)
-    public void updateUserInfo(HttpServletResponse response) {
-
+    public void updateUserInfo(HttpServletResponse response,
+            @RequestParam String token, @RequestParam String phone,
+            @RequestParam int age, @RequestParam String sex,
+            @RequestParam String avatar) {
+        int user_id = TokenUtil.decodeUserId(token);
+        int result = userDao.updateUser(user_id, phone, age, sex, avatar);
+        if (result > 0) {
+            ResponseUtil.normalResponse(response, null);
+        } else {
+            ResponseUtil
+                    .errorResponse(response, null, ErrorCode.CODE_SYSTEM_ERROR,
+                            ErrorCode.MESSAGE_SYSTEM_ERROR);
+        }
     }
 
     /**
-     * 用户修改头像
+     * 用户修改密码
      * 
      * @author shaoxin
      * @param token
      * */
-    @RequestMapping(value = "avatar", method = RequestMethod.POST)
-    public void updateUserAvatar(HttpServletResponse response) {
+    @RequestMapping(value = "password", method = RequestMethod.POST)
+    public void updateUserPassword(HttpServletResponse response) {
 
     }
 

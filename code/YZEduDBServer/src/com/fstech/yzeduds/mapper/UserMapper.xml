@@ -10,7 +10,8 @@
 		from user
 		left join student on
 		user.user_id = student.user_id
-		where user_account = #{user_account}
+		where
+		user_account = #{user_account}
 	</select>
 	<!-- 用户信息模型类 -->
 	<resultMap id="UserBean" type="com.fstech.yzeduds.model.UserBean">
@@ -18,7 +19,7 @@
 		<result column="user_password" jdbcType="VARCHAR" property="user_password" />
 		<result column="user_phone" jdbcType="VARCHAR" property="user_phone" />
 		<result column="user_sex" jdbcType="VARCHAR" property="user_sex" />
-		<result column="user_age" jdbcType="INTEGER" property="user_sex" />
+		<result column="user_age" jdbcType="INTEGER" property="user_age" />
 		<result column="user_avatar" jdbcType="VARCHAR" property="user_avatar" />
 		<result column="student_name" jdbcType="VARCHAR" property="student_name" />
 		<result column="school_id" jdbcType="INTEGER" property="school_id" />
@@ -35,9 +36,21 @@
 		from user
 		left join student on
 		user.user_id = student.user_id
-		where user.user_id = #{user_id}
+		where
+		user.user_id = #{user_id}
 	</select>
 
+	<!-- 修改用户基本信息 -->
+	<update id="updateUser">
+		update user set user_phone =
+		#{phone},user_age=#{user_age},user_sex=#{user_sex},user_avatar=#{user_avatar}
+		where user_id = #{user_id}
+	</update>
 
+	<!-- 修改用户密码 -->
+	<update id="updatePassword">
+		update user set user_password = #{password}
+		where user_id = #{user_id}
+	</update>
 
 </mapper>
