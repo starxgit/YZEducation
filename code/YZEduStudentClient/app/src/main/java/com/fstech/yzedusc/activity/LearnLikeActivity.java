@@ -3,6 +3,7 @@ package com.fstech.yzedusc.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -15,6 +16,7 @@ import com.fstech.yzedusc.application.YZEduApplication;
 import com.fstech.yzedusc.util.CallBackUtil;
 import com.fstech.yzedusc.util.Constant;
 import com.fstech.yzedusc.util.OkhttpUtil;
+import com.fstech.yzedusc.util.TokenUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +38,7 @@ public class LearnLikeActivity extends AppCompatActivity {
     private GridView gv_like;
     private List<Map<String, Object>> listItems;
     private LearnLikeGridAdapter adapter;
-    private String userid;
+    private String token;
     private TextView tv_finish;
 
     @Override
@@ -90,14 +92,13 @@ public class LearnLikeActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        YZEduApplication application = (YZEduApplication) getApplication();
-        userid = "120110040225";
+        token = TokenUtil.getToken(LearnLikeActivity.this);
     }
 
     private void setListContent() {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("userid", userid);
-        String url = Constant.TEMP_BASE_URL + "userlike/likelist";
+        map.put("token", token);
+        String url = Constant.BASE_DB_URL + "userlike/likelist";
         OkhttpUtil.okHttpPost(url, map, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -106,18 +107,26 @@ public class LearnLikeActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(String response) {
+                Log.e("res",response);
                 try {
-                    JSONArray ja = new JSONArray(response);
-                    for (int i = 0; i < ja.length(); i++) {
-                        JSONObject jobj = (JSONObject) ja.get(i);
-                        Map<String, Object> listItem = new HashMap<String, Object>();
-                        listItem.put("chose", jobj.getString("chose"));
-                        listItem.put("name", jobj.getString("name"));
-                        listItem.put("cfa_id", jobj.getString("cfa_id"));
-                        listItems.add(listItem);
+                    JSONObject jsonObject = new JSONObject(response);
+                    int result_code = jsonObject.getInt("result_code");
+                    if(result_code==0){
+                        JSONArray ja = jsonObject.getJSONArray("return_data");
+                        for (int i = 0; i < ja.length(); i++) {
+                            JSONObject jobj = (JSONObject) ja.get(i);
+                            Map<String, Object> listItem = new HashMap<String, Object>();
+                            listItem.put("chose", jobj.getString("chose"));
+                            listItem.put("name", jobj.getString("name"));
+                            listItem.put("cfa_id", jobj.getString("cfa_id"));
+                            listItems.add(listItem);
+                        }
+                        adapter = new LearnLikeGridAdapter(LearnLikeActivity.this, listItems);
+                        gv_like.setAdapter(adapter);
+                    }else{
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(LearnLikeActivity.this,message,Toast.LENGTH_SHORT).show();
                     }
-                    adapter = new LearnLikeGridAdapter(LearnLikeActivity.this, listItems);
-                    gv_like.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -135,9 +144,9 @@ public class LearnLikeActivity extends AppCompatActivity {
             }
         }
         Map<String, String> map = new HashMap<String, String>();
-        map.put("userid", userid);
+        map.put("token", token);
         map.put("userlike", userlike);
-        String url = Constant.TEMP_BASE_URL + "userlike/savelike";
+        String url = Constant.BASE_DB_URL + "userlike/savelike";
         OkhttpUtil.okHttpPost(url, map, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {

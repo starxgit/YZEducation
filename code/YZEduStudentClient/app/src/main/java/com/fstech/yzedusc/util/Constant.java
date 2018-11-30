@@ -10,13 +10,13 @@ import com.fstech.yzedusc.R;
 public class Constant {
 
     // 这个是服务器的IP地址
-    public static final String SERVER_IP = "https://www.fstechnology.cn";
+//    public static final String SERVER_IP = "https://www.fstechnology.cn";
 
     // 本地IP地址
-//    public static final String SERVER_IP = "http://192.168.199.175";
+    public static final String SERVER_IP = "http://192.168.199.175";
 
     // 设置服务器端口
-    public static final String SERVER_PORT = "8443";
+    public static final String SERVER_PORT = "8080";
 
     // 基础数据请求地址
     public static final String BASE_DB_URL = SERVER_IP + ":" + SERVER_PORT + "/YZEduDBServer/";
@@ -40,8 +40,6 @@ public class Constant {
 
     // GridView放图片的数量
     public static final int GRID_SIZE = 4;
-
-    public static final String TEMP_BASE_URL = "http://www.fstechnology.cn:8080/XiankeM/";
 
     // 问题状态数组
     public static String QUESTION_STATE[] = {"待批改", "正确", "[添加到错题]", "不全对"};

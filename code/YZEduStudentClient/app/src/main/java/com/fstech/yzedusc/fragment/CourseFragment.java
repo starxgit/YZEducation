@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -63,7 +64,9 @@ public class CourseFragment extends Fragment implements View.OnClickListener {
     private CourseGridAdapter adapter_new;
     private CourseGridAdapter adapter_top;
     private EditText et_search;
-    private String userid;
+    private RelativeLayout re_more_new;
+    private RelativeLayout re_more_top;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,7 +102,10 @@ public class CourseFragment extends Fragment implements View.OnClickListener {
         lv_live.measure(0, 0);
         gv_new.setAdapter(adapter_new);
         gv_top.setAdapter(adapter_top);
-        userid = "1";
+        re_more_new = (RelativeLayout) getActivity().findViewById(R.id.re_more_new);
+        re_more_top = (RelativeLayout) getActivity().findViewById(R.id.re_more_top);
+        re_more_new.setOnClickListener(this);
+        re_more_top.setOnClickListener(this);
         gv_new.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -127,6 +133,7 @@ public class CourseFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
             }
         });
+
     }
 
     /*
@@ -149,6 +156,14 @@ public class CourseFragment extends Fragment implements View.OnClickListener {
             case R.id.et_search:
                 Intent intent0 = new Intent(getActivity(), CourseClassificationActivity.class);
                 startActivity(intent0);
+                break;
+            case R.id.re_more_new:
+                Intent intent1 = new Intent(getActivity(), CourseClassificationActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.re_more_top:
+                Intent intent2 = new Intent(getActivity(), CourseClassificationActivity.class);
+                startActivity(intent2);
                 break;
             default:
                 break;

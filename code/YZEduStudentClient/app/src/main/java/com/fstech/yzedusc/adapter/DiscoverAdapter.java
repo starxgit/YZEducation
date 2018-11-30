@@ -60,18 +60,7 @@ public class DiscoverAdapter extends PagerAdapter{
 		hv.course_pnum.setText(listItems.get(position).get("course_pnum").toString());
 		final String img=listItems.get(position).get("course_img").toString();
 		// 显示图片
-        ThreadUtil.runInThread(new Runnable() {
-            @Override
-            public void run() {
-                int state = DownloadTools.downloadImg(img);
-                ThreadUtil.runInUIThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ImageUitl.SimpleShowImage(img, hv.course_image);
-                    }
-                });
-            }
-        });
+        ImageUitl.showNetImage(hv.course_image,img);
 		hv.btn_take.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

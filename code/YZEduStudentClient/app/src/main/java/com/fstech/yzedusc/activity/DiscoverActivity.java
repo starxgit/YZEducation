@@ -11,6 +11,7 @@ import com.fstech.yzedusc.adapter.DiscoverAdapter;
 import com.fstech.yzedusc.util.CallBackUtil;
 import com.fstech.yzedusc.util.Constant;
 import com.fstech.yzedusc.util.OkhttpUtil;
+import com.fstech.yzedusc.util.TokenUtil;
 import com.fstech.yzedusc.view.JazzyViewPager;
 
 import org.json.JSONArray;
@@ -32,7 +33,6 @@ import okhttp3.Call;
 public class DiscoverActivity extends AppCompatActivity {
     private JazzyViewPager vp;
     private DiscoverAdapter adapter;
-    private String userid;
     private List<Map<String, Object>> listItems;
 
     @Override
@@ -40,7 +40,6 @@ public class DiscoverActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
         initView();
-        initData();
         setListContent();
 
     }
@@ -56,15 +55,13 @@ public class DiscoverActivity extends AppCompatActivity {
         listItems = new ArrayList<Map<String, Object>>();
     }
 
-    private void initData() {
-        userid = "120110040225";
-    }
 
     private void setListContent() {
+        String token = TokenUtil.getToken(DiscoverActivity.this);
         Map<String, String> map = new HashMap<String, String>();
-        map.put("userid", userid);
-        String url = Constant.TEMP_BASE_URL + "course/like";
-        OkhttpUtil.okHttpPost(url, map, new CallBackUtil.CallBackString() {
+        map.put("token", token);
+        String url = Constant.BASE_DB_URL + "userlike/like";
+        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
                 Toast.makeText(DiscoverActivity.this, R.string.server_response_error, Toast.LENGTH_SHORT).show();
@@ -74,18 +71,24 @@ public class DiscoverActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jobj = new JSONObject(response);
-                    JSONArray ja = jobj.getJSONArray("clist");
-                    for (int i = 0; i < ja.length(); i++) {
-                        JSONObject course = ja.getJSONObject(i);
-                        Map<String, Object> listItem = new HashMap<String, Object>();
-                        listItem.put("course_img", course.get("course_img"));
-                        listItem.put("course_name", course.get("course_name"));
-                        listItem.put("course_pnum", "已有" + course.get("learn_pnum") + "人学习");
-                        listItem.put("course_id", course.get("course_id"));
-                        listItems.add(listItem);
+                    int result_code = jobj.getInt("result_code");
+                    if (result_code == 0) {
+                        JSONArray ja = jobj.getJSONArray("return_data");
+                        for (int i = 0; i < ja.length(); i++) {
+                            JSONObject course = ja.getJSONObject(i);
+                            Map<String, Object> listItem = new HashMap<String, Object>();
+                            listItem.put("course_img", course.get("course_cover"));
+                            listItem.put("course_name", course.get("course_name"));
+                            listItem.put("course_pnum", "已有" + course.get("course_learn_student") + "人学习");
+                            listItem.put("course_id", course.get("course_id"));
+                            listItems.add(listItem);
+                        }
+                        adapter = new DiscoverAdapter(DiscoverActivity.this, listItems, vp);
+                        vp.setAdapter(adapter);
+                    } else {
+                        String message = jobj.getString("message");
+                        Toast.makeText(DiscoverActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
-                    adapter = new DiscoverAdapter(DiscoverActivity.this, listItems, vp);
-                    vp.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

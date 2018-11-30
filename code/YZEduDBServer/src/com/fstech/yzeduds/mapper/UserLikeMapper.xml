@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fstech.yzeduds.mapper.UserLikeMapper">
+	<select id="LikesList" resultType="com.fstech.yzeduds.model.ClassificationBean">
+		select classification_id,classification_name,classification_own from
+		classification
+		where classification_own != -1
+	</select>
+
+	<delete id="delMyLike" parameterType="String">
+		delete from learn_like
+		where user_id = #{user_id}
+	</delete>
+
+	<insert id="addMyLike" parameterType="com.fstech.yzeduds.model.LearnLike">
+		insert into
+		learn_like(user_id,user_like) values(#{user_id},#{user_like})
+	</insert>
+
+	<select id="mylike" parameterType="String" resultType="String">
+		select
+		user_like from learn_like where user_id = #{user_id}
+	</select>
+</mapper>

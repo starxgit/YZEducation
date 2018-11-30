@@ -54,7 +54,6 @@ public class ImageUitl {
 
                 @Override
                 public void onResponse(Bitmap bm) {
-                    Log.e("req",url);
                     LruCacheUtils.getInstance().addBitmapToMemoryCache(url, bm);
                     // 加载完成后再从缓存池读取，不直接读取网络请求图片
                     showCacheImage(iv, url);
