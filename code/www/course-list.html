@@ -1,0 +1,413 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+
+<style type="text/css">  
+#mytable {  
+    table-layout: fixed;  
+    width: 98% border:0px;  
+    margin: 0px;  
+}  
+
+#mytable tr td {  
+    text-overflow: ellipsis; /* for IE */  
+    -moz-text-overflow: ellipsis; /* for Firefox,mozilla */  
+    overflow: hidden;  
+    white-space: nowrap;  
+    text-align: center;  
+}  
+</style>
+
+<title>查看信息</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 系统管理 <span class="c-gray en">&gt;</span> 学生管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<button class="btn btn-primary radius" type="submit">
+	<a style="color:#ffffff;" href="pmanager-ad.html">添加课程</a></button>
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-bg table-hover table-sort">
+			<thead>
+				<tr class="text-c">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th width="80">课程代码</th>
+					<th width="80">课程名称</th>
+					<th width="80">课程简介</th>
+					<th width="80">任课老师</th>
+					<th width="80">开课学校</th>
+					<th width="80">开课院系</th>
+					<th width="80">开课班级</th>
+					<th width="80">课程分类</th>
+					<th width="80">限制人数</th>
+					<th width="80">学习人数</th>
+					<th width="80">封面图片</th>
+					<th width="80">课程类型</th>
+					<th width="80">已更新课时</th>
+					<th width="80">总课时</th>
+					<th width="80">课程价格</th>
+					<th width="80">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					
+					<td>10025</td>
+					<td>Linux 达人养成计划 II</td>
+					<td>VIM+磁盘管理+用户权限，通过学习对Linux系统有进一步的理解</td>
+					<td>张四</td>
+					<td>大学</td>
+					<td>物理系</td>
+					<th>物理A班</th>
+					<th>理科</th>
+					<th>无</th>
+					<th>150</th>
+					<th><img src="http://www.fstechnology.cn:8080/YZEduFileServer/showImg?myfile=57035f580001a91806000338-240-135.jpg"></th>
+					<th>公开课</th>
+					<th>8</th>
+					<th>50</th>
+					<th>25.26</th>
+					<td class="f-14 td-manage">
+					<a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					
+					<td>10020</td>
+					<td>Linux达人养成计划 I</td>
+					<td>Linux入门视频教程，以通俗易懂的语言带你感受linux之美</td>
+					<td>刘亿</td>
+					<td>大学</td>
+					<td>计算机系</td>
+					<th>计科A班</th>
+					<th>工科</th>
+					<th>无</th>
+					<th>150</th>
+					<th><img src="http://www.fstechnology.cn:8080/YZEduFileServer/showImg?myfile=57035f110001a57906000338-240-135.jpg"></th>
+					<th>公开课</th>
+					<th>8</th>
+					<th>60</th>
+					<th>30</th>
+					<td class="f-14 td-manage">
+					<a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					
+					<td>10030</td>
+					<td>Linux Guide for Developers</td>
+					<td>Linux命令行世界生存指南，让本课程成为你初 Linux世界的向导</td>
+					<td>张四</td>
+					<td>大学</td>
+					<td>物理系</td>
+					<th>物理A班</th>
+					<th>理科</th>
+					<th>无</th>
+					<th>150</th>
+					<th><img src="http://www.fstechnology.cn:8080/YZEduFileServer/showImg?myfile=53fed63700018a9306000338-240-135.jpg"></th>
+					<th>公开课</th>
+					<th>8</th>
+					<th>55</th>
+					<th>25</th>
+					<td class="f-14 td-manage">
+					<a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					
+					<td>10015</td>
+					<td>Linux中的计划任务之Crontab</td>
+					<td>学会Crontab命令，让重复任务自动化执行，提高大家工作效率</td>
+					<td>马思</td>
+					<td>大学</td>
+					<td>计算机系</td>
+					<th>软工A班</th>
+					<th>理科</th>
+					<th>无</th>
+					<th>150</th>
+					<th><img src="http://www.fstechnology.cn:8080/YZEduFileServer/showImg?myfile=544f0d9500017d6306000338-240-135.jpg"></th>
+					<th>公开课</th>
+					<th>8</th>
+					<th>50</th>
+					<th>30</th>
+					<td class="f-14 td-manage">
+					<a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					
+					<td>10005</td>
+					<td>云安全的架构设计与实践之旅</td>
+					<td>阿里云公开课，带你更加深入了解云安全架构那些事儿，干货慢慢</td>
+					<td>端木度</td>
+					<td>大学</td>
+					<td>计算机系</td>
+					<th>网工A班</th>
+					<th>理科</th>
+					<th>无</th>
+					<th>150</th>
+					<th><img src="http://www.fstechnology.cn:8080/YZEduFileServer/showImg?myfile=5460558c0001f92506000338-240-135.jpg"></th>
+					<th>公开课</th>
+					<th>8</th>
+					<th>50</th>
+					<th>25.56</th>
+					<td class="f-14 td-manage">
+					<a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					
+					<td>10052</td>
+					<td>Linux网络管理</td>
+					<td>为你带来Linux网络环境搭建，介绍远程登录工具的使用</td>
+					<td>林冲</td>
+					<td>大学</td>
+					<td>计算机系</td>
+					<th>计科A班</th>
+					<th>理科</th>
+					<th>无</th>
+					<th>150</th>
+					<th><img src="http://www.fstechnology.cn:8080/YZEduFileServer/showImg?myfile=5704cf8c00012c9006000338-240-135.jpg"></th>
+					<th>公开课</th>
+					<th>8</th>
+					<th>50</th>
+					<th>25.26</th>
+					<td class="f-14 td-manage">
+					<a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					
+					<td>10036</td>
+					<td>在线分布式数据库原理与实践</td>
+					<td>一起学习事务与分布式事务原理与实践干货，欢迎收藏</td>
+					<td>张四</td>
+					<td>大学</td>
+					<td>物理系</td>
+					<th>物理A班</th>
+					<th>理科</th>
+					<th>无</th>
+					<th>150</th>
+					<th><img src="http://www.fstechnology.cn:8080/YZEduFileServer/showImg?myfile=570779200001fde006000338-240-135.jpg"></th>
+					<th>公开课</th>
+					<th>8</th>
+					<th>50</th>
+					<th>36</th>
+					<td class="f-14 td-manage">
+					<a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					
+					<td>10003</td>
+					<td>云计算 - 引领阿里生态的技术发展之路</td>
+					<td>简要介绍天猫云计算环境，在双11背后的技术支撑</td>
+					<td>张四</td>
+					<td>大学</td>
+					<td>物理系</td>
+					<th>物理A班</th>
+					<th>理科</th>
+					<th>无</th>
+					<th>150</th>
+					<th><img src="http://www.fstechnology.cn:8080/YZEduFileServer/showImg?myfile=54b5e5af00010ec406000338-240-135.jpg"></th>
+					<th>公开课</th>
+					<th>8</th>
+					<th>50</th>
+					<th>25.26</th>
+					<td class="f-14 td-manage">
+					<a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					
+					<td>10013</td>
+					<td>openstack最新技术解析</td>
+					<td>了解openstack最新技术动向，以及了解应用中各种问题</td>
+					<td>晁盖</td>
+					<td>大学</td>
+					<td>计算机系</td>
+					<th>软工A班</th>
+					<th>理科</th>
+					<th>无</th>
+					<th>150</th>
+					<th><img src="http://www.fstechnology.cn:8080/YZEduFileServer/showImg?myfile=54b619d70001294906000338-240-135.jpg"></th>
+					<th>直播课</th>
+					<th>8</th>
+					<th>50</th>
+					<th>30</th>
+					<td class="f-14 td-manage">
+					<a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					
+					<td>10043</td>
+					<td>阿里云助力弹性伸缩服务</td>
+					<td>阿里云openAPI体系、弹性伸缩以及业务水平扩展能力介绍</td>
+					<td>张四</td>
+					<td>大学</td>
+					<td>物理系</td>
+					<th>物理A班</th>
+					<th>理科</th>
+					<th>无</th>
+					<th>150</th>
+					<th><img src="http://www.fstechnology.cn:8080/YZEduFileServer/showImg?myfile=57466be500018b8006000338-240-135.jpg"></th>
+					<th>直播课</th>
+					<th>8</th>
+					<th>50</th>
+					<th>26</th>
+					<td class="f-14 td-manage">
+					<a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					
+					<td>10011</td>
+					<td>携程C4技术分享沙龙</td>
+					<td>来自携程C4技术沙龙的现场分享，小伙伴们赶紧来尝鲜吧</td>
+					<td>张四</td>
+					<td>大学</td>
+					<td>物理系</td>
+					<th>物理A班</th>
+					<th>理科</th>
+					<th>无</th>
+					<th>150</th>
+					<th><img src="http://www.fstechnology.cn:8080/YZEduFileServer/showImg?myfile=57077a1200013d0206000338-240-135.jpg"></th>
+					<th>直播课</th>
+					<th>8</th>
+					<th>50</th>
+					<th>25</th>
+					<td class="f-14 td-manage">
+					<a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					
+					<td>10009</td>
+					<td>shell编程之变量</td>
+					<td>主要介绍Linux shell编程基础中的变量，熟练使用shell中用户自定义变量</td>
+					<td>张四</td>
+					<td>大学</td>
+					<td>物理系</td>
+					<th>物理A班</th>
+					<th>选修</th>
+					<th>无</th>
+					<th>150</th>
+					<th><img src="http://www.fstechnology.cn:8080/YZEduFileServer/showImg?myfile=55063ec30001774b06000338-240-135.jpg"></th>
+					<th>直播课</th>
+					<th>8</th>
+					<th>50</th>
+					<th>25.26</th>
+					<td class="f-14 td-manage">
+					<a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					
+					<td>10025</td>
+					<td>Linux系统扫描技术及安全防范</td>
+					<td>Linux系统下系统扫描及安全防范，规避一些安全的隐患</td>
+					<td>马岱</td>
+					<td>大学</td>
+					<td>计算机系</td>
+					<th>计科A班</th>
+					<th>工科</th>
+					<th>无</th>
+					<th>150</th>
+					<th><img src="http://www.fstechnology.cn:8080/YZEduFileServer/showImg?myfile=5510c2c500016e9e06000338-240-135.jpg"></th>
+					<th>直播课</th>
+					<th>8</th>
+					<th>50</th>
+					<th>25.26</th>
+					<td class="f-14 td-manage">
+					<a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+$('.table-sort').dataTable({
+	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
+	"bStateSave": true,//状态保存
+	"pading":false,
+	"aoColumnDefs": [
+	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+	  {"orderable":false,"aTargets":[0,3]}// 不参与排序的列
+	]
+});
+
+</script> 
+</body>
+</html>

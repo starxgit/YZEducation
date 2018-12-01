@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.fstch.YZEduadmin.mapper.PcourseMapper">
+ 	<select id="findAll" resultType="com.fstch.YZEduadmin.models.Pcourse">
+ 		SELECT
+			platform_course.platform_course_id,
+			course.course_code,
+			course.course_name,
+			course.course_introduce,
+			teacher.teacher_name FROM `course`,`platform_course`,`teacher`
+		WHERE
+			course.course_id=platform_course.course_id AND course.course_teacher=teacher.teacher_id
+ 	</select>
+ 	
+ 	<select id="findCourse" resultType="com.fstch.YZEduadmin.models.Pcourse">
+ 		SELECT course.course_id,course.course_code, course.course_name, course.course_introduce, teacher.teacher_name
+		FROM course,teacher
+		WHERE course.course_teacher = teacher.teacher_id  AND 
+		course.course_id NOT IN (SELECT platform_course.course_id FROM platform_course)
+ 	</select>
+ 	<select id="findById" resultType="com.fstch.YZEduadmin.models.Pcourse">
+ 		select * from course where course_id = #{course_id}
+ 	</select>
+ 	<insert id="addPcourse" parameterType="com.fstch.YZEduadmin.models.Pcourse"
+ 						 useGeneratedKeys="true" keyProperty="course_id">
+ 		INSERT INTO `platform_course`(platform_course.course_id,
+ 							platform_course.gmt_create,platform_course.gmt_modified)
+		VALUES((SELECT course.course_id FROM `course` WHERE course_id = #{course_id}),NOW(),NOW())
+ 	</insert>
+ 	<delete id="delPcourse">
+ 		delete from `platform_course` where platform_course_id = #{platform_course_id}
+ 	</delete>
+ </mapper>

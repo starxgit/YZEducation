@@ -146,9 +146,9 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.DisscussDetail"
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeQmui"
-            android:screenOrientation="portrait"></activity>
+            android:windowSoftInputMode="stateHidden"></activity>
     </application>
 
 </manifest>

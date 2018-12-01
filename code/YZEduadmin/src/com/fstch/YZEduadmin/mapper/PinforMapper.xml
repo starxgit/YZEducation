@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.fstch.YZEduadmin.mapper.PinforMapper">
+ 	<select id="findAll" resultType="com.fstch.YZEduadmin.models.Pinfor">
+ 		SELECT platform_information.platform_information_id,
+ 			   platform_information.platform_information_title,
+ 			   platform_information.platform_information_content,
+			   platform_information.platform_information_author,
+			  Count(platform_image.platform_image_url)AS information_image_count
+			FROM `platform_information`  LEFT  JOIN  `platform_image`
+			ON platform_information.platform_information_id = platform_image.platform_information_id
+ 			WHERE platform_information.gmt_del = 0
+			GROUP BY platform_information.platform_information_id
+ 	</select>
+ 	<select id="findById" resultType="com.fstch.YZEduadmin.models.Pinfor">
+ 		select platform_information.platform_information_title,
+ 			   platform_information.platform_information_content,
+			   platform_information.platform_information_author
+			    from `platform_information` WHERE platform_information_id=#{platform_information_id}
+ 	</select>
+ 	<insert id="addPinfor" parameterType="com.fstch.YZEduadmin.models.Pinfor"
+ 						 useGeneratedKeys="true" keyProperty="platform_information_id">
+ 		INSERT INTO `platform_information`(platform_information_title,platform_information_content,
+ 										   platform_information_author,information_image_count,
+ 										   gmt_del,gmt_create,gmt_modified)
+						VALUES(#{platform_information_title},#{platform_information_content},
+							   #{platform_information_author},0,0,NOW(),NOW())
+			
+ 	</insert>
+ 	<insert id="addPinforImg" parameterType="com.fstch.YZEduadmin.models.Pinfor"
+ 						 useGeneratedKeys="true" keyProperty="platform_image_id">
+ 		insert into platform_image (platform_information_id,platform_image_url,
+ 									gmt_del,gmt_create,gmt_modified)
+		values ((SELECT MAX(platform_information_id) FROM platform_information),#{platform_image_url},0,NOW(),NOW())
+ 	</insert>
+ 	<update id="delPinfor" parameterType="com.fstch.YZEduadmin.models.Pinfor">
+ 		update `platform_information` set gmt_del = 1 where 
+ 		platform_information_id=#{platform_information_id}
+ 	</update>
+ 	<update id="modify" parameterType="com.fstch.YZEduadmin.models.Pinfor">
+ 		update `platform_information` set 
+ 				platform_information_title = #{platform_information_title},
+ 				platform_information_content = #{platform_information_content},
+ 				platform_information_author = #{platform_information_author},
+ 				gmt_modified = now()
+ 				where platform_information_id=#{platform_information_id}
+ 	</update>
+ </mapper>

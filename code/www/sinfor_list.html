@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+
+<style type="text/css">  
+#mytable {  
+    table-layout: fixed;  
+    width: 98% border:0px;  
+    margin: 0px;  
+}  
+
+#mytable tr td {  
+    text-overflow: ellipsis; /* for IE */  
+    -moz-text-overflow: ellipsis; /* for Firefox,mozilla */  
+    overflow: hidden;  
+    white-space: nowrap;  
+    text-align: center;  
+}  
+</style>
+
+<title>查看信息</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 门户管理 <span class="c-gray en">&gt;</span> 资讯管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<button class="btn btn-primary radius" type="submit">
+	<a style="color:#ffffff;" href="pmanager-ad.html">发布资讯</a></button>
+	<div class="mt-20">
+		<table id="mytable" class="table table-border table-bordered table-bg table-hover table-sort">
+			<thead>
+				<tr class="text-c">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th width="80">资讯标题</th>
+					<th width="80">作者</th>
+					<th width="80">资讯内容</th>
+					<th width="80">所属院校</th>
+					<th width="80">图片数量</th>
+					<th width="80">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					<td>传美团年内赴香港上市：估值为600亿美元</td>
+					<td>【中关村在线新闻资讯】3月23日消息， 近日有知情人士向彭博社透露，美团点评计划今年赴香港上市，并且已经就首次公开招股(IPO)展开磋商。在上市之前，美团点评还将进行融资，预计市值将会达到600亿美元。</td>
+					<td>吴晓宇</td>
+					<td>大学A</td>
+					<td>12</td>
+					<td class="f-14 td-manage"><a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					<td>HTC U12+泄密！骁龙845+6G+128G售价799欧元</td>
+					<td>【科技讯】4月10日消息，去年的HTC U11+得益于流畅的系统体验、出色的拍照能力和别具一格的Edge Sense交互方式，让许多人对这部手机赞赏有加，今年HTC继续发力，正计划发布HTC U12+，不过在这款手机正式发布之前，它的配置及售价信息就被曝光了出来。</td>
+					<td>科技讯</td>
+					<td>大学A</td>
+					<td>12</td>
+					<td class="f-14 td-manage"><a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					<td>金立总部预计裁员50% 已经开始与员工沟通</td>
+					<td>【科技讯】4月11日消息，继金立工业园裁员调整之后，金立总部也开始了裁员，裁员比例为50%。该裁员名单早在清明节前就已经统计，4月10日深圳总部、北研所等均开始约谈员工，并出台了补偿方案。</td>
+					<td> 科技讯</td>
+					<td>大学A</td>
+					<td>12</td>
+					<td class="f-14 td-manage"><a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					<td>国家广电总局责令今日头条网站永久关停“内涵段子”</td>
+					<td>【科技讯】4月10日消息，国家广播电视总局在督察“今日头条”网站整改工作中，发现该公司组织推送的“内涵段子”客户端软件和相关公众号存在导向不正、格调低俗等突出问题，引发网民强烈反感。</td>
+					<td>国家广播电视总局微信公众号</td>
+					<td>大学A</td>
+					<td>12</td>
+					<td class="f-14 td-manage"><a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					<td>司机高速加价不成甩客 滴滴：已封禁其账号</td>
+					<td>【科技讯】4月10日消息，日前一滴滴司机竟然因为临时加价被乘客拒绝，将乘客下在了高速路上，滴滴平台在事后查清原委外，对司机进行了封号处理。</td>
+					<td>科技讯</td>
+					<td>大学A</td>
+					<td>12</td>
+					<td class="f-14 td-manage"><a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					<td>虎牙在美提交IPO申请 招股书披露2017年营收21.85亿元</td>
+					<td>【科技讯】4月10日消息，虎牙周一向美国证券交易委员会提交了IPO上市申请文件。招股书显示，虎牙计划通过IPO交易筹集最多2亿美元资金，该公司申请将其美国存托股票在纽约证券交易所挂牌上市，交易代码为“HUYA”。</td>
+					<td>科技讯</td>
+					<td>大学A</td>
+					<td>12</td>
+					<td class="f-14 td-manage"><a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					<td>网易云音乐版权问题再现 私人主播将影视剧转成音频上传也侵权</td>
+					<td>【科技讯】4月10日消息，网易云音乐与杰威尔的版权风波尚未平息，网易云音乐电台也涉及版权风险。不少电台主播将电影、电视剧等转成音频文件上传至平台，但是否经过版权方授权则存在疑问。</td>
+					<td>吴晓宇</td>
+					<td>大学A</td>
+					<td>12</td>
+					<td class="f-14 td-manage"><a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					<td>三星中国销量已不足千万 市场份额连续下滑</td>
+					<td>【科技讯】4月10日消息，三星虽然推出了新品S9但在中国市场的表现还是有些不尽如人意。据国外市场调查公司StrategyAnalytics的调查显示，在2017年第四季度（10~12月），三星手机在中国市场的销售量仅为980万台</td>
+					<td>科技讯</td>
+					<td>大学A</td>
+					<td>12</td>
+					<td class="f-14 td-manage"><a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					<td>“核电之肺”ZH-65型蒸汽发生器在广州吊装出厂</td>
+					<td>中新网广州10月17日电 (沈钊 翟莉)17日，“华龙一号”国内首台ZH-65型蒸汽发生器在东方电气(广州)重型机器有限公司(下简称东方重机)吊装出厂，在码头装船发运。
+                    记者从东方重机获悉，在核电站核岛主设备中，蒸汽发生器个头最高、体积最大、造价最高，被形象地称为“核电之肺”。“华龙一号”ZH-65型蒸汽发生器是中国核动力研究设计院张富源研发团队，采用国际第三代核电站蒸汽发生器的先进设计理念，连续攻克了ZH-65型蒸汽发生器的结构设计、性能验证、设计软件、关键材料国产化等一道道技术难关，做出多项重大技术改进、形成了具有完全自主知识产权的核电重大关键设备。</td>
+					<td>中新网</td>
+					<td>大学A</td>
+					<td>12</td>
+					<td class="f-14 td-manage"><a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					<td>锤子T3或将采用侧边指纹 5月15日重磅揭幕</td>
+					<td>【科技讯】4月10日消息，昨天下午，锤子科技发布了一款千元级别新机坚果3，与昨天的是一场发布会，不如说是一场“发布会的预热会”，因为首先昨天发布会的主角坚果3并不是大家期待的锤子真旗舰，大家都知道5月15日鸟巢的发布会才是旗舰亮相的舞台。其次老罗在昨天发布会也多次提到所有的重磅都将在5月15日出现，其中包括久违的旗舰机——锤子T3。</td>
+					<td>科技讯</td>
+					<td>大学A</td>
+					<td>12</td>
+					<td class="f-14 td-manage"><a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+				<tr class="text-c">
+					<td><input type="checkbox" value="" name=""></td>
+					<td>荣耀10发布日期定档：4月19日上海见</td>
+					<td>【科技讯】4月9日消息，此前传闻中的“手机摄影新品种”在业界引起了剧烈反响，今天这个能够引发手机摄影革命的机型正式由官方宣布了发布日期，它就是将于4月19日在上海发布的荣耀10。</td>
+					<td>科技讯</td>
+					<td>大学A</td>
+					<td>12</td>
+					<td class="f-14 td-manage"><a style="text-decoration:none"  href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;
+					</i></a> <a style="text-decoration:none" class="ml-5" 
+						onClick="article_del(this,'10001')" href="javascript:;"
+						title="删除">
+					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+$('.table-sort').dataTable({
+	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
+	"bStateSave": true,//状态保存
+	"pading":false,
+	"aoColumnDefs": [
+	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+	  {"orderable":false,"aTargets":[0,3]}// 不参与排序的列
+	]
+});
+
+</script> 
+</body>
+</html>

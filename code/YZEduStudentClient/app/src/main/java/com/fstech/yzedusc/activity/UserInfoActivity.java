@@ -136,7 +136,7 @@ public class UserInfoActivity extends AppCompatActivity {
             }
         });
     }
-
+    
     /**
      * 设置基本信息的方法
      */
@@ -197,7 +197,7 @@ public class UserInfoActivity extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }finally {
+                } finally {
                     progressBar.setVisibility(View.GONE);
                     tvFinish.setClickable(true);
                 }
