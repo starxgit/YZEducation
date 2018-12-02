@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="stylesheet" type="text/css" href="http://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/Hui-iconfont/1.0.8/iconfont.css" />
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+	<title>添加院系</title>
+</head>
+
+<body>
+	<article class="page-container" style="margin-top:100px;">
+		<form class="form form-horizontal" id="form-article-add">
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>院系名：</label>
+				<div class="formControls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" value="" placeholder="" id="articletitle" name="articletitle">
+				</div>
+			</div>
+		</form>
+		<div class="row cl" style="margin-top:30px;">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" onclick="addAdmin()">添加院系</button>
+				<button class="btn btn-default radius col-xs-offset-1" onclick="back()">取消</button>
+			</div>
+		</div>
+	</article>
+	<script>
+
+		/*返回*/
+		function back() {
+			window.history.go(-1);
+		}
+
+		/*添加管理员*/
+		function addAdmin() {
+			alert("submit");
+			// TODO 提交表单逻辑
+		}
+	</script>
+</body>
+
+</html>
