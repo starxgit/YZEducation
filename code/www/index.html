@@ -9,11 +9,11 @@
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
 	<link rel="Bookmark" href="/favicon.ico">
 	<link rel="Shortcut Icon" href="/favicon.ico" />
-	<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-	<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
-	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="http://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="http://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui.admin/css/H-ui.admin.css" />
+	<link rel="stylesheet" type="text/css" href="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/Hui-iconfont/1.0.8/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="http://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="http://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui.admin/css/style.css" />
 	<title>教务管理端</title>
 	<meta name="keywords">
 	<meta name="description">
@@ -24,7 +24,7 @@
 		<div class="navbar navbar-fixed-top">
 			<div class="container-fluid cl">
 				<a class="logo navbar-logo f-l mr-10 hidden-xs" href="#">
-					<img src="img/logo.png">
+					<img src="http://cdn.fstechnology.cn/YZEduSchoolWeb/img/logo.png">
 				</a>
 				<a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
 				<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
@@ -63,7 +63,101 @@
 
 	<aside class="Hui-aside">
 		<div class="menu_dropdown bk_2">
-			<dl id="menu-comments">
+			<!-- 管理员管理 -->
+			<dl id="menu-product">
+				<dt><i class="Hui-iconfont">&#xe67f;</i>管理员管理
+					<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+				<dd>
+					<ul>
+						<li>
+							<a data-href="edu_admin.html" data-title="管理员列表" href="javascript:void(0)">管理员列表</a>
+						</li>
+					</ul>
+				</dd>
+			</dl>
+
+			<!-- 院系管理 -->
+			<dl id="menu-product">
+				<dt><i class="Hui-iconfont">&#xe67f;</i>院系管理
+					<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+				<dd>
+					<ul>
+						<li>
+							<a data-href="faculty_list.html" data-title="院系列表" href="javascript:void(0)">院系列表</a>
+						</li>
+						<li>
+							<a data-href="grade_class.html" data-title="班级列表" href="javascript:void(0)">班级列表</a>
+						</li>
+					</ul>
+				</dd>
+			</dl>
+
+			<!-- 课程管理 -->
+			<dl id="menu-product">
+				<dt><i class="Hui-iconfont">&#xe67f;</i>课程管理
+					<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+				<dd>
+					<ul>
+						<li>
+							<a data-href="course-list.html" data-title="课程列表" href="javascript:void(0)">课程列表</a>
+						</li>
+						<li>
+							<a data-href="practice_list.html" data-title="实训列表" href="javascript:void(0)">实训列表</a>
+						</li>
+					</ul>
+				</dd>
+			</dl>
+
+			<!-- 人员管理 -->
+			<dl id="menu-product">
+				<dt><i class="Hui-iconfont">&#xe67f;</i>人员管理
+					<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+				<dd>
+					<ul>
+						<li>
+							<a data-href="student-list.html" data-title="学生列表" href="javascript:void(0)">学生列表</a>
+						</li>
+						<li>
+							<a data-href="teacher-list.html" data-title="教师列表" href="javascript:void(0)">教师列表</a>
+						</li>
+					</ul>
+				</dd>
+			</dl>
+
+			<!-- 门户管理 -->
+			<dl id="menu-product">
+				<dt><i class="Hui-iconfont">&#xe67f;</i>门户管理
+					<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+				<dd>
+					<ul>
+						<li>
+							<a data-href="sinfor_list.html" data-title="资讯列表" href="javascript:void(0)">资讯列表</a>
+						</li>
+						<li>
+							<a data-href="school-notice.html" data-title="公告列表" href="javascript:void(0)">公告列表</a>
+						</li>
+					</ul>
+				</dd>
+			</dl>
+			
+			<!-- 数据分析 -->
+			<dl id="menu-product">
+				<dt><i class="Hui-iconfont">&#xe67f;</i>数据分析
+					<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+				<dd>
+					<ul>
+						<li>
+							<a data-href="ability.html" data-title="学生能力档案" href="javascript:void(0)">学生能力档案</a>
+						</li>
+						<li>
+							<a data-href="participation.html" data-title="课程参与度分析" href="javascript:void(0)">课程参与度分析</a>
+						</li>
+					</ul>
+				</dd>
+			</dl>
+
+
+			<!-- <dl id="menu-comments">
 				<dt><i class="Hui-iconfont">&#xe61d;</i>系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 				<dd>
 					<ul>
@@ -143,10 +237,6 @@
 						<li>
 							<a data-href="participation.html" data-title="参与度分析" href="javascript:void(0)">参与度分析</a>
 						</li>
-						<!-- 
-						<li>
-							<a data-href="admin-role.html" data-title="实训效果分析" href="javascript:void(0)">实训效果分析</a>
-						</li> -->
 						<li>
 							<a data-href="ability.html" data-title="学生能力档案" href="javascript:void(0)">学生能力档案</a>
 						</li>
@@ -166,7 +256,7 @@
 
 					</ul>
 				</dd>
-			</dl>
+			</dl> -->
 		</div>
 	</aside>
 
@@ -199,11 +289,11 @@
 		</ul>
 	</div>
 
-	<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
-	<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
-	<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
-	<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
-	<script type="text/javascript" src="lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/layer/2.4/layer.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui/js/H-ui.min.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui.admin/js/H-ui.admin.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
 </body>
 
 </html>

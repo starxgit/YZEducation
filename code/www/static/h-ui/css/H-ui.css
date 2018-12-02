@@ -1760,8 +1760,8 @@ input[type="radio"],input[type="checkbox"] {line-height: normal; margin-top:-4px
   <option value="3">菜单三</option>
 </select>
 需要引用2个js文件
-<script type="text/javascript" src="lib/squid.js"></script>
-<script type="text/javascript" src="lib/jselect-1.0.js"></script>
+<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/squid.js"></script>
+<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/jselect-1.0.js"></script>
 页面调用方法
 <script type="text/javascript">
 squid.swing.jselect()
@@ -2039,7 +2039,7 @@ img-responsive 响应式    .radius 圆角图片    .round 圆形图片   .thumb
 
 /*3.6.3 头像
 	Name:			mod_avatar
-	Example:		<i class="avatar avatar-L radius"><img src="static/h-ui/images/ucenter/avatar-default.jpg"></i>
+	Example:		<i class="avatar avatar-L radius"><img src="http://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui/images/ucenter/avatar-default.jpg"></i>
 */
 .avatar{display:inline-block;position:relative; overflow:hidden}
 .avatar img{ display:block}
@@ -3376,7 +3376,7 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
     </ol>
   </div>
 </div>
-	<script type="text/javascript" src="lib/jquery.SuperSlide/2.1.1/jquery.SuperSlide.min.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/jquery.SuperSlide/2.1.1/jquery.SuperSlide.min.js"></script>
 	<script type="text/javascript">
 	$(function() {
 		jQuery("#slider-1 .slider").slide({mainCell:".bd ul",titCell:".hd li",trigger:"click",effect:"leftLoop",autoPlay:true,delayTime:700,interTime:3000,pnLoop:false,titOnClassName:"active"});
@@ -3987,7 +3987,7 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus{color: #fff;text-deco
 	Sample:
 	<ul class="commentList">
 	  <li class="item clearfix">
-	    <a href="#"><i class="avatar avatar-L radius"><img alt="" src="static/h-ui/images/ucenter/avatar-default.jpg"></i></a>
+	    <a href="#"><i class="avatar avatar-L radius"><img alt="" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui/images/ucenter/avatar-default.jpg"></i></a>
 		<div class="comment-main">
 		  <header class="comment-header">
 		    <div class="comment-meta"><a class="comment-author" href="#">辉哥</a> 评论于 <time title="2014年8月31日 下午3:20" datetime="2014-08-31T03:54:20">2014-8-31 15:20</time></div>

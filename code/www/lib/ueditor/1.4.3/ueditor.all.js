@@ -7897,7 +7897,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
          * 计算编辑器当前纯文本内容的长度
          * @method  getContentLength
          * @param { Boolean } ingoneHtml 传入true时，只按照纯文本来计算
-         * @return { Number } 返回计算的长度，内容中有hr/img/iframe标签，长度加1
+         * @return { Number } 返回计算的长度，内容中有hr/http://cdn.fstechnology.cn/YZEduSchoolWeb/img/iframe标签，长度加1
          * @example
          * ```javascript
          * //编辑器html内容<p><strong>132</strong></p>
@@ -11101,7 +11101,7 @@ UE.commands['insertimage'] = {
             return;
         }
 
-        if (img && /img/i.test(img.tagName) && (img.className != "edui-faked-video" || img.className.indexOf("edui-upload-video")!=-1) && !img.getAttribute("word_img")) {
+        if (img && /http://cdn.fstechnology.cn/YZEduSchoolWeb/img/i.test(img.tagName) && (img.className != "edui-faked-video" || img.className.indexOf("edui-upload-video")!=-1) && !img.getAttribute("word_img")) {
             var first = opt.shift();
             var floatStyle = first['floatStyle'];
             delete first['floatStyle'];

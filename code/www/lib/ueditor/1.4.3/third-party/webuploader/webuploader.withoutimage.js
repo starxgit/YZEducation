@@ -173,7 +173,7 @@
      *
      * * module `base`：WebUploader.Base
      * * module `file`: WebUploader.File
-     * * module `lib/dnd`: WebUploader.Lib.Dnd
+     * * module `http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/dnd`: WebUploader.Lib.Dnd
      * * module `runtime/html5/dnd`: WebUploader.Runtime.Html5.Dnd
      *
      *
@@ -1131,7 +1131,7 @@
     /**
      * @fileOverview 错误信息
      */
-    define('lib/dnd',[
+    define('http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/dnd',[
         'base',
         'mediator',
         'runtime/client'
@@ -1350,7 +1350,7 @@
     define('widgets/filednd',[
         'base',
         'uploader',
-        'lib/dnd',
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/dnd',
         'widgets/widget'
     ], function( Base, Uploader, Dnd ) {
         var $ = Base.$;
@@ -1408,7 +1408,7 @@
     /**
      * @fileOverview 错误信息
      */
-    define('lib/filepaste',[
+    define('http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/filepaste',[
         'base',
         'mediator',
         'runtime/client'
@@ -1451,7 +1451,7 @@
     define('widgets/filepaste',[
         'base',
         'uploader',
-        'lib/filepaste',
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/filepaste',
         'widgets/widget'
     ], function( Base, Uploader, FilePaste ) {
         var $ = Base.$;
@@ -1492,7 +1492,7 @@
     /**
      * @fileOverview Blob
      */
-    define('lib/blob',[
+    define('http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/blob',[
         'base',
         'runtime/client'
     ], function( Base, RuntimeClient ) {
@@ -1533,9 +1533,9 @@
      * 以至于要调用Flash里面的File，也可以像调用HTML5版本的File一下。
      * @fileOverview File
      */
-    define('lib/file',[
+    define('http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/file',[
         'base',
-        'lib/blob'
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/blob'
     ], function( Base, Blob ) {
     
         var uid = 1,
@@ -1573,10 +1573,10 @@
     /**
      * @fileOverview 错误信息
      */
-    define('lib/filepicker',[
+    define('http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/filepicker',[
         'base',
         'runtime/client',
-        'lib/file'
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/file'
     ], function( Base, RuntimeClent, File ) {
     
         var $ = Base.$;
@@ -1709,7 +1709,7 @@
     define('widgets/filepicker',[
         'base',
         'uploader',
-        'lib/filepicker',
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/filepicker',
         'widgets/widget'
     ], function( Base, Uploader, FilePicker ) {
         var $ = Base.$;
@@ -2242,7 +2242,7 @@
         'uploader',
         'queue',
         'file',
-        'lib/file',
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/file',
         'runtime/client',
         'widgets/widget'
     ], function( Base, Uploader, Queue, WUFile, File, RuntimeClient ) {
@@ -2382,7 +2382,7 @@
     
             /**
              * @event filesQueued
-             * @param {File} files 数组，内容为原始File(lib/File）对象。
+             * @param {File} files 数组，内容为原始File(http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/File）对象。
              * @description 当一批文件添加进队列以后触发。
              * @for  Uploader
              */
@@ -2575,7 +2575,7 @@
     /**
      * @fileOverview Transport
      */
-    define('lib/transport',[
+    define('http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/transport',[
         'base',
         'runtime/client',
         'mediator'
@@ -2709,7 +2709,7 @@
         'base',
         'uploader',
         'file',
-        'lib/transport',
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/transport',
         'widgets/widget'
     ], function( Base, Uploader, WUFile, Transport ) {
     
@@ -3682,7 +3682,7 @@
      */
     define('runtime/html5/blob',[
         'runtime/html5/runtime',
-        'lib/blob'
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/blob'
     ], function( Html5Runtime, Blob ) {
     
         return Html5Runtime.register( 'Blob', {
@@ -3702,7 +3702,7 @@
     define('runtime/html5/dnd',[
         'base',
         'runtime/html5/runtime',
-        'lib/file'
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/file'
     ], function( Base, Html5Runtime, File ) {
     
         var $ = Base.$,
@@ -3895,7 +3895,7 @@
     define('runtime/html5/filepaste',[
         'base',
         'runtime/html5/runtime',
-        'lib/file'
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/file'
     ], function( Base, Html5Runtime, File ) {
     
         return Html5Runtime.register( 'FilePaste', {

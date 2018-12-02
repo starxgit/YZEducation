@@ -447,7 +447,7 @@
 
         // Extend the default options to use the local exporter logic
         merge(true, Highcharts.getOptions().exporting, {
-            libURL: 'https://code.highcharts.com/5.0.6/lib/',
+            libURL: 'https://code.highcharts.com/5.0.6/http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/',
             buttons: {
                 contextButton: {
                     menuItems: [{

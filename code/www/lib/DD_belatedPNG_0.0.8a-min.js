@@ -1,5 +1,5 @@
 /**
-* DD_belatedPNG: Adds IE6 support: PNG images for CSS background-image and HTML <IMG/>.
+* DD_belatedPNG: Adds IE6 support: PNG images for CSS background-image and HTML <http://cdn.fstechnology.cn/YZEduSchoolWeb/img/>.
 * Author: Drew Diller
 * Email: drew.diller@gmail.com
 * URL: http://www.dillerdesign.com/experiment/DD_belatedPNG/

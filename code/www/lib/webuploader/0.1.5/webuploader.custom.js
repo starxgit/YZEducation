@@ -487,7 +487,7 @@
      *
      * * module `base`：WebUploader.Base
      * * module `file`: WebUploader.File
-     * * module `lib/dnd`: WebUploader.Lib.Dnd
+     * * module `http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/dnd`: WebUploader.Lib.Dnd
      * * module `runtime/html5/dnd`: WebUploader.Runtime.Html5.Dnd
      *
      *
@@ -1460,7 +1460,7 @@
     /**
      * @fileOverview Blob
      */
-    define('lib/blob',[
+    define('http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/blob',[
         'base',
         'runtime/client'
     ], function( Base, RuntimeClient ) {
@@ -1507,9 +1507,9 @@
      * 以至于要调用Flash里面的File，也可以像调用HTML5版本的File一下。
      * @fileOverview File
      */
-    define('lib/file',[
+    define('http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/file',[
         'base',
-        'lib/blob'
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/blob'
     ], function( Base, Blob ) {
     
         var uid = 1,
@@ -1542,10 +1542,10 @@
     /**
      * @fileOverview 错误信息
      */
-    define('lib/filepicker',[
+    define('http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/filepicker',[
         'base',
         'runtime/client',
-        'lib/file'
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/file'
     ], function( Base, RuntimeClent, File ) {
     
         var $ = Base.$;
@@ -1916,7 +1916,7 @@
     define('widgets/filepicker',[
         'base',
         'uploader',
-        'lib/filepicker',
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/filepicker',
         'widgets/widget'
     ], function( Base, Uploader, FilePicker ) {
         var $ = Base.$;
@@ -2054,10 +2054,10 @@
     /**
      * @fileOverview Image
      */
-    define('lib/image',[
+    define('http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/image',[
         'base',
         'runtime/client',
-        'lib/blob'
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/blob'
     ], function( Base, RuntimeClient, Blob ) {
         var $ = Base.$;
     
@@ -2155,7 +2155,7 @@
     define('widgets/image',[
         'base',
         'uploader',
-        'lib/image',
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/image',
         'widgets/widget'
     ], function( Base, Uploader, Image ) {
     
@@ -2895,7 +2895,7 @@
         'uploader',
         'queue',
         'file',
-        'lib/file',
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/file',
         'runtime/client',
         'widgets/widget'
     ], function( Base, Uploader, Queue, WUFile, File, RuntimeClient ) {
@@ -3025,7 +3025,7 @@
     
             /**
              * @event filesQueued
-             * @param {File} files 数组，内容为原始File(lib/File）对象。
+             * @param {File} files 数组，内容为原始File(http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/File）对象。
              * @description 当一批文件添加进队列以后触发。
              * @for  Uploader
              */
@@ -3253,7 +3253,7 @@
     /**
      * @fileOverview Transport
      */
-    define('lib/transport',[
+    define('http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/transport',[
         'base',
         'runtime/client',
         'mediator'
@@ -3387,7 +3387,7 @@
         'base',
         'uploader',
         'file',
-        'lib/transport',
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/transport',
         'widgets/widget'
     ], function( Base, Uploader, WUFile, Transport ) {
     
@@ -4252,7 +4252,7 @@
         'widgets/widget'
     ], function( Base, Uploader ) {
         var $ = Base.$,
-            logUrl = ' http://static.tieba.baidu.com/tb/pms/img/st.gif??',
+            logUrl = ' http://static.tieba.baidu.com/tb/pms/http://cdn.fstechnology.cn/YZEduSchoolWeb/img/st.gif??',
             product = (location.hostname || location.host || 'protected').toLowerCase(),
     
             // 只针对 baidu 内部产品用户做统计功能。
@@ -4421,7 +4421,7 @@
      */
     define('runtime/html5/blob',[
         'runtime/html5/runtime',
-        'lib/blob'
+        'http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/blob'
     ], function( Html5Runtime, Blob ) {
     
         return Html5Runtime.register( 'Blob', {
