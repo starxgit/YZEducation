@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class AdminDao implements AdminMapper{
-
+public class AdminDao implements AdminMapper {
     @Autowired
     private AdminMapper adminMapper;
 
