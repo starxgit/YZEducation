@@ -30,17 +30,17 @@
 				<a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
 				<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 					<ul class="cl">
-						<li>超级管理员</li>
+						<li th:text="${admin_account}" ></li>
 						<li class="dropDown dropDown_hover">
-							<a href="#" class="dropDown_A">admin
+							<a href="#" class="dropDown_A"><span th:text="${admin_name}" ></span>
 								<i class="Hui-iconfont">&#xe6d5;</i>
 							</a>
 							<ul class="dropDown-menu menu radius box-shadow">
 								<li>
-									<a href="article-edt.html">修改密码</a>
+									<a href="/admin/modifyPass">修改密码</a>
 								</li>
 								<li>
-									<a href="login.html">退出</a>
+									<a href="/admin/logout">退出</a>
 								</li>
 							</ul>
 						</li>
@@ -150,7 +150,7 @@
 			<div class="Hui-tabNav-wp">
 				<ul id="min_title_list" class="acrossTab cl">
 					<li class="active">
-						<span title="我的桌面" data-href="welcome.html">我的桌面</span><em></em>
+						<span title="我的桌面" data-href="/admin/welcome">我的桌面</span><em></em>
 					</li>
 				</ul>
 			</div>
@@ -161,7 +161,7 @@
 		<div id="iframe_box" class="Hui-article">
 			<div class="show_iframe">
 				<div style="display:none" class="loading"></div>
-				<iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
+				<iframe scrolling="yes" frameborder="0" src="/admin/welcome"></iframe>
 			</div>
 		</div>
 	</section>

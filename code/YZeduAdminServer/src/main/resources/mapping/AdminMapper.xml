@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fstech.yzeduas.mapper.AdminMapper">
+
+    <!--所有管理员列表-->
+    <select id="findList" resultMap="ShowAdmin">
+        SELECT
+            admin_id,
+            admin_name,
+            admin_account,
+            gmt_create
+        FROM admin
+    </select>
+    <resultMap id="ShowAdmin" type="com.fstech.yzeduas.model.Admin">
+        <id column="admin_id" property="admin_id" jdbcType="INTEGER"/>
+        <result column="admin_name" property="admin_name" jdbcType="VARCHAR"/>
+        <result column="admin_account" property="admin_account" jdbcType="VARCHAR"/>
+        <result column="gmt_create" property="register_time" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--根据账号查找管理员-->
+    <select id="findByAccount" resultMap="Admin" parameterType="String">
+        SELECT
+            admin_id,
+            admin_name,
+            admin_password,
+            admin_account,
+            gmt_create
+        FROM admin
+        WHERE admin_account = #{account}
+    </select>
+    <resultMap id="Admin" type="com.fstech.yzeduas.model.Admin">
+        <id column="admin_id" property="admin_id" jdbcType="INTEGER"/>
+        <result column="admin_name" property="admin_name" jdbcType="VARCHAR"/>
+        <result column="admin_password" property="admin_password" jdbcType="VARCHAR"/>
+        <result column="admin_account" property="admin_account" jdbcType="VARCHAR"/>
+        <result column="gmt_create" property="register_time" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--根据id查找管理员-->
+    <select id="findById" resultMap="Admin" parameterType="String">
+        SELECT
+            admin_id,
+            admin_name,
+            admin_password,
+            admin_account,
+            gmt_create
+        FROM admin
+        WHERE id = #{id}
+    </select>
+
+    <!--修改管理员-->
+    <update id="updateAdmin" parameterType="com.fstech.yzeduas.model.Admin">
+        UPDATE admin
+        SET admin_password = #{admin_password}, gmt_modified = now()
+        WHERE admin_account = #{admin_account} limit 1
+    </update>
+
+    <!--删除管理员-->
+    <delete id="deleteAdmin" parameterType="Integer">
+        DELETE FROM admin
+        WHERE admin_account = #{account} limit 1
+    </delete>
+
+    <!--添加管理员-->
+    <insert id="addAdmin" parameterType="com.fstech.yzeduas.model.Admin">
+        INSERT INTO admin (admin_account, admin_password, gmt_create, gmt_modified)
+        VALUES (#{admin_account},#{admin_password},now(),now())
+    </insert>
+
+</mapper>
