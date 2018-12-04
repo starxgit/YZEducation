@@ -57,15 +57,15 @@
     </update>
 
     <!--删除管理员-->
-    <delete id="deleteAdmin" parameterType="Integer">
+    <delete id="deleteAdmin" parameterType="String">
         DELETE FROM admin
         WHERE admin_account = #{account} limit 1
     </delete>
 
     <!--添加管理员-->
     <insert id="addAdmin" parameterType="com.fstech.yzeduas.model.Admin">
-        INSERT INTO admin (admin_account, admin_password, gmt_create, gmt_modified)
-        VALUES (#{admin_account},#{admin_password},now(),now())
+        INSERT INTO admin (admin_account, admin_name,admin_password, gmt_create, gmt_modified)
+        VALUES (#{admin_account},#{admin_name},#{admin_password},now(),now())
     </insert>
 
 </mapper>

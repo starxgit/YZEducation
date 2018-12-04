@@ -15,50 +15,47 @@
 
 <body>
 	<article class="page-container" style="margin-top:100px;">
-		<form class="form form-horizontal" id="form-article-add">
+		<form class="form form-horizontal" action="/admin/addAdmin" method="POST">
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>管理员名：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="articletitle" name="articletitle">
+					<input type="text" class="input-text" value="" placeholder="" name="name">
 				</div>
 			</div>
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>登录账号：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="articletitle2" name="articletitle2">
+					<input type="text" class="input-text" value="" placeholder="" name="account">
 				</div>
 			</div>
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>输入密码：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="password" class="input-text" value="" placeholder="" id="articletitle2" name="articletitle2">
+					<input type="password" class="input-text" value="" placeholder="" name="password1">
 				</div>
 			</div>
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>确认密码：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="password" class="input-text" value="" placeholder="" id="articletitle2" name="articletitle2">
+					<input type="password" class="input-text" value="" placeholder="" name="password2">
 				</div>
 			</div>
-		</form>
-		<div class="row cl" style="margin-top:30px;">
-			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button class="btn btn-primary radius" onclick="addAdmin()">添加管理员</button>
-				<button class="btn btn-default radius col-xs-offset-1" onclick="back()">取消</button>
+			<div class="row cl" style="margin-top:30px;">
+				<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+					<input class="btn btn-primary radius" type="submit" value="添加管理员"></input>
+					<div class="btn btn-default radius col-xs-offset-1" onclick="back()">取消</div>
+				</div>
 			</div>
-		</div>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red" th:text="${error_msg}"></span></label>
+			</div>
+		</form>
+		
 	</article>
 	<script>
-
 		/*返回*/
 		function back() {
 			window.history.go(-1);
-		}
-
-		/*添加管理员*/
-		function addAdmin() {
-			alert("submit");
-			// TODO 提交表单逻辑
 		}
 	</script>
 </body>

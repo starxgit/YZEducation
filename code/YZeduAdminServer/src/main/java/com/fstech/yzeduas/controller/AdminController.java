@@ -4,22 +4,15 @@ import com.fstech.yzeduas.dao.AdminDao;
 import com.fstech.yzeduas.model.Admin;
 import com.fstech.yzeduas.util.Constant;
 import com.fstech.yzeduas.util.CreateMD5;
-import com.fstech.yzeduas.util.ResponseUtil;
 import com.fstech.yzeduas.util.SessionUtil;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -113,6 +106,7 @@ public class AdminController {
     public String updatePassword(@RequestParam String account, HttpServletRequest request,
                                  @RequestParam String password, @RequestParam String newpass, Model model) {
         if (SessionUtil.isLogin(request) == true) {
+            Admin loginer = SessionUtil.getSession(request);
             String errMsg = "";
             Admin admin = adminDao.findByAccount(account);
             if (password.equals("") || newpass.equals("")) {
@@ -137,8 +131,59 @@ public class AdminController {
                 }
             }
             model.addAttribute("error_msg", errMsg);
-            model.addAttribute("admin", admin);
+            model.addAttribute("admin", loginer);
             return "/edit_admin";
+        } else {
+            return "/relogin";
+        }
+    }
+
+    // 到新增管理员页
+    @RequestMapping(value = "addAdmin", method = RequestMethod.GET)
+    public String addAdmin(HttpServletRequest request) {
+        if (SessionUtil.isLogin(request) == true) {
+            return "/add_admin";
+        } else {
+            return "/relogin";
+        }
+    }
+
+    // 提交新增管理员
+    @RequestMapping(value = "addAdmin", method = RequestMethod.POST)
+    public String submitAddAdmin(HttpServletRequest request, @RequestParam String account, @RequestParam String password1,
+                                 @RequestParam String password2, @RequestParam String name, Model model) {
+        Admin loginer = SessionUtil.getSession(request);
+        if (SessionUtil.isLogin(request) == true) {
+            String errMsg = "";
+            if(password1.equals(password2)){
+                Admin admin = adminDao.findByAccount(account);
+                if(admin!=null){
+                    errMsg = Constant.ACCOUNT_BEEN_USED;
+                }else{
+                    admin = new Admin();
+                    admin.setAdmin_account(account);
+                    admin.setAdmin_name(name);
+                    admin.setAdmin_password(password1);
+                    adminDao.addAdmin(admin);
+                    return "redirect:/admin/adminList";
+                }
+            }else{
+                errMsg = Constant.PASSWORD_NOT_BOTH;
+            }
+            model.addAttribute("error_msg", errMsg);
+            model.addAttribute("admin", loginer);
+            return "/edit_admin";
+        } else {
+            return "/relogin";
+        }
+    }
+
+    // 删除管理员
+    @RequestMapping(value = "delAdmin", method = RequestMethod.GET)
+    public String delAdmin(HttpServletRequest request,@RequestParam String account) {
+        if (SessionUtil.isLogin(request) == true) {
+            adminDao.deleteAdmin(account);
+            return "redirect:/admin/adminList";
         } else {
             return "/relogin";
         }

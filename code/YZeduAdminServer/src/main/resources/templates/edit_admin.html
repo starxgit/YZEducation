@@ -43,7 +43,7 @@
 			<div class="row cl" style="margin-top:30px;">
 				<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
 					<input class="btn btn-primary radius" type="submit" value="保存修改"></button>
-					<button class="btn btn-default radius col-xs-offset-1" onclick="back()">取消</button>
+					<div class="btn btn-default radius col-xs-offset-1" onclick="back()">取消</div>
 				</div>
 			</div>
 			<div class="row cl">
@@ -54,7 +54,7 @@
 	<script>
 		/*返回*/
 		function back() {
-			window.location.href = "/admin/index";
+			window.history.go(-1);
 		}
 	</script>
 </body>

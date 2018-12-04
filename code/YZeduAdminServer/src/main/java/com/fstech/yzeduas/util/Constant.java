@@ -16,5 +16,7 @@ public class Constant {
     public static final String WRONG_PASSWORD = "账号密码不匹配";
     public static final String UNKNOW_ERROR = "未知原因";
     public static final String AUTH_NOT_ENOUGH = "权限不足";
+    public static final String PASSWORD_NOT_BOTH = "两次密码输入不一致";
+    public static final String ACCOUNT_BEEN_USED = "账号已被注册";
 
 }
