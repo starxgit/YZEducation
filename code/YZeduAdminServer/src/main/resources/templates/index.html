@@ -37,7 +37,7 @@
 							</a>
 							<ul class="dropDown-menu menu radius box-shadow">
 								<li>
-									<a href="/admin/modifyPass">修改密码</a>
+									<a th:href="@{/admin/modifyPass(account=${admin_account})}">修改密码</a>
 								</li>
 								<li>
 									<a href="/admin/logout">退出</a>
@@ -71,7 +71,7 @@
 				<dd>
 					<ul>
 						<li>
-							<a data-href="admin_list.html" data-title="管理员列表" href="javascript:void(0)">管理员列表</a>
+							<a data-href="/admin/adminList" data-title="管理员列表" href="javascript:void(0)">管理员列表</a>
 						</li>
 					</ul>
 				</dd>

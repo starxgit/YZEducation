@@ -29,12 +29,16 @@ public class AdminController {
     @Autowired
     private AdminDao adminDao;
 
-    // 查看所有管理员
-    @RequestMapping("allAdmin")
-    public String allAdmin(Model model) {
-        List<Admin> admins = adminDao.findList();
-        model.addAttribute("admins", admins);
-        return "/admin_list";
+    // 所有管理员困
+    @RequestMapping("adminList")
+    public String allAdmin(Model model, HttpServletRequest request) {
+        if (SessionUtil.isLogin(request) == true) {
+            List<Admin> admins = adminDao.findList();
+            model.addAttribute("admins", admins);
+            return "/admin_list";
+        } else {
+            return "/relogin";
+        }
     }
 
     // 管理员登录
@@ -93,9 +97,9 @@ public class AdminController {
 
     // 到修改密码页
     @RequestMapping(value = "modifyPass", method = RequestMethod.GET)
-    public String modifyPass(HttpServletRequest request, Model model) {
+    public String modifyPass(HttpServletRequest request, Model model, @RequestParam String account) {
         if (SessionUtil.isLogin(request) == true) {
-            Admin admin = SessionUtil.getSession(request);
+            Admin admin = adminDao.findByAccount(account);
             admin.setAdmin_password("");    // 隐藏敏感信息
             model.addAttribute("admin", admin);
             return "/edit_admin";
@@ -110,21 +114,23 @@ public class AdminController {
                                  @RequestParam String password, @RequestParam String newpass, Model model) {
         if (SessionUtil.isLogin(request) == true) {
             String errMsg = "";
-            System.out.println(account);
-            System.out.println(password);
-            System.out.println(newpass);
             Admin admin = adminDao.findByAccount(account);
             if (password.equals("") || newpass.equals("")) {
                 errMsg = Constant.PLEASE_INPUT_ALL;
             } else {
                 if (admin.getAdmin_password().equals(CreateMD5.getMd5(password))) {
-                    admin.setAdmin_password(CreateMD5.getMd5(newpass));
-                    int result = adminDao.updateAdmin(admin);
-                    if (result > 0) {
-                        model.addAttribute("error_msg", "修改成功，请重新登录");
-                        return "/login";
+                    String admin_account = SessionUtil.getSession(request).getAdmin_account();
+                    if (account.equals(admin_account) || account.equals("1219371280")) {
+                        admin.setAdmin_password(CreateMD5.getMd5(newpass));
+                        int result = adminDao.updateAdmin(admin);
+                        if (result > 0) {
+                            model.addAttribute("error_msg", "修改成功，请重新登录");
+                            return "/login";
+                        } else {
+                            errMsg = Constant.UNKNOW_ERROR;
+                        }
                     } else {
-                        errMsg = Constant.UNKNOW_ERROR;
+                        errMsg = Constant.AUTH_NOT_ENOUGH;
                     }
                 } else {
                     errMsg = Constant.WRONG_PASSWORD;

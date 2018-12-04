@@ -15,5 +15,6 @@ public class Constant {
     public static final String ADMIN_NOT_EXIST = "管理员不存在";
     public static final String WRONG_PASSWORD = "账号密码不匹配";
     public static final String UNKNOW_ERROR = "未知原因";
+    public static final String AUTH_NOT_ENOUGH = "权限不足";
 
 }
