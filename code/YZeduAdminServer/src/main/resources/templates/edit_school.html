@@ -19,13 +19,13 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>院校id：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" disabled="true" value="1" placeholder="" id="articletitle" name="articletitle">
+					<input type="text" class="input-text" disabled="true" th:value="${school.school_id}" placeholder="" id="articletitle" name="articletitle">
 				</div>
 			</div>
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>院校名称：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="articletitle" name="articletitle">
+					<input type="text" class="input-text" th:value="${school.school_name}" placeholder="" id="articletitle" name="articletitle">
 				</div>
 			</div>
 			<div class="row cl">
@@ -39,19 +39,19 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>院校介绍：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="articletitle" name="articletitle">
+					<input type="text" class="input-text" th:value="${school.school_introduce}" placeholder="" id="articletitle" name="articletitle">
 				</div>
 			</div>
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所在省份：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="articletitle" name="articletitle">
+					<input type="text" class="input-text" th:value="${school.school_province}" placeholder="" id="articletitle" name="articletitle">
 				</div>
 			</div>
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所在城市：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="articletitle" name="articletitle">
+					<input type="text" class="input-text" th:value="${school.school_city}" placeholder="" id="articletitle" name="articletitle">
 				</div>
 			</div>
 			<div class="row cl">

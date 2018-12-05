@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fstech.yzeduas.mapper.SchoolMapper">
+
+   <!--所有院校列表-->
+    <select id="findList" resultMap="School">
+        select school_id,school_name,school_badge,school_introduce,school_province,school_city,school_type
+        from school
+    </select>
+    <!--院校模型基本信息-->
+    <resultMap id="School" type="com.fstech.yzeduas.model.School">
+        <id column="school_id" property="school_id" jdbcType="INTEGER"/>
+        <result column="school_name" property="school_name" jdbcType="VARCHAR"/>
+        <result column="school_badge" property="school_badge" jdbcType="VARCHAR"/>
+        <result column="school_introduce" property="school_introduce" jdbcType="VARCHAR"/>
+        <result column="school_city" property="school_city" jdbcType="VARCHAR"/>
+        <result column="school_province" property="school_province" jdbcType="VARCHAR"/>
+        <result column="school_type" property="school_type" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--通过id找到这个院校-->
+    <select id="findSchoolById" parameterType="Integer" resultMap="School">
+        select school_id,school_name,school_badge,school_introduce,school_province,school_city,school_type
+        from school where school_id = #{school_id}
+    </select>
+
+
+</mapper>

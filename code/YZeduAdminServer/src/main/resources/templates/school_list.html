@@ -20,7 +20,7 @@
 		 title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="page-container">
 		<button class="btn btn-primary radius" type="submit">
-			<a style="color:#ffffff;" href="add_school.html">添加院校</a></button>
+			<a style="color:#ffffff;" href="/school/addSchool">添加院校</a></button>
 		<div class="mt-20">
 			<table class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
@@ -37,17 +37,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="text-c">
+					<tr class="text-c" th:each="school : ${schools}">
 						<td><input type="checkbox" value="" name=""></td>
-						<td>305</td>
-						<td>XX测试院校</td>
-						<td><img src="http://cdn.fstechnology.cn/YZEduResources/images/xiaohui.png" alt=""></td>
-						<td>笃学力行，守正求新</td>
-						<td>浙江</td>
-						<td>杭州</td>
-						<td>普通大学</td>
+						<td th:text="${school.school_id}"></td>
+						<td th:text="${school.school_name}"></td>
+						<td><img th:src="${school.school_badge}" alt=""></td>
+						<td th:text="${school.school_introduce}"></td>
+						<td th:text="${school.school_province}">浙江</td>
+						<td th:text="${school.school_city}">杭州</td>
+						<td th:text="${types[school.school_type]}">普通大学</td>
 						<td class="f-14 td-manage">
-							<a href="edit_school.html" style="text-decoration:none" class="ml-5" href="javascript:;" title="修改"><i class="Hui-iconfont">&#xe6df;</i></a>
+							<a th:href="@{/school/editSchool(school_id=${school.school_id})}" style="text-decoration:none" class="ml-5" title="修改"><i class="Hui-iconfont">&#xe6df;</i></a>
 							<a style="text-decoration:none" class="ml-5" onClick="article_del(this,'10001')" href="javascript:;" title="删除">
 								<i class="Hui-iconfont">&#xe6e2;</i>
 							</a>
@@ -64,17 +64,19 @@
 	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/laypage/1.2/laypage.js"></script>
-	<script type="text/javascript">
+	<script type="text/javascript" th:inline="none">
 		$('.table-sort').dataTable({
 			"aaSorting": [[1, "desc"]],//默认第几个排序
 			"bStateSave": true,//状态保存
 			"pading": false,
-			"aoColumnDefs": [
-				//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-				{ "orderable": false, "aTargets": [0, 3] }// 不参与排序的列
-			]
 		});
-
+		/*删除*/
+		function admin_del(id) {
+			layer.confirm('确认要删除吗？', function (index) {
+				layer.msg('已删除!', { icon: 1, time: 1000 });
+				window.location.href="/admin/delAdmin?account="+id;
+			});
+		}
 	</script>
 </body>
 
