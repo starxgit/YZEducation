@@ -21,7 +21,7 @@
 	</nav>
 	<div class="page-container">
 		<button class="btn btn-primary radius" type="submit">
-			<a style="color:#ffffff;" href="add_information.html">发布资讯</a></button>
+			<a style="color:#ffffff;" href="/information/add">发布资讯</a></button>
 		<div class="mt-20">
 			<table id="mytable" class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
@@ -36,9 +36,31 @@
 				<tbody>
 					<tr class="text-c">
 						<td><input type="checkbox" value="" name=""></td>
-						<td>传美团年内赴香港上市：估值为600亿美元</td>
-						<td></td>
-						<td>2018-12-01</td>
+						<td>这是标题1</td>
+						<td><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2310514390,3580363630&fm=27&gp=0.jpg" style="width:100px"></td>
+						<td>2018-11-13 </td>
+						<td class="f-14 td-manage">
+							<a style="text-decoration:none" class="ml-5" onClick="article_del(this,'10001')" href="javascript:;" title="删除">
+								<i class="Hui-iconfont">&#xe6e2;</i>
+							</a>
+						</td>
+					</tr>
+					<tr class="text-c">
+						<td><input type="checkbox" value="" name=""></td>
+						<td>这是标题2</td>
+						<td><img src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1557680978,316529973&fm=58" style="width:100px"></td>
+						<td>2018-11-13 </td>
+						<td class="f-14 td-manage">
+							<a style="text-decoration:none" class="ml-5" onClick="article_del(this,'10001')" href="javascript:;" title="删除">
+								<i class="Hui-iconfont">&#xe6e2;</i>
+							</a>
+						</td>
+					</tr>
+					<tr class="text-c">
+						<td><input type="checkbox" value="" name=""></td>
+						<td>这是标题3</td>
+						<td><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2249893882,1165836821&fm=27&gp=0.jpg" style="width:100px"></td>
+						<td>2018-11-13 </td>
 						<td class="f-14 td-manage">
 							<a style="text-decoration:none" class="ml-5" onClick="article_del(this,'10001')" href="javascript:;" title="删除">
 								<i class="Hui-iconfont">&#xe6e2;</i>
@@ -57,14 +79,14 @@
 	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/laypage/1.2/laypage.js"></script>
-	<script type="text/javascript">
+	<script type="text/javascript" th:inline="none">
 		$('.table-sort').dataTable({
 			"aaSorting": [[1, "desc"]],//默认第几个排序
 			"bStateSave": true,//状态保存
 			"pading": false,
 			"aoColumnDefs": [
 				//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-				{ "orderable": false, "aTargets": [0, 3] }// 不参与排序的列
+				{ "orderable": false, "aTargets": [0] }// 不参与排序的列
 			]
 		});
 
