@@ -15,12 +15,12 @@
 
 <body>
 	<article class="page-container" style="margin-top:100px;">
-		<form class="form form-horizontal" id="form-article-add">
+		<form class="form form-horizontal" action="/banner/add" method="POST">
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>Banner图片：</label>
 				<div class="formControls col-xs-8 col-sm-9"> <span class="btn-upload form-group">
 						<a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont"></i> 浏览文件</a>
-						<input type="file" multiple="" name="file-2" class="input-file valid">
+						<input type="file" multiple="" name="banner_image" class="input-file valid">
 					</span> 
 				</div>
 			</div>
@@ -28,37 +28,28 @@
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>Banner类型：</label>
 				<div class="formControls col-xs-8 col-sm-9">
 					<select name="" id="" class="input-text" >
-						<option value="0">展示广告</option>
-						<option value="1">课程广告</option>
-						<option value="2">网页广告</option>
+						<option value="1">展示广告</option>
+						<option value="2">课程广告</option>
+						<option value="3">网页广告</option>
 					</select>
 				</div>
 			</div>
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>外部链接：</label>
-				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="articletitle" name="articletitle">
+			<div class="row cl" style="margin-top:30px;">
+				<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+					<input class="btn btn-primary radius" type="submit" value="添加"></input>
+					<div class="btn btn-default radius col-xs-offset-1" onclick="back()">取消</div>
 				</div>
 			</div>
-		</form>
-		<div class="row cl" style="margin-top:30px;">
-			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button class="btn btn-primary radius" onclick="addAdmin()">添加院系</button>
-				<button class="btn btn-default radius col-xs-offset-1" onclick="back()">取消</button>
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red" th:text="${error_msg}"></span></label>
 			</div>
-		</div>
+		</form>
 	</article>
 	<script>
 
 		/*返回*/
 		function back() {
 			window.history.go(-1);
-		}
-
-		/*添加管理员*/
-		function addAdmin() {
-			alert("submit");
-			// TODO 提交表单逻辑
 		}
 	</script>
 </body>

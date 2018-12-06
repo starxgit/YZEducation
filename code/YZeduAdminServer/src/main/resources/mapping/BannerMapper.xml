@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fstech.yzeduas.mapper.BannerMapper">
+
+    <!--所有Banner列表-->
+    <select id="findList" resultType="com.fstech.yzeduas.model.Banner">
+        select banner_id,banner_image,banner_type,banner_link
+        from banner
+    </select>
+
+    <!--添加Banner-->
+    <insert id="addBanner" parameterType="com.fstech.yzeduas.model.Banner">
+        insert into banner(banner_image,banner_type,banner_link,gmt_create,gmt_modified)
+        values(#{banner_image} ,#{banner_type} ,#{banner_link},now() ,now() )
+    </insert>
+
+    <!--删除Banner-->
+    <delete id="delBanner" parameterType="Integer">
+        delete from banner where banner_id = #{banner_id} limit 1
+    </delete>
+</mapper>

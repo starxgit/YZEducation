@@ -19,7 +19,7 @@
 		</span> 用户统计 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);"
 		 title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="page-container">
-		
+		<div id="container" style="min-width:700px;height:400px"></div>
 	</div>
 	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/jquery/1.9.1/jquery.min.js"></script>
 	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/layer/2.4/layer.js"></script>
@@ -28,17 +28,46 @@
 	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/laypage/1.2/laypage.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/hcharts/Highcharts/5.0.6/js/highcharts.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/hcharts/Highcharts/5.0.6/js/modules/exporting.js"></script>
 	<script type="text/javascript">
-		$('.table-sort').dataTable({
-			"aaSorting": [[1, "desc"]],//默认第几个排序
-			"bStateSave": true,//状态保存
-			"pading": false,
-			"aoColumnDefs": [
-				//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-				{ "orderable": false, "aTargets": [0, 3] }// 不参与排序的列
-			]
+		$(function () {
+			Highcharts.chart('container', {
+				title: {
+					text: '一周用户数量分析',
+					x: -20 //center
+				},
+				xAxis: {
+					categories: ['2018-11-30', '2018-12-01', '2018-12-02', '2018-12-03', '2018-12-04', '2018-12-05', '2018-12-06']
+				},
+				yAxis: {
+					title: {
+						text: '用户数量 (人)'
+					},
+					plotLines: [{
+						value: 0,
+						width: 1,
+						color: '#808080'
+					}]
+				},
+				tooltip: {
+					valueSuffix: '人'
+				},
+				legend: {
+					layout: 'vertical',
+					align: 'right',
+					verticalAlign: 'middle',
+					borderWidth: 0
+				},
+				series: [{
+					name: '教师用户数量',
+					data: [7, 11, 12, 15, 31, 42, 45]
+				}, {
+					name: '学生用户数量',
+					data: [142, 143, 143, 143, 155, 155, 156]
+				}]
+			});
 		});
-
 	</script>
 </body>
 
