@@ -15,37 +15,99 @@
 
 <body>
 	<article class="page-container" style="margin-top:100px;">
-		<form class="form form-horizontal" action="/banner/add" method="POST">
+		<div class="form form-horizontal">
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>Banner图片：</label>
 				<div class="formControls col-xs-8 col-sm-9"> <span class="btn-upload form-group">
-						<a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont"></i> 浏览文件</a>
-						<input type="file" multiple="" name="banner_image" class="input-file valid">
-					</span> 
-				</div>
+						<input class="input-text upload-url" type="text" readonly nullmsg="请添加图片！" style="width:200px">
+						<a href="javascript:void();" class="btn btn-primary radius upload-btn">
+							<i class="Hui-iconfont">&#xe642;</i> 浏览文件
+						</a>
+						<input type="file" name="file" id="file" multiple class="input-file">
+					</span> </div>
 			</div>
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>Banner类型：</label>
-				<div class="formControls col-xs-8 col-sm-9">
-					<select name="" id="" class="input-text" >
-						<option value="1">展示广告</option>
-						<option value="2">课程广告</option>
-						<option value="3">网页广告</option>
-					</select>
+			<form id="form1" action="/banner/add" method="POST">
+				<input type="hidden" name="banner_image" id="input_image">
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>Banner链接：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<input type="text" class="input-text" value="" placeholder="" id="banner_link" name="banner_link">
+					</div>
 				</div>
-			</div>
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>Banner类型：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<select class="input-text" id="banner_type" name="banner_type">
+							<option value="1">展示广告</option>
+							<option value="2">课程广告</option>
+							<option value="3">网页广告</option>
+						</select>
+					</div>
+				</div>
+			</form>
 			<div class="row cl" style="margin-top:30px;">
 				<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-					<input class="btn btn-primary radius" type="submit" value="添加"></input>
-					<div class="btn btn-default radius col-xs-offset-1" onclick="back()">取消</div>
+					<button class="btn btn-primary radius" onclick="upLoadImage()">添加</button>
+					<button class="btn btn-default radius col-xs-offset-1" onclick="back()">取消</button>
 				</div>
 			</div>
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red" th:text="${error_msg}"></span></label>
 			</div>
-		</form>
+		</div>
 	</article>
+	<!--_footer 作为公共模版分离出去-->
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/layer/2.4/layer.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui/js/H-ui.min.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui.admin/js/H-ui.admin.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+	<script type="text/javascript" src="http://cdn.fstechnology.cn/YZEduSchoolWeb/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 	<script>
+
+		// 上传图片
+		function upLoadImage() {
+			let formData = new FormData();
+			let img = $('#file')[0].files[0];
+			formData.append("file", img);
+			let that = this;
+			$.ajax({
+				url: "https://www.fstechnology.cn:8443/CommonFileServer/UploadImage",
+				method: "post",
+				data: formData,
+				contentType: false,
+				processData: false,
+				async: true,
+				cache: false,
+				dataType: "text",
+				success: function (res) {
+					$("#input_image").val(res);
+					that.submitForm();
+				},
+				error: function (res) {
+					console.log(res);
+					alert("上传失败");
+				}
+			});
+		}
+
+
+		// 提交表单
+		function submitForm() {
+			let image = $("#input_image").val();
+			let bannerLink = $("#banner_link").val();
+			let bannerType = $("#banner_type").val();
+			console.log(image);
+			console.log(bannerLink);
+			console.log(bannerType);
+			if (image.length > 0 && bannerLink.length > 0 && bannerType.length > 0) {
+				$("#form1").submit();
+			} else {
+				alert("请输入完整信息");
+			}
+		}
 
 		/*返回*/
 		function back() {
