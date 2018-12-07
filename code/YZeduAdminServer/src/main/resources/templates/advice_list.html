@@ -69,7 +69,7 @@
 		function admin_del(id) {
 			layer.confirm('已经读完了吗？', function (index) {
 				layer.msg('标记完成!', { icon: 1, time: 1000 });
-				window.location.href = "/advice/readAdvice?advice_id=" + id;
+				window.location.href = "../advice/readAdvice?advice_id=" + id;
 			});
 		}
 

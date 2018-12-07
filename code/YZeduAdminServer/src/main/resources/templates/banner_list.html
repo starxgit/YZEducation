@@ -20,7 +20,7 @@
 		 title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="page-container">
 		<button class="btn btn-primary radius" type="submit">
-			<a style="color:#ffffff;" href="/banner/add">添加Banner</a></button>
+			<a style="color:#ffffff;" href="../banner/add">添加Banner</a></button>
 		<div class="mt-20">
 			<table class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
@@ -71,7 +71,7 @@
 		function admin_del(id) {
 			layer.confirm('确认删除？', function (index) {
 				layer.msg('已删除!', { icon: 1, time: 1000 });
-				window.location.href = "/banner/delBanner?banner_id=" + id;
+				window.location.href = "../banner/delBanner?banner_id=" + id;
 			});
 		}
 
