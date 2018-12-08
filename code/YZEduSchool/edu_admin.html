@@ -26,26 +26,14 @@
 			<table class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 					<tr class="text-c">
-						<th width="25"><input type="checkbox" name="" value=""></th>
 						<th width="80">教工号</th>
 						<th width="80">管理员名称</th>
 						<th width="80">创建时间</th>
 						<th width="80">操作</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr class="text-c">
-						<td><input type="checkbox" value="" name=""></td>
-						<td>7129398</td>
-						<td>admin1</td>
-						<td>2018-04-09 21:35:58</td>
-						<td class="f-14 td-manage">
-							<a href="edit_admin.html" style="text-decoration:none" class="ml-5" href="javascript:;" title="修改"><i class="Hui-iconfont">&#xe6df;</i></a>
-							<a style="text-decoration:none" class="ml-5" onClick="article_del('10001')" href="javascript:;" title="删除">
-								<i class="Hui-iconfont">&#xe6e2;</i>
-							</a>
-						</td>
-					</tr>
+				<tbody id="admins">
+
 				</tbody>
 			</table>
 		</div>
@@ -58,14 +46,9 @@
 	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/laypage/1.2/laypage.js"></script>
 	<script type="text/javascript">
-		$('.table-sort').dataTable({
-			"aaSorting": [[1, "desc"]],//默认第几个排序
-			"bStateSave": true,//状态保存
-			"pading": false,
-			"aoColumnDefs": [
-				//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-				{ "orderable": false, "aTargets": [0, 3] }// 不参与排序的列
-			]
+		// 页面加载完成执行
+		$(function () {
+			getList();
 		});
 
 		/*删除*/
@@ -88,6 +71,55 @@
 			});
 		}
 
+		// 获取管理员列表
+		function getList() {
+			let school_id = 305;
+			$.ajax({
+				url: "http://127.0.0.1:9092/" + "admin/list",
+				type: "get",
+				data: {
+					"school_id": school_id,
+				},
+				success: function (res) {
+					let data = JSON.parse(res);
+					if (data.result_code == 0) {
+						setList(data.return_data);
+					} else {
+						alert(data.message);
+					}
+				}
+			});
+		}
+
+		// 将列表设置到页面
+		function setList(array) {
+			array.forEach(admin => {
+				console.log(admin);
+				let tr = '<tr id="" class="text-c">'
+					+ '<td>' + admin.school_admin_number + '</td>'
+					+ '<td>' + admin.school_admin_name + '</td>'
+					+ '<td>' + admin.registe_time + '</td>'
+					+ '<td class="f-14 td-manage">'
+					+ '<a href="edit_admin.html?school_admin_id=' + admin.school_admin_id + '" style="text-decoration:none" class="ml-5" title="修改"><i class="Hui-iconfont">&#xe6df;</i></a>'
+					+ '<a style="text-decoration:none" class="ml-5" onClick="article_del(' + admin.school_admin_id + ')" title="删除">'
+					+ '<i class="Hui-iconfont">&#xe6e2;</i>'
+					+ '</a>'
+					+ '</td>'
+					+ '</tr>';
+				$("#admins").append(tr);
+			});
+			myDataTable();
+		}
+
+		// DataTable相关
+		function myDataTable(){
+			$('.table-sort').dataTable({
+				"aaSorting": [[1, "desc"]],//默认第几个排序
+				"bStateSave": true,//状态保存
+				"pading": false,
+				"aoColumnDefs": []
+			});
+		}
 
 	</script>
 </body>

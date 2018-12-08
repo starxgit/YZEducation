@@ -1,0 +1,13 @@
+server:
+  port: 9092
+
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://118.89.29.44:3306/yzedu?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: yzedu
+    password: yzedu
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.fstech.yzeduss.model

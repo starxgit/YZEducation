@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fstech.yzeduss.mapper.AdminMapper">
+
+    <!--所有管理员列表-->
+    <select id="findListBySchool" resultMap="ShowAdmin">
+        SELECT
+            school_admin_id,
+            school_admin_number,
+            school_admin_name,
+            gmt_create
+        FROM school_admin where school_id = #{school_id}
+    </select>
+    <resultMap id="ShowAdmin" type="com.fstech.yzeduss.model.SchoolAdmin">
+        <id column="school_admin_id" property="school_admin_id" jdbcType="INTEGER"/>
+        <result column="school_admin_name" property="school_admin_name" jdbcType="VARCHAR"/>
+        <result column="school_admin_number" property="school_admin_number" jdbcType="VARCHAR"/>
+        <result column="gmt_create" property="registe_time" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+</mapper>

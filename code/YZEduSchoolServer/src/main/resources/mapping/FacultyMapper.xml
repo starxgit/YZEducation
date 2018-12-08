@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fstech.yzeduss.mapper.FacultyMapper">
+
+    <!--所有管理员列表-->
+    <select id="findListBySchoolId" resultType="com.fstech.yzeduss.model.Faculty">
+        select faculty_id,faculty_name from faculty where school_id = #{school_id}
+    </select>
+
+    <!--添加一个院系-->
+    <insert id="addFaculty">
+        insert into faculty(faculty_name,school_id,gmt_create,gmt_modified)
+        values(#{faculty_name},#{school_id},now(),now())
+    </insert>
+
+    <!--删除一个院系-->
+    <delete id="delFaculty">
+        delete from faculty where faculty_id = #{faculty_id} limit 1
+    </delete>
+
+</mapper>

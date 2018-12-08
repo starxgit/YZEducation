@@ -1,75 +1,128 @@
 ﻿<!DOCTYPE HTML>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<link rel="stylesheet" type="text/css" href="https://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="https://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui.admin/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="https://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui.admin/css/style.css" />
-<title>院系管理</title>
-</head>
-<body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 院系管理 <span class="c-gray en">&gt;</span> 院系列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
-<div class="page-container">
-	<button class="btn btn-primary radius" type="submit">
-	<a style="color:#ffffff;" href="add_faculty.html">添加院系</a></button>
-	<div class="mt-20">
-		<table class="table table-border table-bordered table-bg table-hover table-sort">
-			<thead>
-				<tr class="text-c">
-					<th width="25"><input type="checkbox" name="" value=""></th>
-					<th width="80">院系代码</th>
-					<th width="80">院系名称</th>
-					<th width="80">操作</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="text-c">
-					<td><input type="checkbox" value="" name=""></td>
-					<td>2000010</td>
-					<td>物理</td>
-					<td class="f-14 td-manage">
-					<a style="text-decoration:none" class="ml-5" 
-						onClick="article_del(this,'10001')" href="javascript:;"
-						title="删除">
-					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
-				</tr>
-				<tr class="text-c">
-					<td><input type="checkbox" value="" name=""></td>
-					<td>2001510</td>
-					<td>会计</td>
-					<td class="f-14 td-manage">
-					<a style="text-decoration:none" class="ml-5" 
-						onClick="article_del(this,'10001')" href="javascript:;"
-						title="删除">
-					<i class="Hui-iconfont">&#xe6e2;</i></a></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
-<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/jquery/1.9.1/jquery.min.js"></script> 
-<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui/js/H-ui.min.js"></script> 
-<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui.admin/js/H-ui.admin.js"></script>
-<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/My97DatePicker/4.8/WdatePicker.js"></script> 
-<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
-<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/laypage/1.2/laypage.js"></script>
-<script type="text/javascript">
-$('.table-sort').dataTable({
-	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-	"bStateSave": true,//状态保存
-	"pading":false,
-	"aoColumnDefs": [
-	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable":false,"aTargets":[0,3]}// 不参与排序的列
-	]
-});
 
-</script> 
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="stylesheet" type="text/css" href="https://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="https://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui.admin/css/H-ui.admin.css" />
+	<link rel="stylesheet" type="text/css" href="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/Hui-iconfont/1.0.8/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="https://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui.admin/css/style.css" />
+	<title>院系管理</title>
+</head>
+
+<body>
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 院系管理 <span class="c-gray en">&gt;</span>
+		院系列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);"
+		 title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="page-container">
+		<button class="btn btn-primary radius" type="submit">
+			<a style="color:#ffffff;" href="add_faculty.html">添加院系</a></button>
+		<div class="mt-20">
+			<table class="table table-border table-bordered table-bg table-hover table-sort">
+				<thead>
+					<tr class="text-c">
+						<th width="25"><input type="checkbox" name="" value=""></th>
+						<th width="80">院系代码</th>
+						<th width="80">院系名称</th>
+						<th width="80">操作</th>
+					</tr>
+				</thead>
+				<tbody id="facultys">
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/layer/2.4/layer.js"></script>
+	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui/js/H-ui.min.js"></script>
+	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/static/h-ui.admin/js/H-ui.admin.js"></script>
+	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/laypage/1.2/laypage.js"></script>
+	<script type="text/javascript">
+		// 页面加载完成执行
+		$(function () {
+			getList();
+		});
+
+		/*删除*/
+		function article_del(id) {
+			layer.confirm('确认要删除吗？', function (index) {
+				console.log(id);
+				$.ajax({
+				url: "http://127.0.0.1:9092/" + "school/delFaculty",
+				type: "post",
+				data: {
+					"school_id": id,
+				},
+				success: function (res) {
+					let data = JSON.parse(res);
+					if (data.result_code == 0) {
+						layer.msg('已删除!', { icon: 1, time: 1000 });
+						$("#faculty"+id).remove();
+					} else {
+						alert(data.message);
+					}
+				}
+			});
+			});
+		}
+
+		// 获取院系列表
+		function getList() {
+			let school_id = 305;
+			$.ajax({
+				url: "http://127.0.0.1:9092/" + "school/facultyList",
+				type: "get",
+				data: {
+					"school_id": school_id,
+				},
+				success: function (res) {
+					let data = JSON.parse(res);
+					if (data.result_code == 0) {
+						setList(data.return_data);
+					} else {
+						alert(data.message);
+					}
+				}
+			});
+		}
+
+		// 将列表设置到页面
+		function setList(array) {
+			array.forEach(faculty => {
+				console.log(faculty);
+				let tr = '<tr id="faculty'+faculty.faculty_id +'" class="text-c">'
+					+ '<td><input type="checkbox" value="" name=""></td>'
+					+ '<td>' + faculty.faculty_id + '</td>'
+					+ '<td>' + faculty.faculty_name + '</td>'
+					+ '<td class="f-14 td-manage">'
+					+ '<a href="edit_admin.html?faculty_id=' + faculty.faculty_id + '" style="text-decoration:none" class="ml-5" title="修改"><i class="Hui-iconfont">&#xe6df;</i></a>'
+					+ '<a style="text-decoration:none" class="ml-5" onClick="article_del(' + faculty.faculty_id + ')" title="删除">'
+					+ '<i class="Hui-iconfont">&#xe6e2;</i>'
+					+ '</a>'
+					+ '</td>'
+					+ '</tr>';
+				$("#facultys").append(tr);
+			});
+			myDataTable();
+		}
+
+		// DataTable相关
+		function myDataTable() {
+			$('.table-sort').dataTable({
+				"aaSorting": [[1, "desc"]],//默认第几个排序
+				"bStateSave": true,//状态保存
+				"pading": false,
+				"aoColumnDefs": []
+			});
+		}
+	</script>
 </body>
+
 </html>
