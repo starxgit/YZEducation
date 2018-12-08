@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fstech.yzeduss.mapper.FacultyMapper">
 
-    <!--所有管理员列表-->
+    <!--所有院系列表-->
     <select id="findListBySchoolId" resultType="com.fstech.yzeduss.model.Faculty">
         select faculty_id,faculty_name from faculty where school_id = #{school_id}
     </select>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fstech.yzeduss.mapper.ClassMapper">
+
+    <!--所有ban班级列表-->
+    <select id="findListBySchoolId" resultType="com.fstech.yzeduss.model.GradeClass">
+        select class_id,grade_class.faculty_id,faculty.faculty_name,grade_class.school_id,class_name
+        from grade_class left join faculty on grade_class.faculty_id = faculty.faculty_id
+        where grade_class.school_id = #{school_id}
+    </select>
+
+    <!--添加一个班级-->
+    <insert id="addClass">
+        insert into grade_class(faculty_id,school_id,class_name,gmt_create,gmt_modified)
+        values(#{faculty_id}, #{school_id}, #{class_name}, now(), now())
+    </insert>
+
+    <!--删除一个班级-->
+    <update id="delClass">
+        delete from grade_class where class_id = #{class_id} limit 1
+    </update>
+
+</mapper>

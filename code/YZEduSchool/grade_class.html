@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -26,35 +27,14 @@
 				<thead>
 					<tr class="text-c">
 						<th width="25"><input type="checkbox" name="" value=""></th>
-						<th width="80">所属院系</th>
 						<th width="80">班级代码</th>
+						<th width="80">所属院系</th>
 						<th width="80">班级名称</th>
 						<th width="80">操作</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr class="text-c">
-						<td><input type="checkbox" value="" name=""></td>
-						<td>物理</td>
-						<td>2000010001</td>
-						<td>物理A班</td>
-						<td class="f-14 td-manage">
-							<a style="text-decoration:none" class="ml-5" onClick="article_del(this,'10001')" href="javascript:;" title="删除">
-								<i class="Hui-iconfont">&#xe6e2;</i>
-							</a>
-						</td>
-					</tr>
-					<tr class="text-c">
-						<td><input type="checkbox" value="" name=""></td>
-						<td>物理</td>
-						<td>2000010002</td>
-						<td>物理B班</td>
-						<td class="f-14 td-manage">
-							<a style="text-decoration:none" class="ml-5" onClick="article_del(this,'10001')" href="javascript:;" title="删除">
-								<i class="Hui-iconfont">&#xe6e2;</i>
-							</a>
-						</td>
-					</tr>
+				<tbody id="school">
+					
 				</tbody>
 			</table>
 		</div>
@@ -68,16 +48,80 @@
 	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/laypage/1.2/laypage.js"></script>
 	<script type="text/javascript">
-		$('.table-sort').dataTable({
-			"aaSorting": [[1, "desc"]],//默认第几个排序
-			"bStateSave": true,//状态保存
-			"pading": false,
-			"aoColumnDefs": [
-				//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-				{ "orderable": false, "aTargets": [0, 3] }// 不参与排序的列
-			]
+		// 页面加载完成执行
+		$(function () {
+			getList();
 		});
+		// 获取院系列表
+		function getList() {
+			let school_id = 305;
+			$.ajax({
+				url: "http://127.0.0.1:9092/" + "school/classlList",
+				type: "get",
+				data: {
+					"school_id": school_id,
+				},
+				success: function (res) {
+					let data = JSON.parse(res);
+					if (data.result_code == 0) {
+						setList(data.return_data);
+					} else {
+						alert(data.message);
+					}
+				}
+			});
+		}
+		// 将列表设置到页面
+		function setList(array) {
+			array.forEach(cla => {
+				let tr = '<tr id="class' + cla.class_id + '" class="text-c">'
+					+ '<td><input type="checkbox" value="" name=""></td>'
+					+ '<td>' + cla.faculty_id + '</td>'
+					+ '<td>' + cla.faculty_name + '</td>'
+					+ '<td>' + cla.class_name + '</td>'
+					+ '<td class="f-14 td-manage">'
+					+ '<a href="edit_admin.html?faculty_id=' + cla.class_id + '" style="text-decoration:none" class="ml-5" title="修改"><i class="Hui-iconfont">&#xe6df;</i></a>'
+					+ '<a style="text-decoration:none" class="ml-5" onClick="article_del(' + cla.class_id + ')" title="删除">'
+					+ '<i class="Hui-iconfont">&#xe6e2;</i>'
+					+ '</a>'
+					+ '</td>'
+					+ '</tr>';
+				$("#school").append(tr);
+			});
+			myDataTable();
+		}
+		// DataTable相关
+		function myDataTable() {
+			$('.table-sort').dataTable({
+				"aaSorting": [[1, "desc"]],//默认第几个排序
+				"bStateSave": true,//状态保存
+				"pading": false,
+				"aoColumnDefs": []
+			});
+		}
 
+		/*删除*/
+		function article_del(id) {
+			layer.confirm('确认要删除吗？', function (index) {
+				console.log(id);
+				$.ajax({
+				url: "http://127.0.0.1:9092/" + "school/delClass",
+				type: "post",
+				data: {
+					"class_id": id,
+				},
+				success: function (res) {
+					let data = JSON.parse(res);
+					if (data.result_code == 0) {
+						layer.msg('已删除!', { icon: 1, time: 1000 });
+						$("#class"+id).remove();
+					} else {
+						alert(data.message);
+					}
+				}
+			});
+			});
+		}
 	</script>
 </body>
 
