@@ -19,19 +19,19 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>公告标题：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="articletitle" name="articletitle">
+					<input type="text" class="input-text" value="" placeholder="" id="title" name="articletitle">
 				</div>
 			</div>
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>公告内容：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="" placeholder="" id="articletitle2" name="articletitle2">
+					<input type="text" class="input-text" value="" placeholder="" id="content" name="articletitle2">
 				</div>
 			</div>
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>是否置顶：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<select class="input-text" value="" placeholder="" id="articletitle2" name="articletitle2">
+					<select class="input-text" value="" placeholder="" id="isStick" name="articletitle2">
 						<option value="0">不置顶</option>
 						<option value="1">置顶</option>
 					</select>
@@ -41,22 +41,46 @@
 		</form>
 		<div class="row cl" style="margin-top:30px;">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button class="btn btn-primary radius" onclick="addAdmin()">添加管理员</button>
+				<button class="btn btn-primary radius" onclick="submit()">发布公告</button>
 				<button class="btn btn-default radius col-xs-offset-1" onclick="back()">取消</button>
 			</div>
 		</div>
 	</article>
+	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/jquery/1.9.1/jquery.min.js"></script>
 	<script>
-
 		/*返回*/
 		function back() {
 			window.history.go(-1);
 		}
 
-		/*添加管理员*/
-		function addAdmin() {
-			alert("submit");
-			// TODO 提交表单逻辑
+		
+		// 提交表单的方法
+		function submit() {
+			let title = $("#title").val();
+			let content = $("#content").val();
+			let isStick = $("#isStick").val();
+			let school_id = 305;
+			$.ajax({
+				url: "http://127.0.0.1:9092/" + "info/newAnnouncement",
+				type: "post",
+				data: {
+					"school_id": school_id,
+					"title":title,
+					"content":content,
+					"isStick":isStick,
+				},
+				success: function (res) {
+					let data = JSON.parse(res);
+					if (data.result_code == 0) {
+						alert("添加成功");
+						setTimeout(function(){
+							self.location=document.referrer;
+						},100);
+					} else {
+						alert(data.message);
+					}
+				}
+			});
 		}
 	</script>
 </body>
