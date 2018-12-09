@@ -56,7 +56,7 @@
 		function getList() {
 			let school_id = 305;
 			$.ajax({
-				url: "http://127.0.0.1:9092/" + "school/classlList",
+				url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "school/classlList",
 				type: "get",
 				data: {
 					"school_id": school_id,
@@ -105,7 +105,7 @@
 			layer.confirm('确认要删除吗？', function (index) {
 				console.log(id);
 				$.ajax({
-				url: "http://127.0.0.1:9092/" + "school/delClass",
+				url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "school/delClass",
 				type: "post",
 				data: {
 					"class_id": id,

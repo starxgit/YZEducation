@@ -58,7 +58,7 @@
 			layer.confirm('确认要删除吗？', function (index) {
 				console.log(id);
 				// $.ajax({
-				// 	url: "http://127.0.0.1:9092/" + "info/delAnnouncement",
+				// 	url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "info/delAnnouncement",
 				// 	type: "post",
 				// 	data: {
 				// 		"announcement_id": id,
@@ -80,7 +80,7 @@
 		function getList() {
 			let school_id = 485;
 			$.ajax({
-				url: "http://127.0.0.1:9092/" + "info/informationList",
+				url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "info/informationList",
 				type: "get",
 				data: {
 					"school_id": school_id,

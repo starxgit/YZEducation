@@ -55,7 +55,7 @@
 		function getList() {
 			let school_id = 305;
 			$.ajax({
-				url: "http://127.0.0.1:9092/" + "school/facultyList",
+				url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "school/facultyList",
 				type: "get",
 				data: {
 					"school_id": school_id,
@@ -94,7 +94,7 @@
 				let class_name = $("#class_name").val();
 				let school_id = 305;
 				$.ajax({
-					url: "http://127.0.0.1:9092/" + "school/addClass",
+					url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "school/addClass",
 					type: "post",
 					data: {
 						"school_id": school_id,

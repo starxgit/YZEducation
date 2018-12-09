@@ -11,7 +11,7 @@
 	<groupId>com.fstech.yzeduss</groupId>
 	<artifactId>yzedu</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>YZEduSchoolServer</name>
 	<description>The School Manager Platfrom of YZEducation</description>
 
