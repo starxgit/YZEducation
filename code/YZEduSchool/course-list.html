@@ -30,10 +30,8 @@
 						<th width="80">课程名称</th>
 						<th width="80">课程简介</th>
 						<th width="80">任课老师</th>
-						<th width="80">开课学校</th>
 						<th width="80">开课院系</th>
 						<th width="80">开课班级</th>
-						<th width="80">课程分类</th>
 						<th width="80">限制人数</th>
 						<th width="80">学习人数</th>
 						<th width="80">封面图片</th>
@@ -48,7 +46,6 @@
 						<td>Linux 达人养成计划 II</td>
 						<td>VIM+磁盘管理+用户权限，通过学习对Linux系统有进一步的理解</td>
 						<td>张四</td>
-						<td>大学</td>
 						<td>物理系</td>
 						<th>物理A班</th>
 						<th>理科</th>
@@ -78,15 +75,7 @@
 	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/laypage/1.2/laypage.js"></script>
 	<script type="text/javascript">
-		$('.table-sort').dataTable({
-			"aaSorting": [[1, "desc"]],//默认第几个排序
-			"bStateSave": true,//状态保存
-			"pading": false,
-			"aoColumnDefs": [
-				//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-				{ "orderable": false, "aTargets": [0, 3] }// 不参与排序的列
-			]
-		});
+		
 
 	</script>
 </body>

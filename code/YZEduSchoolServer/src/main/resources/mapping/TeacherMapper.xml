@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fstech.yzeduss.mapper.TeacherMapper">
+
+    <!--所有教师列表-->
+    <select id="findListBySchoolId" resultType="com.fstech.yzeduss.model.Teacher">
+        select teacher_name,teacher_number,gmt_create as registe_time
+        from teacher
+        where school_id = #{school_id}
+    </select>
+
+    <!--添加一个教师-->
+    <insert id="addTeacher">
+        insert into teacher(teacher_name,teacher_number,school_id,teacher_password,gmt_create,gmt_modified)
+        values(#{teacher_name},#{teacher_number},#{school_id},#{teacher_password},now(),now())
+    </insert>
+
+    <!--删除一个教师-->
+    <delete id="delTeacher">
+        delete from teacher where teacher_number = #{teacher_number} limit 1
+    </delete>
+
+</mapper>

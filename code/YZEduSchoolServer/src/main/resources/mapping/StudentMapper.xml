@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fstech.yzeduss.mapper.StudentMapper">
+
+    <!--所有学生列表-->
+    <select id="findListBySchoolId" resultType="com.fstech.yzeduss.model.Student">
+        select student_name,student_number,faculty_name,class_name,student.gmt_create as registe_time
+        from student
+        left join faculty on student.faculty_id = faculty.faculty_id
+        left join grade_class on student.class_id = grade_class.class_id
+        where student.school_id = #{school_id}
+    </select>
+
+</mapper>
