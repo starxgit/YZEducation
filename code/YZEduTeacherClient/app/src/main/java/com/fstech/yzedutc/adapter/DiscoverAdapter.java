@@ -19,10 +19,8 @@ import android.widget.TextView;
 
 import com.fstech.yzedutc.R;
 import com.fstech.yzedutc.activity.CourseIntroduceActivity;
-import com.fstech.yzedutc.util.DownloadTools;
 import com.fstech.yzedutc.util.ImageUitl;
 import com.fstech.yzedutc.util.OutlineContainer;
-import com.fstech.yzedutc.util.ThreadUtil;
 import com.fstech.yzedutc.view.JazzyViewPager;
 
 
@@ -59,19 +57,8 @@ public class DiscoverAdapter extends PagerAdapter{
 		hv.course_name.setText(listItems.get(position).get("course_name").toString());
 		hv.course_pnum.setText(listItems.get(position).get("course_pnum").toString());
 		final String img=listItems.get(position).get("course_img").toString();
-		// TODO 显示图片
-        ThreadUtil.runInThread(new Runnable() {
-            @Override
-            public void run() {
-                int state = DownloadTools.downloadImg(img);
-                ThreadUtil.runInUIThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ImageUitl.SimpleShowImage(img, hv.course_image);
-                    }
-                });
-            }
-        });
+		// 显示图片
+        ImageUitl.showNetImage(hv.course_image,img);
 		hv.btn_take.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

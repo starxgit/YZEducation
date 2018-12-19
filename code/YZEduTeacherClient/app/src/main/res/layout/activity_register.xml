@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ImageView01"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="30dp"
+        android:onClick="back"
+        android:src="@mipmap/back2" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="280dp"
+            android:layout_height="420dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:cardCornerRadius="@dimen/dimen_9dp">
+
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundLinearLayout
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                app:qmui_borderColor="@color/text_black9"
+                app:qmui_borderWidth="1dp"
+                app:qmui_radius="30dp">
+
+                <com.fstech.yzedutc.view.ClearEditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@null"
+                    android:ems="12"
+                    android:gravity="center"
+                    android:hint="@string/please_input_phone"
+                    android:inputType="number"
+                    android:maxLength="12" />
+
+            </com.qmuiteam.qmui.widget.roundwidget.QMUIRoundLinearLayout>
+
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundLinearLayout
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="100dp"
+                app:qmui_borderColor="@color/text_black9"
+                app:qmui_borderWidth="1dp"
+                app:qmui_radius="30dp">
+
+                <com.fstech.yzedutc.view.ClearEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@null"
+                    android:ems="12"
+                    android:gravity="center"
+                    android:hint="@string/please_input_password"
+                    android:inputType="textPassword"
+                    android:maxLength="16" />
+
+            </com.qmuiteam.qmui.widget.roundwidget.QMUIRoundLinearLayout>
+
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundLinearLayout
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="170dp"
+                app:qmui_borderColor="@color/text_black9"
+                app:qmui_borderWidth="1dp"
+                app:qmui_radius="30dp">
+
+                <com.fstech.yzedutc.view.ClearEditText
+                    android:id="@+id/et_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@null"
+                    android:ems="3"
+                    android:gravity="center"
+                    android:hint="@string/please_input_age"
+                    android:inputType="number"
+                    android:maxLength="3" />
+
+            </com.qmuiteam.qmui.widget.roundwidget.QMUIRoundLinearLayout>
+
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundLinearLayout
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="240dp"
+                app:qmui_borderColor="@color/text_black9"
+                app:qmui_borderWidth="1dp"
+                app:qmui_radius="30dp">
+
+                <RadioGroup
+                    android:id="@+id/rg_sex"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_man"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:text="@string/man" />
+
+                    <RadioButton
+                        android:id="@+id/rb_wonam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/woman" />
+
+                </RadioGroup>
+
+            </com.qmuiteam.qmui.widget.roundwidget.QMUIRoundLinearLayout>
+
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundLinearLayout
+                android:id="@+id/qrl_login"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="310dp"
+                app:qmui_borderColor="@color/colorPrimary"
+                app:qmui_borderWidth="1dp"
+                app:qmui_radius="30dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:text="@string/register_now"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp" />
+
+            </com.qmuiteam.qmui.widget.roundwidget.QMUIRoundLinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="200dp"
+                android:visibility="gone" />
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+</LinearLayout>

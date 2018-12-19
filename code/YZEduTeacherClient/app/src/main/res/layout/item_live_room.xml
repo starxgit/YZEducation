@@ -49,7 +49,7 @@
                     android:textColor="@color/qmui_config_color_white" />
             </LinearLayout>
 
-            <com.fstech.yzedutc.view.RectangleView
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                 android:id="@+id/item_live_iv_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"

@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fstech.yzedutc.R;
-import com.fstech.yzedutc.activity.AbilityActivity;
-import com.fstech.yzedutc.activity.DiscoverActivity;
-import com.fstech.yzedutc.activity.LearnLikeActivity;
-import com.fstech.yzedutc.activity.MessageActivity;
+import com.fstech.yzedutc.activity.LoginActivity;
 import com.fstech.yzedutc.activity.SettingActivity;
 import com.fstech.yzedutc.activity.UserInfoActivity;
 import com.fstech.yzedutc.activity.WalletActivity;
+import com.fstech.yzedutc.application.YZEduApplication;
+import com.fstech.yzedutc.util.ImageUitl;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 /**
@@ -29,10 +29,11 @@ import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 public class PersonFragment extends Fragment implements View.OnClickListener {
 
     // 定义UI对象
-    private RelativeLayout re_wallet, re_ability, re_setting, re_learn_like, re_discover;
+    private RelativeLayout re_wallet, re_setting;
     private TextView tv_name;
     private QMUIRadiusImageView iv_avatar;
     private ImageView iv_message;
+    private YZEduApplication application;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,23 +55,13 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
     * */
     private void initView() {
         re_wallet = (RelativeLayout) getActivity().findViewById(R.id.re_wallet);
-        re_ability = (RelativeLayout) getActivity().findViewById(R.id.re_ability);
         re_setting = (RelativeLayout) getActivity().findViewById(R.id.re_setting);
-        re_learn_like = (RelativeLayout) getActivity().findViewById(R.id.re_learn_like);
-        re_discover = (RelativeLayout) getActivity().findViewById(R.id.re_discover);
         iv_avatar = (QMUIRadiusImageView) getActivity().findViewById(R.id.iv_avatar);
         iv_message = (ImageView) getActivity().findViewById(R.id.iv_message);
         tv_name = (TextView) getActivity().findViewById(R.id.tv_name);
 
-        re_learn_like.setVisibility(View.GONE);
-        re_discover.setVisibility(View.GONE);
-        re_ability.setVisibility(View.GONE);
-
         re_wallet.setOnClickListener(this);
-        re_ability.setOnClickListener(this);
         re_setting.setOnClickListener(this);
-        re_learn_like.setOnClickListener(this);
-        re_discover.setOnClickListener(this);
         iv_avatar.setOnClickListener(this);
         iv_message.setOnClickListener(this);
         tv_name.setOnClickListener(this);
@@ -82,32 +73,51 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
     * 无返回
     * */
     private void initData() {
+        application = (YZEduApplication) getActivity().getApplication();
+        if (application.getToken() != null) {
+            if (application.getUserName() != null) {
+                tv_name.setText(application.getUserName());
+                final String img = application.getAvatar();
+                // 显示图片
+                ImageUitl.showNetImage(iv_avatar, img);
+            }
+        }
 
+    }
+
+    private boolean checkLogin() {
+        if (application.getToken() == null) {
+            Toast.makeText(getActivity(), R.string.please_login_first, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    /*
+    * 点击用户头像或用户名的方法
+    * 如果已登录进入用户主页
+    * 否则进入登录页
+    * */
+    private void userMain() {
+        if (application.getToken() != null) {
+            Intent intent = new Intent(getActivity(), UserInfoActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     // 监听按钮事件
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.re_learn_like:
-                Log.e("click", "learn_like");
-                Intent intent0 = new Intent(getActivity(), LearnLikeActivity.class);
-                startActivity(intent0);
-                break;
-            case R.id.re_discover:
-                Log.e("click", "discover");
-                Intent intent1 = new Intent(getActivity(), DiscoverActivity.class);
-                startActivity(intent1);
-                break;
             case R.id.re_wallet:
                 Log.e("click", "wallet");
-                Intent intent2 = new Intent(getActivity(), WalletActivity.class);
-                startActivity(intent2);
-                break;
-            case R.id.re_ability:
-                Log.e("click", "ability");
-                Intent intent3 = new Intent(getActivity(), AbilityActivity.class);
-                startActivity(intent3);
+                if (checkLogin() == true) {
+                    Intent intent2 = new Intent(getActivity(), WalletActivity.class);
+                    startActivity(intent2);
+                }
                 break;
             case R.id.re_setting:
                 Log.e("click", "setting");
@@ -116,18 +126,11 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.iv_avatar:
                 Log.e("click", "avatar");
-                Intent intent5 = new Intent(getActivity(), UserInfoActivity.class);
-                startActivity(intent5);
+                userMain();
                 break;
             case R.id.tv_name:
                 Log.e("click", "name");
-                Intent intent6 = new Intent(getActivity(), UserInfoActivity.class);
-                startActivity(intent6);
-                break;
-            case R.id.iv_message:
-                Log.e("click", "message");
-                Intent intent7 = new Intent(getActivity(), MessageActivity.class);
-                startActivity(intent7);
+                userMain();
                 break;
             default:
                 break;

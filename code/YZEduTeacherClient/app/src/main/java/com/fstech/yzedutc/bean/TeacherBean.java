@@ -1,25 +1,29 @@
 package com.fstech.yzedutc.bean;
 
-import java.io.Serializable;
 
 /**
  * Created by shaoxin on 18-4-9.
  * 教师用户信息的模型类
  */
 
-public class TeacherBean implements Serializable {
-    private int user_id;                // 用户id
-    private String user_phone;          // 学生绑定用户手机号
+public class TeacherBean {
+	private int user_id;                // 用户id
+    private String user_phone;          // 教师绑定用户手机号
     private String user_sex;            // 用户性别
     private int user_age;               // 年龄
     private String user_avatar;         // 用户头像
-    private String teacher_id;          // 学生id
-    private String teacher_name;        // 学生姓名
+    
+    private String teacher_id;          // 教师id
+    private String teacher_name;        // 教师姓名
+    private String teacher_number;		// 教师工号
+    
+    private int school_id;					// 学校id
+    private String school_name;		// 学校名称
 
     public TeacherBean() {
     }
 
-    public TeacherBean(int user_id, String user_phone, String user_sex, int user_age, String user_avatar, String teacher_id, String teacher_name) {
+    public TeacherBean(int user_id, String user_phone, String user_sex, int user_age, String user_avatar, String teacher_id, String teacher_name, String teacher_number, int school_id, String school_name) {
         this.user_id = user_id;
         this.user_phone = user_phone;
         this.user_sex = user_sex;
@@ -27,6 +31,9 @@ public class TeacherBean implements Serializable {
         this.user_avatar = user_avatar;
         this.teacher_id = teacher_id;
         this.teacher_name = teacher_name;
+        this.teacher_number = teacher_number;
+        this.school_id = school_id;
+        this.school_name = school_name;
     }
 
     public int getUser_id() {
@@ -85,6 +92,30 @@ public class TeacherBean implements Serializable {
         this.teacher_name = teacher_name;
     }
 
+    public String getTeacher_number() {
+        return teacher_number;
+    }
+
+    public void setTeacher_number(String teacher_number) {
+        this.teacher_number = teacher_number;
+    }
+
+    public int getSchool_id() {
+        return school_id;
+    }
+
+    public void setSchool_id(int school_id) {
+        this.school_id = school_id;
+    }
+
+    public String getSchool_name() {
+        return school_name;
+    }
+
+    public void setSchool_name(String school_name) {
+        this.school_name = school_name;
+    }
+
     @Override
     public String toString() {
         return "TeacherBean{" +
@@ -95,6 +126,9 @@ public class TeacherBean implements Serializable {
                 ", user_avatar='" + user_avatar + '\'' +
                 ", teacher_id='" + teacher_id + '\'' +
                 ", teacher_name='" + teacher_name + '\'' +
+                ", teacher_number='" + teacher_number + '\'' +
+                ", school_id=" + school_id +
+                ", school_name='" + school_name + '\'' +
                 '}';
     }
 }

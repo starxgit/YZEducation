@@ -18,10 +18,9 @@ import com.fstech.yzedutc.bean.LessonBean;
 import com.fstech.yzedutc.util.CacheActivityUtil;
 import com.fstech.yzedutc.util.CallBackUtil;
 import com.fstech.yzedutc.util.Constant;
-import com.fstech.yzedutc.util.DownloadTools;
 import com.fstech.yzedutc.util.ImageUitl;
 import com.fstech.yzedutc.util.OkhttpUtil;
-import com.fstech.yzedutc.util.ThreadUtil;
+import com.fstech.yzedutc.util.TokenUtil;
 import com.fstech.yzedutc.view.MyListView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -53,6 +52,7 @@ public class CourseOverViewActivity extends AppCompatActivity {
     private TextView tv_sumhour;
     private TextView tv_course_code;
     private TextView tv_course_price;
+    private QMUIRoundButton bn_option;
     private TabHost tabhost;
     private LinearLayout ll_introduce;
     private LinearLayout ll_catalog;
@@ -103,6 +103,7 @@ public class CourseOverViewActivity extends AppCompatActivity {
         listItems = new ArrayList<LessonBean>();
         adapter_lesson = new LessonListAdapter(CourseOverViewActivity.this, listItems);
         lv_catalog.setAdapter(adapter_lesson);
+        bn_option.setText(R.string.quit_course);
 
     }
 
@@ -192,10 +193,11 @@ public class CourseOverViewActivity extends AppCompatActivity {
     * 无返回
     * */
     private void getCourseData() {
-        String url = Constant.BASE_DB_URL + "CourseDetail";
+        String url = Constant.BASE_DB_URL + "course/detail";
+        String token = TokenUtil.getToken(CourseOverViewActivity.this);
         Map<String, String> map = new HashMap<String, String>();
-        map.put("user_id", user_id);
         map.put("course_id", course_id);
+        map.put("token", token);
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -214,34 +216,19 @@ public class CourseOverViewActivity extends AppCompatActivity {
                         CourseBean courseBean = objectMapper.readValue(jobj.toString(), CourseBean.class);
                         tv_course_name.setText(courseBean.getCourse_name());
                         tv_course_introduce.setText(courseBean.getCourse_introduce());
-                        // TODO 设置教师
-                        String teacher = Constant.ARR_TEACHER_NAME[Integer.parseInt(courseBean.getCourse_teacher()) % Constant.ARR_TEACHER_NAME.length];
-                        tv_course_teacher.setText("授课教师: " + teacher);
+                        tv_course_teacher.setText("授课教师: " + courseBean.getCourse_teacher());
                         tv_course_code.setText("课程代码: " + courseBean.getCourse_code());
                         String sum_student = " / " + courseBean.getCourse_sum_student();
                         if (courseBean.getCourse_sum_student() == -1) sum_student = "";
                         tv_learn_num.setText(courseBean.getCourse_learn_student() + sum_student + " 人学习");
-                        // TODO 设置课时
-                        int sHour = Constant.ARR_COURSE_SUM_HOUR[Integer.parseInt(course_id) % Constant.ARR_COURSE_SUM_HOUR.length];
-                        tv_sumhour.setText("共 " + sHour + " 课时");
+                        tv_sumhour.setText("共 " + courseBean.getCourse_sum() + " 课时");
                         if (courseBean.getCourse_price() > 0) {
                             tv_course_price.setText("¥ " + courseBean.getCourse_price());
                         } else {
                             tv_course_price.setText("免费");
                         }
                         final String str_course_cover = courseBean.getCourse_cover();
-                        ThreadUtil.runInThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                int state = DownloadTools.downloadImg(str_course_cover);
-                                ThreadUtil.runInUIThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        ImageUitl.SimpleShowImage(str_course_cover, iv_course_image);
-                                    }
-                                });
-                            }
-                        });
+                        ImageUitl.showNetImage(iv_course_image,str_course_cover);
 
                     } else {
                         String message = jsonObject.getString("message");

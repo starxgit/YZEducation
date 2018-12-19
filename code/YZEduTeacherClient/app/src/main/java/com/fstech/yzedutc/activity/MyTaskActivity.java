@@ -1,11 +1,15 @@
 package com.fstech.yzedutc.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
+
 
 import com.fstech.yzedutc.R;
 import com.fstech.yzedutc.adapter.TaskListAdapter;
@@ -73,6 +77,19 @@ public class MyTaskActivity extends AppCompatActivity {
         lv_doing.setAdapter(adapter_doing);
         lv_all.setAdapter(adapter_all);
         lv_finish.setAdapter(adapter_finish);
+        lv_doing.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TaskBean tb = listItems_doing.get(i);
+                if (tb.getTask_type() == 1) {
+                    Intent intent = new Intent(MyTaskActivity.this, ExamActivity.class);
+                    startActivity(intent);
+                } else if (tb.getTask_type() == 2) {
+                    Intent intent = new Intent(MyTaskActivity.this, DoPracticalActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     /*
@@ -83,7 +100,7 @@ public class MyTaskActivity extends AppCompatActivity {
     private void initData() {
         TaskBean tb0 = new TaskBean(1, "完成第1节的课后习题", 1, 3298, "2018-04-09", "2018-04-18", 2, "王白老师", "2018-04-09");
         TaskBean tb1 = new TaskBean(1, "完成第2节的课后习题", 1, 3298, "2018-04-09", "2018-04-18", 4, "王白老师", "2018-04-09");
-        TaskBean tb2 = new TaskBean(1, "完成关于JAVA编程的实践", 2, 4298, "2018-04-11", "2018-04-15", 2, "文民老师", "2018-04-09");
+        TaskBean tb2 = new TaskBean(1, "完成关于HTML5编程的实践", 2, 4298, "2018-04-11", "2018-04-15", 2, "文民老师", "2018-04-09");
         listItems_doing.add(tb0);
         listItems_doing.add(tb2);
         listItems_all.add(tb0);

@@ -11,11 +11,13 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.Camera"/>
+
+    <uses-feature android:name="android.hardware.Camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
     <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -28,6 +30,7 @@
 
 
     <application
+        android:name=".application.YZEduApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -86,9 +89,6 @@
             android:name=".activity.WalletActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.AbilityActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
             android:name=".activity.MessageActivity"
             android:screenOrientation="portrait"></activity>
         <activity
@@ -115,11 +115,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing"></activity>
         <activity
-            android:name=".activity.LiveRoomActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity
             android:name=".activity.ExamActivity"
             android:screenOrientation="portrait"></activity>
         <activity
@@ -134,6 +129,42 @@
         <activity
             android:name=".activity.CourseEditActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.CourseLearnActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.MistakeActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.InformationDetailActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.SchoolSelectActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity
+            android:name=".activity.MistakeDetailActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.AllInformationActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.NewDisscussActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.AddLessonActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.DisscussDetail"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeQmui"
+            android:windowSoftInputMode="stateHidden"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.fstech.yzedutc.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,8 +9,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fstech.yzedutc.R;
@@ -21,6 +26,7 @@ import com.fstech.yzedutc.util.CacheActivityUtil;
 import com.fstech.yzedutc.util.CallBackUtil;
 import com.fstech.yzedutc.util.Constant;
 import com.fstech.yzedutc.util.OkhttpUtil;
+import com.fstech.yzedutc.util.TokenUtil;
 import com.fstech.yzedutc.view.HorizontalListView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -56,7 +62,6 @@ public class CourseCfaResultActivity extends AppCompatActivity implements View.O
     private int cfa_id;
     private TabAdapter adapter_cfa;
     private Handler handler;
-    private String user_id;
     private int page;
 
 
@@ -92,7 +97,6 @@ public class CourseCfaResultActivity extends AppCompatActivity implements View.O
     * */
     private void initView() {
         CacheActivityUtil.addActivity(CourseCfaResultActivity.this);
-        user_id = "1";
         page = 1;
         final Intent intent = getIntent();
         cfa_id = Integer.parseInt(intent.getStringExtra("cfa_id"));
@@ -138,7 +142,7 @@ public class CourseCfaResultActivity extends AppCompatActivity implements View.O
     * */
     private List<ClassificationBean> getClassfivations(int cfa_own, final int msg) {
         final List<ClassificationBean> list = new ArrayList<ClassificationBean>();
-        String url = Constant.BASE_DB_URL + "Classifications";
+        String url = Constant.BASE_DB_URL + "course/classification";
         Map<String, String> map = new HashMap<String, String>();
         map.put("classification_own", cfa_own + "");
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
@@ -220,21 +224,15 @@ public class CourseCfaResultActivity extends AppCompatActivity implements View.O
     }
 
     /*
-    * 重新搜索的方法
-    * */
-    private void reSearch() {
-        // TODO 刷新列表搜索
-    }
-
-    /*
     * 获取课程列表
     * */
     private void getCourseList(int cfa_own) {
         listItems_course.clear();
-        String url = Constant.BASE_DB_URL + "ClassificationCourse";
+        String url = Constant.BASE_DB_URL + "course/classificationCourse";
+        String token = TokenUtil.getToken(CourseCfaResultActivity.this);
         Map<String, String> map = new HashMap<String, String>();
         map.put("classification_own", cfa_own + "");
-        map.put("user_id", user_id);
+        map.put("token", token);
         map.put("page", page + "");
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
             @Override
@@ -255,8 +253,6 @@ public class CourseCfaResultActivity extends AppCompatActivity implements View.O
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jobj = jsonArray.getJSONObject(i);
                             CourseBean cb = objectMapper.readValue(jobj.toString(), CourseBean.class);
-                            // TODO 取消预定设置
-                            cb.setCourse_sum(Constant.ARR_COURSE_SUM_HOUR[cb.getCourse_id() % Constant.ARR_COURSE_SUM_HOUR.length]);
                             listItems_course.add(cb);
                         }
                         handler.sendMessage(handler.obtainMessage(1));

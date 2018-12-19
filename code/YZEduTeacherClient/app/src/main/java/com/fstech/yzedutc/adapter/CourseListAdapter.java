@@ -1,17 +1,17 @@
 package com.fstech.yzedutc.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fstech.yzedutc.R;
 import com.fstech.yzedutc.bean.CourseBean;
-import com.fstech.yzedutc.util.DownloadTools;
 import com.fstech.yzedutc.util.ImageUitl;
-import com.fstech.yzedutc.util.ThreadUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import java.util.List;
@@ -92,19 +92,7 @@ public class CourseListAdapter extends BaseAdapter {
         vh.tv_course_price.setText(course_price);
 
         final ViewHolder finalVh = vh;
-        ThreadUtil.runInThread(new Runnable() {
-            @Override
-            public void run() {
-                int state = DownloadTools.downloadImg(course_cover);
-                ThreadUtil.runInUIThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ImageUitl.SimpleShowImage(course_cover, finalVh.iv_course_image);
-                    }
-                });
-            }
-        });
-
+        ImageUitl.showNetImage(vh.iv_course_image,course_cover);
         return convertView;
     }
 

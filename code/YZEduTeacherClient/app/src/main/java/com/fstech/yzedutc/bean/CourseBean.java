@@ -16,7 +16,7 @@ public class CourseBean implements Serializable {
     private int course_learn_student;   // 课程学习人数
     private String course_cover;        // 课程封面途径
     private int course_sum;             // 总课时
-    private int course_type;            // 课程类型
+    private int course_type;            // 课程类型(1必修，2选修，3实训，4公开)
     private double course_price;        // 课程价格
     private int course_finish;          // 已完成课时
 

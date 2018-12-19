@@ -10,10 +10,18 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fstech.yzedutc.R;
 import com.fstech.yzedutc.bean.LessonBean;
+import com.fstech.yzedutc.util.CallBackUtil;
 import com.fstech.yzedutc.util.Constant;
+import com.fstech.yzedutc.util.OkhttpUtil;
+
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +30,7 @@ import java.util.Map;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+import okhttp3.Call;
 
 /**
  * Created by shaoxin on 18-4-11.
@@ -44,7 +53,7 @@ public class LessonLearnActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_lesson_learn);
         initView();
         initData();
-
+        setKnowledgeList();
     }
 
     /*
@@ -72,20 +81,43 @@ public class LessonLearnActivity extends AppCompatActivity implements View.OnCli
         Intent intent = getIntent();
         lb = (LessonBean) intent.getSerializableExtra("lb");
         tv_title.setText(lb.getLesson_title());
-        String url = Constant.BASE_VIDEO_URL + lb.getLesson_video_url();
-//        Log.e("url", url);
-//        String url = "rtmp://22280.livepush.myqcloud.com/live/22280_9600f698362d11e892905cb9018cf0d4?bizid=22280";
+        String url = lb.getLesson_video_url();
         player.setUp(url, JCVideoPlayer.SCREEN_LAYOUT_LIST, "");
+    }
 
-        Map<String, String> map0 = new HashMap<>();
-        map0.put("knowledge", "Java是一种跨平台的语言");
-        Map<String, String> map1 = new HashMap<>();
-        map1.put("knowledge", "Java的跨平台体现在JVM虚拟机的机制上面");
-        Map<String, String> map2 = new HashMap<>();
-        map2.put("knowledge", "Java有Java SE，Java EE和Java ME三种主要平台");
-        listItems.add(map0);
-        listItems.add(map1);
-        listItems.add(map2);
+    private void setKnowledgeList() {
+        String url = Constant.BASE_DB_URL + "course/knowledgeList";
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("lesson_id", lb.getLesson_id() + "");
+        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Log.e("error", "okHttpRequestError");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int result_code = jsonObject.getInt("result_code");
+                    if (result_code == 0) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            Map<String, String> contentMap = new HashMap<>();
+                            contentMap.put("knowledge", jsonArray.get(i).toString());
+                            listItems.add(contentMap);
+                        }
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(LessonLearnActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    Log.e("json", e.getLocalizedMessage());
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /*
@@ -116,11 +148,14 @@ public class LessonLearnActivity extends AppCompatActivity implements View.OnCli
             case R.id.ll_exercise:
                 Log.e("click", "exercise");
                 Intent intent = new Intent(LessonLearnActivity.this, ExamActivity.class);
+                intent.putExtra("lesson_id", lb.getLesson_id());
+                intent.putExtra("course_id", lb.getCourse_id());
                 startActivity(intent);
                 break;
             case R.id.ll_disscuss:
                 Log.e("click", "disscuss");
                 Intent intent1 = new Intent(LessonLearnActivity.this, CourseDisscussActivity.class);
+                intent1.putExtra("lesson_id", lb.getLesson_id());
                 startActivity(intent1);
                 break;
             default:

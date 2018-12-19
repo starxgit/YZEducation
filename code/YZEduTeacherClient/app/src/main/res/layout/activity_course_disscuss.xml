@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -31,236 +31,33 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/tv_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:textColor="@color/Write"
-            android:text="@string/new_disscuss" />
+            android:text="@string/new_disscuss"
+            android:textColor="@color/Write" />
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_marginTop="20dp"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/lv_communication"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent" />
 
-            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/header_01"
-                app:qmui_border_width="0dp"
-                app:qmui_is_circle="true" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="荀况"
-                android:textColor="@color/text_black3" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/delete"
-                android:textColor="@color/grey_blue" />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:maxLines="2"
-            android:text="JAVA和C有什么不同？是不是要学过C再学Java？"
-            android:textColor="@color/text_black6" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="2018-04-07 14:03:11"
-                android:textColor="@color/text_black9"
-                android:textSize="12sp" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/comment" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="15dp"
-                android:text="3"
-                android:textColor="@color/grey_blue" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/dianzan" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="6"
-                android:textColor="@color/grey_blue" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <View
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_marginTop="200dp"
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/line_d6" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:orientation="horizontal">
-
-            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/header_02"
-                app:qmui_border_width="0dp"
-                app:qmui_is_circle="true" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="梦奇"
-                android:textColor="@color/text_black3" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/delete"
-                android:visibility="gone"
-                android:textColor="@color/grey_blue" />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:maxLines="2"
-            android:text="老师讲课讲的很清楚"
-            android:textColor="@color/text_black6" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="2018-04-03 19:12:56"
-                android:textColor="@color/text_black9"
-                android:textSize="12sp" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/comment" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="15dp"
-                android:text="2"
-                android:textColor="@color/grey_blue" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/dianzan" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="10"
-                android:textColor="@color/grey_blue" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/line_d6" />
-
+        android:layout_height="wrap_content" />
 </LinearLayout>

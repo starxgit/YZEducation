@@ -11,9 +11,7 @@ import android.widget.TextView;
 
 import com.fstech.yzedutc.R;
 import com.fstech.yzedutc.bean.CourseBean;
-import com.fstech.yzedutc.util.DownloadTools;
 import com.fstech.yzedutc.util.ImageUitl;
-import com.fstech.yzedutc.util.ThreadUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 public class CourseGridAdapter extends BaseAdapter {
@@ -76,21 +74,7 @@ public class CourseGridAdapter extends BaseAdapter {
         vh.course_name.setText(str_course_name);
         vh.course_learn.setText(str_course_learn_student + str_course_sum_student + " 人学习");
         vh.course_sum.setText("共 " + str_course_sum + " 课时");
-
-        final ViewHolder finalVh = vh;
-        ThreadUtil.runInThread(new Runnable() {
-            @Override
-            public void run() {
-                int state = DownloadTools.downloadImg(str_course_iamge);
-                ThreadUtil.runInUIThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ImageUitl.SimpleShowImage(str_course_iamge, finalVh.course_image);
-                    }
-                });
-            }
-        });
-
+        ImageUitl.showNetImage(vh.course_image,str_course_iamge);
         return convertView;
     }
 

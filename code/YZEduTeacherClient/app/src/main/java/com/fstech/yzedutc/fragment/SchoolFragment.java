@@ -1,24 +1,55 @@
 package com.fstech.yzedutc.fragment;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fstech.yzedutc.R;
+import com.fstech.yzedutc.activity.AllInformationActivity;
+import com.fstech.yzedutc.activity.InformationDetailActivity;
+import com.fstech.yzedutc.activity.LoginActivity;
 import com.fstech.yzedutc.adapter.AnnouncementListAdapter;
 import com.fstech.yzedutc.adapter.InformationListAdapter;
+import com.fstech.yzedutc.application.YZEduApplication;
 import com.fstech.yzedutc.bean.AnnouncementBean;
 import com.fstech.yzedutc.bean.InformationBean;
+import com.fstech.yzedutc.bean.SchoolBean;
+import com.fstech.yzedutc.util.CallBackUtil;
+import com.fstech.yzedutc.util.Constant;
+import com.fstech.yzedutc.util.ImageUitl;
+import com.fstech.yzedutc.util.OkhttpUtil;
 import com.fstech.yzedutc.view.MyListView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.Call;
 
 /**
  * Created by shaoxin on 18-3-25.
@@ -33,11 +64,14 @@ public class SchoolFragment extends Fragment {
     private RelativeLayout re_school_background;
     private MyListView lv_information;
     private MyListView lv_announcement;
-    private MyListView lv_circle;
+//    private MyListView lv_circle;
     private InformationListAdapter information_adapter;
     private List<InformationBean> listItems_information;
     private AnnouncementListAdapter announcement_adapter;
     private List<AnnouncementBean> listItems_announcement;
+    private YZEduApplication application;
+    private LinearLayout ll_more_information;
+//    private RelativeLayout re_more_circle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,8 +82,23 @@ public class SchoolFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        checkLogin();
         initView();
         initData();
+    }
+
+    /*
+    * 判断用户是否已登录
+    * 登录后才可见
+    * */
+    private void checkLogin() {
+        application = (YZEduApplication) getActivity().getApplication();
+        if (application.getToken() == null) {
+            Toast.makeText(getActivity(), R.string.please_login_first, Toast.LENGTH_SHORT).show();
+            // 转到登录页
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     /*
@@ -63,14 +112,17 @@ public class SchoolFragment extends Fragment {
         tabhost = (TabHost) getActivity().findViewById(R.id.main_school_tab);
         lv_information = (MyListView) getActivity().findViewById(R.id.lv_school_information);
         lv_announcement = (MyListView) getActivity().findViewById(R.id.lv_school_announcement);
-        lv_circle = (MyListView) getActivity().findViewById(R.id.lv_school_circle);
+//        lv_circle = (MyListView) getActivity().findViewById(R.id.lv_school_circle);
         re_school_background = (RelativeLayout) getActivity().findViewById(R.id.re_school_background);
+        ll_more_information = (LinearLayout) getActivity().findViewById(R.id.ll_more_information);
+//        re_more_circle = (RelativeLayout) getActivity().findViewById(R.id.re_more_circle);
+
         //调用 TabHost.setup()
         tabhost.setup();
         //创建Tab标签
-        tabhost.addTab(tabhost.newTabSpec("one").setIndicator("资讯").setContent(R.id.ll_school_information));
         tabhost.addTab(tabhost.newTabSpec("two").setIndicator("公告").setContent(R.id.ll_school_announcement));
-        tabhost.addTab(tabhost.newTabSpec("three").setIndicator("学友圈").setContent(R.id.ll_school_circle));
+        tabhost.addTab(tabhost.newTabSpec("one").setIndicator("资讯").setContent(R.id.ll_school_information));
+//        tabhost.addTab(tabhost.newTabSpec("three").setIndicator("学友圈").setContent(R.id.ll_school_circle));
 
         listItems_information = new ArrayList<InformationBean>();
         information_adapter = new InformationListAdapter(getActivity(), listItems_information);
@@ -79,6 +131,26 @@ public class SchoolFragment extends Fragment {
         listItems_announcement = new ArrayList<AnnouncementBean>();
         announcement_adapter = new AnnouncementListAdapter(getActivity(), listItems_announcement);
         lv_announcement.setAdapter(announcement_adapter);
+
+        lv_information.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                InformationBean ib = listItems_information.get(i);
+                Intent intent = new Intent(getActivity(), InformationDetailActivity.class);
+                intent.putExtra("ib", ib);
+                intent.putExtra("type", 1);
+                startActivity(intent);
+            }
+        });
+
+        ll_more_information.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AllInformationActivity.class);
+                intent.putExtra("type", 1);
+                startActivity(intent);
+            }
+        });
     }
 
     /*
@@ -87,31 +159,173 @@ public class SchoolFragment extends Fragment {
     * 无返回
     * */
     private void initData() {
-        tv_school_name.setText("高等院校01");
+        if (application.getUser_type() == 1) {
 
-        InformationBean ib = new InformationBean(1, "学院开设新的大数据课程",
-                "响应大数据的发展,我们院校将开设大数据的课程。", "2018-04-13", "570360ca00010eeb06000338-240-135.jpg", null);
-        InformationBean ib2 = new InformationBean(2, "阿里云助力弹性伸缩服务",
-                "阿里云助力弹性伸缩服务，同学们可以借此机会学习这类课程，深入了解一下弹性伸缩服务。", "2018-04-10", "57466be500018b8006000338-240-135.jpg", null);
-        InformationBean ib3 = new InformationBean(3, "关于评选先进团支部的通知",
-                "我们学院将组织评选2017年度的优秀团支部，希望各个团支部都踊跃报名。", "2018-04-09", null, null);
-        listItems_information.add(ib);
-        listItems_information.add(ib2);
-        listItems_information.add(ib3);
+            String token = application.getToken();
+            Log.e("token",token);
+            setInformations(token);
+            setAnnouncements(token);
+            setSchoolInfo(token);
+        } else {
+            tv_school_name.setText("无登录用户院校信息");
+        }
 
+    }
 
-        AnnouncementBean ab = new AnnouncementBean(1, "大三学生体测通知", "教育部将与4月17号对我校的大三学生进行体质考察抽测，希望大家做好充分准备。", 1,
-                "2018-04-05");
-        AnnouncementBean ab1 = new AnnouncementBean(2, "停水通知", "由于学校所在路线的水管维修修。明天8点到20点停水，请同学们做好水源储备。", 0,
-                "2018-04-01");
-        AnnouncementBean ab2 = new AnnouncementBean(3, "开发选课平台通知", "第二轮选课将与3月29到4月1号开启，希望大家根据自己的学分情况进行选课。", 0,
-                "2018-03-29");
-        AnnouncementBean ab3 = new AnnouncementBean(4, "大学生CET4/CET6考试报名通知", "大学生英语CET4/CET6考试报名已经开设了，请要参加的同学尽快完成考试报名。", 0,
-                "2018-03-25");
-        listItems_announcement.add(ab);
-        listItems_announcement.add(ab1);
-        listItems_announcement.add(ab2);
-        listItems_announcement.add(ab3);
+    /**
+     * 设置院校基本信息的方法
+     *
+     * @author shaoxin
+     * @date 2018-11-17
+     */
+    private void setSchoolInfo(String token) {
+        String url = Constant.BASE_DB_URL + "school/schoolInfo";
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("token", token);
+        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Toast.makeText(getActivity(), R.string.server_response_error, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int result_code = jsonObject.getInt("result_code");
+                    if (result_code == 0) {
+                        // 返回正确的情况
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        SchoolBean schoolBean = objectMapper.readValue(jsonObject.get("return_data").toString(),
+                                SchoolBean.class);
+                        tv_school_name.setText(schoolBean.getSchool_name());
+                        ImageUitl.showNetImage(iv_school_image,schoolBean.getSchool_badge());
+                        ImageUitl.setBackground(re_school_background,schoolBean.getSchool_background());
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    Log.e("Json", e.getMessage());
+                    e.printStackTrace();
+                } catch (JsonParseException e) {
+                    Log.e("error", e.getMessage());
+                    e.printStackTrace();
+                } catch (JsonMappingException e) {
+                    e.printStackTrace();
+                    Log.e("error", e.getMessage());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("error", e.getMessage());
+                }
+            }
+        });
+    }
+
+    /*
+    * 设置资讯列表
+    * */
+    private void setInformations(String token) {
+        String url = Constant.BASE_DB_URL + "school/information";
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("page", "1");
+        map.put("token", token);
+        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Toast.makeText(getActivity(), R.string.server_response_error, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int result_code = jsonObject.getInt("result_code");
+                    if (result_code == 0) {
+                        // 返回正确的情况
+                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jobj = jsonArray.getJSONObject(i);
+                            InformationBean ib = objectMapper.readValue(jobj.toString(), InformationBean.class);
+                            listItems_information.add(ib);
+                        }
+                        information_adapter.notifyDataSetChanged();
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    Log.e("Json", e.getMessage());
+                    e.printStackTrace();
+                } catch (JsonParseException e) {
+                    Log.e("error", e.getMessage());
+                    e.printStackTrace();
+                } catch (JsonMappingException e) {
+                    e.printStackTrace();
+                    Log.e("error", e.getMessage());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("error", e.getMessage());
+                }
+            }
+        });
+    }
+
+    /*
+    * 设置公告列表
+    * */
+    private void setAnnouncements(String token) {
+        String url = Constant.BASE_DB_URL + "school/announcement";
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("token", token);
+        OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Toast.makeText(getActivity(), R.string.server_response_error, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int result_code = jsonObject.getInt("result_code");
+                    if (result_code == 0) {
+                        // 返回正确的情况
+                        JSONArray jsonArray = jsonObject.getJSONArray("return_data");
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jobj = jsonArray.getJSONObject(i);
+                            AnnouncementBean ab = objectMapper.readValue(jobj.toString(), AnnouncementBean.class);
+                            listItems_announcement.add(ab);
+                        }
+                        announcement_adapter.notifyDataSetChanged();
+                    } else {
+                        String message = jsonObject.getString("message");
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    Log.e("Json", e.getMessage());
+                    e.printStackTrace();
+                } catch (JsonParseException e) {
+                    Log.e("error", e.getMessage());
+                    e.printStackTrace();
+                } catch (JsonMappingException e) {
+                    e.printStackTrace();
+                    Log.e("error", e.getMessage());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("error", e.getMessage());
+                }
+            }
+        });
+    }
+
+    /*
+    * 设置学友圈列表
+    * */
+    private void setCircleList() {
+
     }
 
 }

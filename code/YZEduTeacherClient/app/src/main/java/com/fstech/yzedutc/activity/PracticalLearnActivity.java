@@ -2,6 +2,7 @@ package com.fstech.yzedutc.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,10 +21,8 @@ import com.fstech.yzedutc.bean.CourseBean;
 import com.fstech.yzedutc.bean.LessonBean;
 import com.fstech.yzedutc.util.CallBackUtil;
 import com.fstech.yzedutc.util.Constant;
-import com.fstech.yzedutc.util.DownloadTools;
 import com.fstech.yzedutc.util.ImageUitl;
 import com.fstech.yzedutc.util.OkhttpUtil;
-import com.fstech.yzedutc.util.ThreadUtil;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -53,6 +53,8 @@ public class PracticalLearnActivity extends AppCompatActivity implements View.On
     private CourseBean cb;
     private List<LessonBean> listItems;
     private LessonListAdapter adapter_lesson;
+    private ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,6 +81,7 @@ public class PracticalLearnActivity extends AppCompatActivity implements View.On
         ll_material = (LinearLayout) findViewById(R.id.ll_material);
         ll_detail = (LinearLayout) findViewById(R.id.ll_detail);
         lv_catalog = (ListView) findViewById(R.id.lv_catalog);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         listItems = new ArrayList<>();
         adapter_lesson = new LessonListAdapter(PracticalLearnActivity.this, listItems);
         lv_catalog.setAdapter(adapter_lesson);
@@ -106,19 +109,7 @@ public class PracticalLearnActivity extends AppCompatActivity implements View.On
         Intent intent = getIntent();
         cb = (CourseBean) intent.getSerializableExtra("cb");
         tv_title.setText(cb.getCourse_name());
-        final String str_course_cover = cb.getCourse_cover();
-        ThreadUtil.runInThread(new Runnable() {
-            @Override
-            public void run() {
-                int state = DownloadTools.downloadImg(str_course_cover);
-                ThreadUtil.runInUIThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ImageUitl.SimpleShowImage(str_course_cover, iv_course_cover);
-                    }
-                });
-            }
-        });
+        ImageUitl.showNetImage(iv_course_cover,cb.getCourse_cover());
         getCatalogs(cb.getCourse_id() + "");
     }
 
@@ -128,13 +119,15 @@ public class PracticalLearnActivity extends AppCompatActivity implements View.On
    * 无返回
    * */
     private void getCatalogs(String course_id) {
-        String url = Constant.BASE_DB_URL + "CourseCatalog";
+        progressBar.setVisibility(View.VISIBLE);
+        String url = Constant.BASE_DB_URL + "course/catalog";
         Map<String, String> map = new HashMap<String, String>();
         map.put("course_id", course_id);
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
                 Log.e("fail", "okhttp请求失败");
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -169,6 +162,8 @@ public class PracticalLearnActivity extends AppCompatActivity implements View.On
                 } catch (IOException e) {
                     Log.e("IO", e.getLocalizedMessage());
                     e.printStackTrace();
+                }finally {
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
@@ -185,7 +180,7 @@ public class PracticalLearnActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.ll_detail:
                 Log.e("click", "overview");
-                Intent intent3 = new Intent(PracticalLearnActivity.this, CourseOverViewActivity.class);
+                Intent intent3 = new Intent(PracticalLearnActivity.this, CourseIntroduceActivity.class);
                 intent3.putExtra("course_id", cb.getCourse_id() + "");
                 startActivity(intent3);
                 break;

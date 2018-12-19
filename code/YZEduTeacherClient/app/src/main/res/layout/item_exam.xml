@@ -1,57 +1,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="15dp"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="15dp">
 
     <TextView
         android:id="@+id/tv_question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="1.关于Java应用程序的main方法，下面哪个是正确的写法" />
-    
-    <RadioGroup 
+
+    <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/rg_answer"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:layout_marginTop="10dp">
 
-        <RadioButton
+        <TextView
             android:id="@+id/radioButton1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:text="public Static void main(String args[])" />
-        
-        <RadioButton
+            android:layout_marginTop="10dp"
+            android:text="public Static void main(String args[])"
+            android:textColor="@color/text_black3"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_marginTop="10dp"
             android:id="@+id/radioButton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:text="private static void main(String args[])" />
-        
-        <RadioButton
+            android:text="private static void main(String args[])"
+            android:textColor="@color/text_black3"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_marginTop="10dp"
             android:id="@+id/radioButton3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:text="public static void Main(string args[])" />
-        
-        <RadioButton
+            android:text="public static void Main(string args[])"
+            android:textColor="@color/text_black3"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_marginTop="10dp"
             android:id="@+id/radioButton4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:text="public static void main(String args[])" />
+            android:text="public static void main(String args[])"
+            android:textColor="@color/text_black3"
+            android:textSize="14sp" />
 
-    </RadioGroup>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_ans"
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/textView1"
@@ -64,19 +72,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="D" />
-        
-         <TextView
+
+        <TextView
             android:id="@+id/textView3"
-            android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
             android:text="正确率：" />
 
         <TextView
             android:id="@+id/tv_myans"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="76%" />
+            android:text="18/45" />
 
     </LinearLayout>
 

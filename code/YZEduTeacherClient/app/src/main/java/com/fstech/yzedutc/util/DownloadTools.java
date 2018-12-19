@@ -1,6 +1,8 @@
 package com.fstech.yzedutc.util;
 
 
+import java.io.File;
+
 public class DownloadTools {
     public static int downloadImg(final String fileurl) {
         return new FileDownloader().downloadFile("yzedu/images/", fileurl,

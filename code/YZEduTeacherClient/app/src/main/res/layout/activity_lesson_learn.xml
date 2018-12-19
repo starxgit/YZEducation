@@ -30,16 +30,6 @@
             android:textColor="@color/qmui_config_color_white"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="15dp"
-            android:text="@string/edit"
-            android:textColor="@color/Write" />
-
     </RelativeLayout>
 
     <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard

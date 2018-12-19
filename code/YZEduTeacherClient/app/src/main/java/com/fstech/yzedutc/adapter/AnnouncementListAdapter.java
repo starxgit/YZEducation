@@ -12,6 +12,7 @@ import com.fstech.yzedutc.bean.AnnouncementBean;
 
 import java.util.List;
 
+
 /**
  * Created by shaoxin on 18-3-25.
  * 资讯列表的适配器
@@ -77,7 +78,7 @@ public class AnnouncementListAdapter extends BaseAdapter {
             vh.tv_isstick.setVisibility(View.GONE);
         }
 
-        vh.tv_announcement_date.setText(ab.getAnnouncement_date());
+        vh.tv_announcement_date.setText(ab.getAnnouncement_date().substring(0,10));
         vh.tv_announcement_title.setText(ab.getAnnouncement_title());
         vh.tv_announcement_content.setText(ab.getAnnouncement_content());
 

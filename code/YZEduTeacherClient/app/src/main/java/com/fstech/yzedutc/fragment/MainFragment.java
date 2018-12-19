@@ -2,6 +2,7 @@ package com.fstech.yzedutc.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,21 +11,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.fstech.yzedutc.R;
+import com.fstech.yzedutc.activity.AllInformationActivity;
 import com.fstech.yzedutc.activity.CourseIntroduceActivity;
+import com.fstech.yzedutc.activity.InformationDetailActivity;
 import com.fstech.yzedutc.adapter.InformationListAdapter;
 import com.fstech.yzedutc.bean.BannerBean;
 import com.fstech.yzedutc.bean.InformationBean;
 import com.fstech.yzedutc.util.CallBackUtil;
 import com.fstech.yzedutc.util.Constant;
-import com.fstech.yzedutc.util.DownloadTools;
 import com.fstech.yzedutc.util.ImageUitl;
 import com.fstech.yzedutc.util.OkhttpUtil;
-import com.fstech.yzedutc.util.ThreadUtil;
 import com.fstech.yzedutc.view.MyListView;
 import com.oragee.banners.BannerView;
 
@@ -56,8 +59,7 @@ public class MainFragment extends Fragment {
     private MyListView lv_information;
     private InformationListAdapter adapter;
     private List<InformationBean> listItems_information;
-    private ScrollView sv_main;
-    private Handler handler;
+    private RelativeLayout re_more_info;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,24 +73,6 @@ public class MainFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         initView();
         initData();
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    // banner 数据加载完成
-                    case 0:
-                        setBanner();
-                        break;
-                    // 资讯数据加载完成
-                    case 1:
-                        Log.e("informationsize", listItems_information.size() + "");
-                        adapter.notifyDataSetChanged();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
     }
 
     /*
@@ -100,11 +84,30 @@ public class MainFragment extends Fragment {
         vp_banner = (BannerView) getActivity().findViewById(R.id.vp_banner);
         viewList = new ArrayList<View>();
         lv_information = (MyListView) getActivity().findViewById(R.id.lv_information);
-        sv_main = (ScrollView) getActivity().findViewById(R.id.sv_main);
         listItems_information = new ArrayList<InformationBean>();
         adapter = new InformationListAdapter(getActivity(), listItems_information);
         lv_information.setAdapter(adapter);
         listItems_banner = new ArrayList<BannerBean>();
+        re_more_info = (RelativeLayout) getActivity().findViewById(R.id.re_more_info);
+        re_more_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),AllInformationActivity.class);
+                intent.putExtra("type", 0);
+                startActivity(intent);
+            }
+        });
+
+        lv_information.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                InformationBean ib = listItems_information.get(i);
+                Intent intent = new Intent(getActivity(), InformationDetailActivity.class);
+                intent.putExtra("ib", ib);
+                intent.putExtra("type", 0);
+                startActivity(intent);
+            }
+        });
     }
 
     /*
@@ -130,30 +133,15 @@ public class MainFragment extends Fragment {
             final int type = b.getBanner_type();
             final String link = b.getBanner_link();
             final String banner_image = b.getBanner_image();
-
             final ImageView image = new ImageView(getActivity());
             image.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             //设置显示格式
             image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-            // 使用线程工具类设置banner图片
-            ThreadUtil.runInThread(new Runnable() {
-                @Override
-                public void run() {
-                    int state = DownloadTools.downloadImg(banner_image);
-//                    Log.e("im3", state + "");
-                    ThreadUtil.runInUIThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ImageUitl.SimpleShowImage(banner_image, image);
-                        }
-                    });
-                }
-            });
+            // 使用okhttp加载图片
+            ImageUitl.showNetImage(image,banner_image);
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO 点击banner后的事件
                     if (type == 2) {
                         // 课程广告
                         Intent intent = new Intent(getActivity(), CourseIntroduceActivity.class);
@@ -183,8 +171,8 @@ public class MainFragment extends Fragment {
     * 无参数
     * 无返回
     * */
-    private void getBanners() {
-        String url = Constant.BASE_DB_URL + "PlatformInformations";
+    private void getInformations() {
+        String url = Constant.BASE_DB_URL + "platform/information";
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", "1");
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
@@ -195,7 +183,6 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onResponse(String response) {
-                Log.e("response", response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     int result_code = jsonObject.getInt("result_code");
@@ -204,28 +191,27 @@ public class MainFragment extends Fragment {
                         JSONArray jsonArray = jsonObject.getJSONArray("return_data");
                         ObjectMapper objectMapper = new ObjectMapper();
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            Log.e("informationsize", listItems_information.size() + "," + i + "," + jsonArray.length());
                             JSONObject jobj = jsonArray.getJSONObject(i);
                             InformationBean ib = objectMapper.readValue(jobj.toString(), InformationBean.class);
                             listItems_information.add(ib);
                         }
-                        handler.sendMessage(handler.obtainMessage(1));
+                        adapter.notifyDataSetChanged();
                     } else {
                         String message = jsonObject.getString("message");
                         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
-                    Log.e("Json", "创建Json对象失败");
+                    Log.e("Json", e.getMessage());
                     e.printStackTrace();
                 } catch (JsonParseException e) {
-                    Log.e("error", "包装异常");
+                    Log.e("error", e.getMessage());
                     e.printStackTrace();
                 } catch (JsonMappingException e) {
                     e.printStackTrace();
-                    Log.e("error", "PlatFormMapping异常");
+                    Log.e("error", e.getMessage());
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.e("error", "IO异常");
+                    Log.e("error", e.getMessage());
                 }
             }
         });
@@ -236,8 +222,8 @@ public class MainFragment extends Fragment {
     * 无参数
     * 无返回
     * */
-    private void getInformations() {
-        String url = Constant.BASE_DB_URL + "Banners";
+    private void getBanners() {
+        String url = Constant.BASE_DB_URL + "platform/banner";
         OkhttpUtil.okHttpGet(url, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -246,7 +232,6 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onResponse(String response) {
-                Log.e("response", response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     int result_code = jsonObject.getInt("result_code");
@@ -259,7 +244,7 @@ public class MainFragment extends Fragment {
                             BannerBean bannerBean = objectMapper.readValue(jobj.toString(), BannerBean.class);
                             listItems_banner.add(bannerBean);
                         }
-                        handler.sendMessage(handler.obtainMessage(0));
+                        setBanner();
                     } else {
                         String message = jsonObject.getString("message");
                         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();

@@ -5,12 +5,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
+import com.fstech.yzedutc.fragment.LearnFragment;
 import com.fstech.yzedutc.fragment.LiveFragment;
-import com.fstech.yzedutc.fragment.TeachFragment;
 import com.fstech.yzedutc.fragment.MainFragment;
 import com.fstech.yzedutc.fragment.PersonFragment;
 import com.fstech.yzedutc.fragment.SchoolFragment;
 import com.fstech.yzedutc.util.Constant;
+
 
 /**
  * Created by shaoxin on 18-3-25.
@@ -22,7 +23,7 @@ public class MyFragmentAdapter extends FragmentPagerAdapter {
     private final int PAGER_COUNT = 5;
     private MainFragment myFragment0 = null;
     private LiveFragment myFragment1 = null;
-    private TeachFragment myFragment2 = null;
+    private LearnFragment myFragment2 = null;
     private SchoolFragment myFragment3 = null;
     private PersonFragment myFragment4 = null;
 
@@ -30,7 +31,7 @@ public class MyFragmentAdapter extends FragmentPagerAdapter {
         super(fm);
         myFragment0 = new MainFragment();
         myFragment1 = new LiveFragment();
-        myFragment2 = new TeachFragment();
+        myFragment2 = new LearnFragment();
         myFragment3 = new SchoolFragment();
         myFragment4 = new PersonFragment();
     }

@@ -1,141 +1,129 @@
 package com.fstech.yzedutc.adapter;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 import com.fstech.yzedutc.R;
+import com.fstech.yzedutc.bean.MyExamBean;
+import com.fstech.yzedutc.util.CallBackUtil;
+import com.fstech.yzedutc.util.Constant;
+import com.fstech.yzedutc.util.OkhttpUtil;
+import com.fstech.yzedutc.util.TokenUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import okhttp3.Call;
 
 
-public class ExamAdapter extends BaseAdapter{
-	private Context context;
-	private List<Map<String,Object>> listItems;
-	private List<Map<String,Object>> answers;
-	private LayoutInflater listContainer;
+public class ExamAdapter extends BaseAdapter {
+    private Context context;
+    private List<MyExamBean> listItems;
+    private LayoutInflater listContainer;
+    private int isDo;
+    private List<Map<String, Object>> answer_list;
+    private int course_id;
 
-	public final class ListItemView{
-		public TextView tv_question;
-		public RadioGroup rg_answer;
-		public RadioButton rd_a;
-		public RadioButton rd_b;
-		public RadioButton rd_c;
-		public RadioButton rd_d;
-		public TextView tv_myans;
-		public TextView tv_trueans;
-		public LinearLayout ll_ans;
-	}
+    private final static String[] tempA = {"D", "A", "A", "JVM虚拟机",""};
+    private final static String[] tempB = {"1/3", "3/3", "2/3", "3/3",""};
 
-	public ExamAdapter(Context context,List<Map<String,Object>> listItems,List<Map<String,Object>> answers) {
-		this.context = context;
-		listContainer = LayoutInflater.from(context);
-		this.listItems = listItems;
-		this.answers=answers;
-	}
+    public final class ListItemView {
+        public TextView tv_question;
+        public TextView rd_a;
+        public TextView rd_b;
+        public TextView rd_c;
+        public TextView rd_d;
+        public TextView tv_myans;
+        public TextView tv_trueans;
+        public LinearLayout ll_ans;
+        private LinearLayout rg_answer;
+    }
 
-	@Override
-	public int getCount() {
-		return listItems.size();
-	}
+    public ExamAdapter(Context context, List<MyExamBean> listItems, int isDo, int course_id,
+                       List<Map<String, Object>> answer_list) {
+        this.context = context;
+        listContainer = LayoutInflater.from(context);
+        this.listItems = listItems;
+        this.isDo = isDo;
+        this.answer_list = answer_list;
+        this.course_id = course_id;
+    }
 
-	@Override
-	public Object getItem(int position) {
-		return null;
-	}
+    @Override
+    public int getCount() {
+        return listItems.size();
+    }
 
-	@Override
-	public long getItemId(int position) {
-		return 0;
-	}
+    @Override
+    public Object getItem(int position) {
+        return null;
+    }
 
-	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
-		ListItemView lv = null;
-		if(convertView ==null){
-			lv = new ListItemView();
-			convertView = listContainer.inflate(R.layout.item_exam, null);
-			//获得控件对象
-			lv.tv_question=(TextView) convertView.findViewById(R.id.tv_question);
-			lv.rg_answer=(RadioGroup) convertView.findViewById(R.id.rg_answer);
-			lv.rd_a=(RadioButton) convertView.findViewById(R.id.radioButton1);
-			lv.rd_b=(RadioButton) convertView.findViewById(R.id.radioButton2);
-			lv.rd_c=(RadioButton) convertView.findViewById(R.id.radioButton3);
-			lv.rd_d=(RadioButton) convertView.findViewById(R.id.radioButton4);
-			lv.tv_trueans=(TextView) convertView.findViewById(R.id.tv_trueans);
-			lv.tv_myans=(TextView) convertView.findViewById(R.id.tv_myans);
-			lv.ll_ans=(LinearLayout) convertView.findViewById(R.id.ll_ans);
-			//设置空间集到convertView
-			String trueans=listItems.get(position).get("trueans").toString();
-			if(trueans.equals("no")){
-				lv.ll_ans.setVisibility(View.GONE);
-			}else{
-				lv.ll_ans.setVisibility(View.VISIBLE);
-				lv.tv_trueans.setText(listItems.get(position).get("trueans").toString());
-				lv.tv_myans.setText(listItems.get(position).get("myans").toString());
-			}
-			String question=listItems.get(position).get("question").toString();
-			String A="A. "+listItems.get(position).get("A").toString();
-			String B="B. "+listItems.get(position).get("B").toString();
-			String C="C. "+listItems.get(position).get("C").toString();
-			String D="D. "+listItems.get(position).get("D").toString();
-			final String exam_id=listItems.get(position).get("exam_id").toString();
-			lv.tv_question.setText(question);
-			lv.rd_a.setText(A);
-			lv.rd_b.setText(B);
-			lv.rd_c.setText(C);
-			lv.rd_d.setText(D);
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
 
-			lv.rd_a.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-//					Log.e("A", A);
-					answers.get(position).clear();
-					answers.get(position).put("ms", "A");
-					answers.get(position).put("exam_id", exam_id);
-				}
-			});
-			lv.rd_b.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-//					Log.e("B", B);
-					answers.get(position).clear();
-					answers.get(position).put("ms", "B");
-					answers.get(position).put("exam_id", exam_id);
-				}
-			});
-			lv.rd_c.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-//					Log.e("C", C);
-					answers.get(position).clear();
-					answers.get(position).put("ms", "C");
-					answers.get(position).put("exam_id", exam_id);
-				}
-			});
-			lv.rd_d.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-//					Log.e("D", D);
-					answers.get(position).clear();
-					answers.get(position).put("ms", "D");
-					answers.get(position).put("exam_id", exam_id);
-				}
-			});
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        ListItemView lv = null;
+        if (convertView == null) {
+            lv = new ListItemView();
+            convertView = listContainer.inflate(R.layout.item_exam, null);
+            //获得控件对象
+            lv.tv_question = (TextView) convertView.findViewById(R.id.tv_question);
+            lv.rd_a = (TextView) convertView.findViewById(R.id.radioButton1);
+            lv.rd_b = (TextView) convertView.findViewById(R.id.radioButton2);
+            lv.rd_c = (TextView) convertView.findViewById(R.id.radioButton3);
+            lv.rd_d = (TextView) convertView.findViewById(R.id.radioButton4);
+            lv.tv_trueans = (TextView) convertView.findViewById(R.id.tv_trueans);
+            lv.tv_myans = (TextView) convertView.findViewById(R.id.tv_myans);
+            lv.ll_ans = (LinearLayout) convertView.findViewById(R.id.ll_ans);
+            lv.rg_answer = (LinearLayout) convertView.findViewById(R.id.rg_answer);
+            //设置空间集到convertView
 
-			convertView.setTag(lv);
-		}else{
-			lv = (ListItemView) convertView.getTag();
-		}
-		return convertView;
-	}
+            final MyExamBean meb = listItems.get(position);   // 得到问题对象
+
+            if (meb.getExam_type() == 0) {
+                lv.rg_answer.setVisibility(View.VISIBLE);
+                lv.rd_a.setText("A. " + meb.getOption1());
+                lv.rd_b.setText("B. " + meb.getOption2());
+                lv.rd_c.setText("C. " + meb.getOption3());
+                lv.rd_d.setText("D. " + meb.getOption4());
+            } else {
+                lv.rg_answer.setVisibility(View.GONE);
+            }
+            // 必定显示内容
+            lv.tv_question.setText(position + 1 + "." + meb.getQuestion());  // 问题题目
+//            lv.tv_trueans.setText(meb.getAnswer());     // 正确答案
+//            lv.tv_myans.setText(meb.getStudent_ans());  // 我的答案
+
+            lv.tv_trueans.setText(tempA[position]);     // 正确答案
+            lv.tv_myans.setText(tempB[position]);  // 我的答案
+            convertView.setTag(lv);
+        } else {
+            lv = (ListItemView) convertView.getTag();
+        }
+        return convertView;
+    }
 
 }

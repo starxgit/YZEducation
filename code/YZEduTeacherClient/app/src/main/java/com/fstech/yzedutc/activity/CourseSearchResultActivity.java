@@ -24,6 +24,7 @@ import com.fstech.yzedutc.util.CacheActivityUtil;
 import com.fstech.yzedutc.util.CallBackUtil;
 import com.fstech.yzedutc.util.Constant;
 import com.fstech.yzedutc.util.OkhttpUtil;
+import com.fstech.yzedutc.util.TokenUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -52,7 +53,6 @@ public class CourseSearchResultActivity extends AppCompatActivity implements Vie
     private TextView tv_search;
     private EditText et_search;
     private String keyword;
-    private String user_id;
     private ListView lv_search_course;
     private CourseListAdapter adapter_course;
     private List<CourseBean> listItems_course;
@@ -60,7 +60,6 @@ public class CourseSearchResultActivity extends AppCompatActivity implements Vie
     private ProgressBar pb;
     private boolean isLoading;
     private int page;
-    private Handler handler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,25 +67,6 @@ public class CourseSearchResultActivity extends AppCompatActivity implements Vie
         setContentView(R.layout.activity_course_search_result);
         initView();
         initData();
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    // 课程列表数据加载完成
-                    case 0:
-                        if(listItems_course.size()==0){
-                            Toast.makeText(CourseSearchResultActivity.this,R.string.search_another_course,Toast.LENGTH_SHORT).show();
-                        }
-                        adapter_course.notifyDataSetChanged();
-                        isLoading = false;
-                        setLoading();
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        };
     }
 
     /*
@@ -98,7 +78,6 @@ public class CourseSearchResultActivity extends AppCompatActivity implements Vie
         CacheActivityUtil.addActivity(CourseSearchResultActivity.this);
         Intent intent = getIntent();
         keyword = intent.getStringExtra("keyword");
-        user_id = "1";
         page = 1;
         isLoading = true;
         tv_search = (TextView) findViewById(R.id.tv_search);
@@ -151,10 +130,11 @@ public class CourseSearchResultActivity extends AppCompatActivity implements Vie
     * */
     private void initData() {
         listItems_course.clear();
-        String url = Constant.BASE_DB_URL + "SearchCourse";
+        String url = Constant.BASE_DB_URL + "course/search";
+        String token = TokenUtil.getToken(CourseSearchResultActivity.this);
         Map<String, String> map = new HashMap<String, String>();
         map.put("keyword", keyword);
-        map.put("user_id", user_id);
+        map.put("token", token);
         map.put("page", page + "");
         OkhttpUtil.okHttpGet(url, map, new CallBackUtil.CallBackString() {
             @Override
@@ -177,11 +157,12 @@ public class CourseSearchResultActivity extends AppCompatActivity implements Vie
                         for (int i = 0; i < Constant.GRID_SIZE; i++) {
                             JSONObject jobj = jsonArray.getJSONObject(i);
                             CourseBean courseBean = objectMapper.readValue(jobj.toString(), CourseBean.class);
-                            // TODO 取消预定设置
-                            courseBean.setCourse_sum(Constant.ARR_COURSE_SUM_HOUR[courseBean.getCourse_id() % Constant.ARR_COURSE_SUM_HOUR.length]);
                             listItems_course.add(courseBean);
                         }
-                        handler.sendMessage(handler.obtainMessage(0));
+                        if(listItems_course.size()==0){
+                            Toast.makeText(CourseSearchResultActivity.this,R.string.search_another_course,Toast.LENGTH_SHORT).show();
+                        }
+                        adapter_course.notifyDataSetChanged();
                     } else {
                         String message = jsonObject.getString("message");
                         Toast.makeText(CourseSearchResultActivity.this, message, Toast.LENGTH_SHORT).show();
@@ -189,19 +170,18 @@ public class CourseSearchResultActivity extends AppCompatActivity implements Vie
                 } catch (JSONException e) {
                     Log.e("Json", e.getLocalizedMessage());
                     e.printStackTrace();
-                    handler.sendMessage(handler.obtainMessage(0));
                 } catch (JsonParseException e) {
                     Log.e("Json", "JSON包装成对象失败");
                     e.printStackTrace();
-                    handler.sendMessage(handler.obtainMessage(0));
                 } catch (JsonMappingException e) {
                     Log.e("error", "NewCourseMapping异常");
                     e.printStackTrace();
-                    handler.sendMessage(handler.obtainMessage(0));
                 } catch (IOException e) {
                     Log.e("error", "IO异常" + e.getLocalizedMessage());
                     e.printStackTrace();
-                    handler.sendMessage(handler.obtainMessage(0));
+                }finally {
+                    isLoading = false;
+                    setLoading();
                 }
 
             }
@@ -221,7 +201,6 @@ public class CourseSearchResultActivity extends AppCompatActivity implements Vie
         switch (view.getId()) {
             case R.id.tv_search:
                 reSearch();
-                hideKeyBoard();
                 break;
             default:
                 break;
@@ -232,9 +211,10 @@ public class CourseSearchResultActivity extends AppCompatActivity implements Vie
     * 重新搜索的方法
     * */
     private void reSearch() {
+        isLoading = true;
+        setLoading();
         hideKeyBoard();
         keyword = et_search.getText().toString();
-        Log.e("key", keyword);
         initData();
     }
 
