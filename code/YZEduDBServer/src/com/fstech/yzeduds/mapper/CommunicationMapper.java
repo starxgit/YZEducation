@@ -46,4 +46,7 @@ public interface CommunicationMapper {
 
     // 减少一条交流的评论数量
     public void decreCommentNum(@Param("comment_id") int comment_id);
+    
+    // 所有敏感词列表
+    public  List<String> sensitiveWordList();
 }

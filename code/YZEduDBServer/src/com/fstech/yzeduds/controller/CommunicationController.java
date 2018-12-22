@@ -1,6 +1,7 @@
 package com.fstech.yzeduds.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +19,7 @@ import com.fstech.yzeduds.model.CommunicationCommentBean;
 import com.fstech.yzeduds.model.UserBean;
 import com.fstech.yzeduds.util.ErrorCode;
 import com.fstech.yzeduds.util.ResponseUtil;
+import com.fstech.yzeduds.util.SensitiveWordUtil;
 import com.fstech.yzeduds.util.TokenUtil;
 
 @Controller
@@ -115,6 +117,11 @@ public class CommunicationController {
             @RequestParam String communication_content,
             @RequestParam int lesson_id, HttpServletResponse response) {
         int user_id = TokenUtil.decodeUserId(token);
+        // 敏感词过滤操作
+        List<String> sensitiveWordList = communicationDao.sensitiveWordList();
+        communication_content = SensitiveWordUtil.autoCheck(
+                communication_content, sensitiveWordList);
+        // 加入数据库
         int result = communicationDao.addCommunication(lesson_id, user_id,
                 communication_content);
         if (result > 0) {
@@ -135,14 +142,19 @@ public class CommunicationController {
             @RequestParam int communication_id, @RequestParam int reply_id,
             HttpServletResponse response) {
         int user_id = TokenUtil.decodeUserId(token);
-        int result = communicationDao.addComment(communication_id, user_id, reply_id, comment_content);
-        if(result>0){
+        // 敏感词过滤操作
+        List<String> sensitiveWordList = communicationDao.sensitiveWordList();
+        comment_content = SensitiveWordUtil.autoCheck(
+                comment_content, sensitiveWordList);
+        int result = communicationDao.addComment(communication_id, user_id,
+                reply_id, comment_content);
+        if (result > 0) {
             communicationDao.increCommentNum(communication_id);
             ResponseUtil.normalResponse(response, null);
-        }else{
+        } else {
             ResponseUtil
-            .errorResponse(response, null, ErrorCode.CODE_SYSTEM_ERROR,
-                    ErrorCode.MESSAGE_SYSTEM_ERROR);
+                    .errorResponse(response, null, ErrorCode.CODE_SYSTEM_ERROR,
+                            ErrorCode.MESSAGE_SYSTEM_ERROR);
         }
     }
 
@@ -176,7 +188,7 @@ public class CommunicationController {
     public void delComment(@RequestParam String token,
             @RequestParam int comment_id, HttpServletResponse response) {
         int user_id = TokenUtil.decodeUserId(token);
-        if(communicationDao.isMyComment(comment_id, user_id)>0){
+        if (communicationDao.isMyComment(comment_id, user_id) > 0) {
             int result = communicationDao.delComment(comment_id);
             if (result > 0) {
                 communicationDao.decreCommentNum(comment_id);
@@ -186,7 +198,7 @@ public class CommunicationController {
                         ErrorCode.CODE_SYSTEM_ERROR,
                         ErrorCode.MESSAGE_SYSTEM_ERROR);
             }
-        }else{
+        } else {
             ResponseUtil.errorResponse(response, null,
                     ErrorCode.CODE_NOT_YOUR_COMMENT,
                     ErrorCode.MESSAGE_NOT_YOUR_COMMENT);

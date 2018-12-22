@@ -6,7 +6,7 @@
 		select
 		communication_id,lesson_id,communication_author,communication_content,
 		comment_num,gmt_create as communication_time from communication where
-		lesson_id = #{lesson_id} and communication_del = 0 
+		lesson_id = #{lesson_id} and communication_del = 0
 		order by communication.gmt_modified desc
 	</select>
 
@@ -17,8 +17,10 @@
 		communication_comment_content,gmt_create as communication_comment_time
 		from communication_comment
 		where communication_id =
-		#{communication_id} and communication_comment_del = 0
-		order by communication_comment.gmt_modified desc
+		#{communication_id}
+		and communication_comment_del = 0
+		order by
+		communication_comment.gmt_modified desc
 	</select>
 
 	<!-- 添加课程交流 -->
@@ -77,6 +79,12 @@
 		1 where communication_id in (select communication_id
 		from
 		communication_comment where communication_comment_id =
-		#{comment_id} ) limit 1
+		#{comment_id} )
+		limit 1
 	</update>
+
+	<!-- 所有敏感词集合 -->
+	<select id="sensitiveWordList" resultType="String">
+		select distinct sensitive_word FROM sensitive_word;
+	</select>
 </mapper>

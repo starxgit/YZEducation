@@ -69,4 +69,9 @@ public class CommunicationDao implements CommunicationMapper {
         communicationMapper.decreCommentNum(communication_id);
     }
 
+    @Override
+    public List<String> sensitiveWordList() {
+        return communicationMapper.sensitiveWordList();
+    }
+
 }
