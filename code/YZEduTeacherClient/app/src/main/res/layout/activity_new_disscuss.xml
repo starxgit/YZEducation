@@ -47,6 +47,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_height="200dp"
         android:ems="10"
+        android:gravity="top"
         android:inputType="text" />
 
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton

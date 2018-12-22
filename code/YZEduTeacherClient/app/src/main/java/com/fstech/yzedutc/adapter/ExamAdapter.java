@@ -39,12 +39,6 @@ public class ExamAdapter extends BaseAdapter {
     private Context context;
     private List<MyExamBean> listItems;
     private LayoutInflater listContainer;
-    private int isDo;
-    private List<Map<String, Object>> answer_list;
-    private int course_id;
-
-    private final static String[] tempA = {"D", "A", "A", "JVM虚拟机",""};
-    private final static String[] tempB = {"1/3", "3/3", "2/3", "3/3",""};
 
     public final class ListItemView {
         public TextView tv_question;
@@ -58,14 +52,10 @@ public class ExamAdapter extends BaseAdapter {
         private LinearLayout rg_answer;
     }
 
-    public ExamAdapter(Context context, List<MyExamBean> listItems, int isDo, int course_id,
-                       List<Map<String, Object>> answer_list) {
+    public ExamAdapter(Context context, List<MyExamBean> listItems) {
         this.context = context;
         listContainer = LayoutInflater.from(context);
         this.listItems = listItems;
-        this.isDo = isDo;
-        this.answer_list = answer_list;
-        this.course_id = course_id;
     }
 
     @Override
@@ -100,29 +90,24 @@ public class ExamAdapter extends BaseAdapter {
             lv.ll_ans = (LinearLayout) convertView.findViewById(R.id.ll_ans);
             lv.rg_answer = (LinearLayout) convertView.findViewById(R.id.rg_answer);
             //设置空间集到convertView
-
-            final MyExamBean meb = listItems.get(position);   // 得到问题对象
-
-            if (meb.getExam_type() == 0) {
-                lv.rg_answer.setVisibility(View.VISIBLE);
-                lv.rd_a.setText("A. " + meb.getOption1());
-                lv.rd_b.setText("B. " + meb.getOption2());
-                lv.rd_c.setText("C. " + meb.getOption3());
-                lv.rd_d.setText("D. " + meb.getOption4());
-            } else {
-                lv.rg_answer.setVisibility(View.GONE);
-            }
-            // 必定显示内容
-            lv.tv_question.setText(position + 1 + "." + meb.getQuestion());  // 问题题目
-//            lv.tv_trueans.setText(meb.getAnswer());     // 正确答案
-//            lv.tv_myans.setText(meb.getStudent_ans());  // 我的答案
-
-            lv.tv_trueans.setText(tempA[position]);     // 正确答案
-            lv.tv_myans.setText(tempB[position]);  // 我的答案
             convertView.setTag(lv);
         } else {
             lv = (ListItemView) convertView.getTag();
         }
+        final MyExamBean meb = listItems.get(position);   // 得到问题对象
+        if (meb.getExam_type() == 0) {
+            lv.rg_answer.setVisibility(View.VISIBLE);
+            lv.rd_a.setText("A. " + meb.getOption1());
+            lv.rd_b.setText("B. " + meb.getOption2());
+            lv.rd_c.setText("C. " + meb.getOption3());
+            lv.rd_d.setText("D. " + meb.getOption4());
+        } else {
+            lv.rg_answer.setVisibility(View.GONE);
+        }
+        // 必定显示内容
+        lv.tv_question.setText(position + 1 + "." + meb.getQuestion());  // 问题题目
+        lv.tv_trueans.setText(meb.getAnswer());     // 正确答案
+        lv.tv_myans.setText(meb.getStudent_ans() + meb.getMy_exam_state());  // 完成情况
         return convertView;
     }
 

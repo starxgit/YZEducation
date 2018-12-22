@@ -57,6 +57,7 @@
     <string name="detail">详情</string>
     <string name="misstake">错题</string>
     <string name="exam">习题</string>
+    <string name="add_exam">添加习题</string>
     <string name="material">资料</string>
     <string name="course_material">课程资料</string>
     <string name="overview">总览</string>
@@ -104,5 +105,9 @@
     <string name="my_correct">我的批改</string>
     <string name="live">直播</string>
     <string name="new_lesson">添加章节</string>
-
+    <string-array name="exam_type">
+        <item >选择题</item>
+        <item >填空题</item>
+        <item >主观题</item>
+    </string-array>
 </resources>

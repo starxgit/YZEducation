@@ -32,4 +32,13 @@ public interface ExamMapper {
     public void updateCheckMyExam(@Param("my_exam_id") int my_exam_id,
             @Param("my_exam_state") int my_exam_state);
 
+    // 添加习题
+    public int addExam(ExamBean examBean);
+
+    // 本题正确学生人数
+    public int trueStudentNum(@Param("exam_id") int exam_id);
+
+    // 本题完成学生人数
+    public int finishStudentNum(@Param("exam_id") int exam_id);
+
 }

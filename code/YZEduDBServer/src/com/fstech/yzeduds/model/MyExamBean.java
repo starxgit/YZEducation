@@ -5,7 +5,7 @@ public class MyExamBean {
     private int user_id;    // 用户id
     private int exam_id;    // 对应题目id
     private String student_ans;   // 学生答案
-    private int my_exam_state;  // 学生习题状态（0待审核，1正确，2错位，3不全对）
+    private int my_exam_state;  // 学生习题状态（0待审核，1正确，2错误，3不全对）
     private int lesson_id;  // 所属一节课id
     private int exam_type;  // 题目类型（0表示选择题，1表示填空题，2表示主观题）
     private String question;    // 问题题目

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:onClick="back"
+            android:src="@mipmap/back2" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/add_exam"
+            android:textColor="@color/qmui_config_color_white"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_marginTop="20dp"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="请输入题目"
+            android:textColor="@color/text_black3" />
+
+        <EditText
+            android:id="@+id/et_question"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/grey2"
+            android:gravity="top"
+            android:hint="请输入题目内容"
+            android:inputType="text"
+            android:padding="5dp"
+            android:text=""
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="请选择题型" />
+
+            <Spinner
+                android:layout_marginTop="10dp"
+                android:id="@+id/sp_type"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/exam_type"/>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_option1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/grey2"
+            android:gravity="center_vertical"
+            android:hint="请输入选项1"
+            android:inputType="text"
+            android:padding="5dp"
+            android:text=""
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_option2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/grey2"
+            android:gravity="center_vertical"
+            android:hint="请输入选项2"
+            android:inputType="text"
+            android:padding="5dp"
+            android:text=""
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_option3"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/grey2"
+            android:gravity="center_vertical"
+            android:hint="请输入选项3"
+            android:inputType="text"
+            android:padding="5dp"
+            android:text=""
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_option4"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/grey2"
+            android:gravity="center_vertical"
+            android:hint="请输入选项4"
+            android:inputType="text"
+            android:padding="5dp"
+            android:text=""
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="正确答案" />
+
+        <EditText
+            android:id="@+id/et_answer"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/grey2"
+            android:gravity="center_vertical"
+            android:hint="请输入答案"
+            android:inputType="text"
+            android:padding="5dp"
+            android:text=""
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/bn_submit"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/lable_btn_blue_bg"
+            android:text="@string/submit"
+            android:textColor="@color/Write"
+            android:textSize="16dp" />
+    </LinearLayout>
+</LinearLayout>

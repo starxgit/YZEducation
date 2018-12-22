@@ -5,8 +5,9 @@
 	<!-- 这节课的习题列表（只有题目和选项） -->
 	<select id="findExamByLessonId" resultMap="BaseExamBean">
 		select
-		exam_id,exam_type,question,option1,option2,option3,option4
-		from exam
+		exam_id,exam_type,question,option1,option2,option3,option4,answer
+		from
+		exam
 		where lesson_id = #{lesson_id}
 	</select>
 	<!-- 课程习题模型类 -->
@@ -63,10 +64,35 @@
 		my_exam(user_id,exam_id,student_ans,gmt_create,gmt_modified)
 		values(#{user_id},#{exam_id},#{student_ans},now(),now());
 	</insert>
-	
+
 	<!-- 批改作业 -->
 	<update id="updateCheckMyExam">
 		update my_exam set my_exam_state = #{my_exam_state}
 		where my_exam_id = #{my_exam_id}
 	</update>
+
+	<!-- 添加习题 -->
+	<insert id="addExam" parameterType="com.fstech.yzeduds.model.ExamBean">
+		insert into
+		exam(lesson_id,exam_type,question,option1,option2,
+		option3,option4,answer,gmt_create,gmt_modified)
+		values(#{lesson_id},#{exam_type},#{question},
+		#{option1},
+		#{option2},#{option3}, #{option4},
+		#{answer}, now(),now() );
+	</insert>
+
+	<!-- 本题正确学生人数 -->
+
+	<select id="trueStudentNum" resultType="Integer">
+		select count(*) from
+		my_exam where exam_id = #{exam_id} and my_exam_state=1
+	</select>
+
+	<!-- 本题完成学生人数 -->
+	<select id="finishStudentNum" resultType="Integer">
+		select count(*) from
+		my_exam where exam_id = #{exam_id}
+	</select>
+
 </mapper>

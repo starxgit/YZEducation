@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
-    android:orientation="vertical">
+    android:background="#F0F0F0">
 
     <RelativeLayout
+        android:id="@+id/re_top"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_alignParentTop="true"
         android:background="@color/colorPrimary">
 
         <ImageView
@@ -46,8 +47,11 @@
 
     <ListView
         android:id="@+id/lv_exam"
-        android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/re_top"
         android:background="#FFFFFF"
         android:descendantFocusability="afterDescendants"
         android:divider="#F0F0F0">
@@ -62,4 +66,14 @@
         android:layout_marginTop="200dp"
         android:visibility="gone" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/bn_add_exam"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/Write"
+        android:textSize="16sp"
+        android:layout_alignParentBottom="true"
+        android:text="@string/add_exam" />
+
+</RelativeLayout>

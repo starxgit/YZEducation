@@ -43,4 +43,19 @@ public class ExamDao implements ExamMapper {
     public void updateCheckMyExam(int my_exam_id, int my_exam_state) {
         examMapper.updateCheckMyExam(my_exam_id, my_exam_state);
     }
+
+    @Override
+    public int addExam(ExamBean examBean) {
+        return examMapper.addExam(examBean);
+    }
+
+    @Override
+    public int trueStudentNum(int exam_id) {
+        return examMapper.trueStudentNum(exam_id);
+    }
+
+    @Override
+    public int finishStudentNum(int exam_id) {
+        return examMapper.finishStudentNum(exam_id);
+    }
 }

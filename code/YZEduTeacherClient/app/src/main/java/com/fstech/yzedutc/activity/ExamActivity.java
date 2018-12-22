@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 import com.fstech.yzedutc.R;
 import com.fstech.yzedutc.adapter.ExamAdapter;
 import com.fstech.yzedutc.bean.MyExamBean;
+import com.fstech.yzedutc.util.CacheActivityUtil;
 import com.fstech.yzedutc.util.CallBackUtil;
 import com.fstech.yzedutc.util.Constant;
 import com.fstech.yzedutc.util.OkhttpUtil;
@@ -41,15 +43,16 @@ public class ExamActivity extends Activity {
     private TextView tv_submit;
     private ExamAdapter adapter;
     private List<MyExamBean> listItems;
-    private int lesson_id,course_id;
+    private int lesson_id;
     private ProgressBar progressBar;
-    private List<Map<String, Object>> answer_list;
+    private Button bn_add_exam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam);
+        CacheActivityUtil.addActivity(ExamActivity.this);
         initView();
         initData();
         getExamList();
@@ -62,14 +65,24 @@ public class ExamActivity extends Activity {
         lv_exam = (ListView) findViewById(R.id.lv_exam);
         tv_submit = (TextView) findViewById(R.id.tv_submit);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        bn_add_exam = (Button) findViewById(R.id.bn_add_exam);
+        bn_add_exam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ExamActivity.this, AddExamActivity.class);
+                intent.putExtra("lesson_id", lesson_id);
+                startActivity(intent);
+            }
+        });
         listItems = new ArrayList<>();
-        answer_list = new ArrayList<>();
         tv_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 submit();
             }
         });
+        adapter = new ExamAdapter(ExamActivity.this, listItems);
+        lv_exam.setAdapter(adapter);
     }
 
     /**
@@ -78,7 +91,6 @@ public class ExamActivity extends Activity {
     private void initData() {
         Intent intent = getIntent();
         lesson_id = intent.getIntExtra("lesson_id", -1);
-        course_id = intent.getIntExtra("course_id", -1);
     }
 
     /**
@@ -86,7 +98,7 @@ public class ExamActivity extends Activity {
      */
     private void getExamList() {
         setLock();
-        String url = Constant.BASE_DB_URL + "learn/examList";
+        String url = Constant.BASE_DB_URL + "teach/examList";
         String token = TokenUtil.getToken(ExamActivity.this);
         Map<String, String> map = new HashMap<String, String>();
         map.put("lesson_id", lesson_id + "");
@@ -104,21 +116,14 @@ public class ExamActivity extends Activity {
                     int result_code = jsonObject.getInt("result_code");
                     if (result_code == 0) {
                         JSONObject return_data = jsonObject.getJSONObject("return_data");
-                        int isDo = return_data.getInt("isDo");
-                        if (isDo == 0) {
-                            tv_submit.setVisibility(View.VISIBLE);
-                        }
                         JSONArray jsonArray = return_data.getJSONArray("exam_list");
                         ObjectMapper objectMapper = new ObjectMapper();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jobj = jsonArray.getJSONObject(i);
                             MyExamBean eb = objectMapper.readValue(jobj.toString(), MyExamBean.class);
                             listItems.add(eb);
-                            Map<String, Object> map = new HashMap<>();
-                            answer_list.add(map);
                         }
-                        adapter = new ExamAdapter(ExamActivity.this, listItems, isDo,course_id, answer_list);
-                        lv_exam.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     } else {
                         String message = jsonObject.getString("message");
                         Toast.makeText(ExamActivity.this, message, Toast.LENGTH_SHORT).show();
@@ -148,7 +153,7 @@ public class ExamActivity extends Activity {
     }
 
     private void submit() {
-       
+
     }
 
     /**
