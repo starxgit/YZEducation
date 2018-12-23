@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/item_course_grid_iv_image"
+            android:layout_width="140dp"
+            android:layout_height="105dp"
+            app:qmui_border_color="@color/Write"
+            app:qmui_border_width="0dp"
+            app:qmui_corner_radius="@dimen/dimen_9dp"
+            app:qmui_is_circle="false" />
+
+        <TextView
+            android:id="@+id/item_course_grid_tv_name"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:text="课程名称" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/item_course_grid_tv_learn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="学习人数"
+                android:textColor="@color/text_black6"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/item_course_grid_tv_sum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="共n节课"
+                android:textColor="@color/color_green_like"
+                android:textSize="10sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

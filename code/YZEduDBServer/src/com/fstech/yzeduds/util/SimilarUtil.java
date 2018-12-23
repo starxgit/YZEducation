@@ -103,10 +103,10 @@ public class SimilarUtil {
 
     public static void main(String[] args) {
 //        人工审核判对
-        String[] answers={"JVM虚拟机","计算机软件","高并发","Linux","十六进制"};
-        String[] str1s={"JVM","软件","高并发","Linux","十六进制"};
+        String[] answers={"JVM虚拟机","计算机软件","高并发","Linux","十六进制","A","C","B","D"};
+        String[] str1s={"JVM","软件","高并发","Linux","十六进制","A","C","B","D"};
 //        人工审核判错
-        String[] str2s={"JAVA","硬件","安全性","Unix","十进制"};
+        String[] str2s={"JAVA","硬件","安全性","Unix","十进制","D","A","C","B"};
         
         for(int i=0;i<answers.length;i++){
             String str1 = answers[i];

@@ -13,7 +13,7 @@ public class Constant {
     public static final String SERVER_IP = "https://www.fstechnology.cn";
 
     // 本地IP地址
-//    public static final String SERVER_IP = "http://192.168.199.175";
+//    public static final String SERVER_IP = "http://192.168.199.173";
 
     // 设置服务器端口
     public static final String SERVER_PORT = "8443";

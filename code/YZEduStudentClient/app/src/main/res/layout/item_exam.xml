@@ -1,0 +1,104 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/tv_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1.关于Java应用程序的main方法，下面哪个是正确的写法" />
+
+    <RadioGroup
+        android:id="@+id/rg_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="public Static void main(String args[])"
+            android:textColor="@color/text_black3"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="private static void main(String args[])"
+            android:textColor="@color/text_black3"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="public static void Main(string args[])"
+            android:textColor="@color/text_black3"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/radioButton4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="public static void main(String args[])"
+            android:textColor="@color/text_black3"
+            android:textSize="14sp" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/et_tiankong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:editable="true"
+        android:focusable="true"
+        android:inputType="text"
+        android:textColor="@color/text_black6" />
+
+    <LinearLayout
+        android:id="@+id/ll_ans"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="正确答案：" />
+
+        <TextView
+            android:id="@+id/tv_trueans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="D" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:text="我的答案：" />
+
+        <TextView
+            android:id="@+id/tv_myans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="D" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_cuo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:text="[添加到错题]"
+        android:textColor="@color/qmui_config_color_blue" />
+
+</LinearLayout>

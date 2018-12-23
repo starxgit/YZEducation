@@ -1,0 +1,98 @@
+<resources>
+    <string name="app_name">云智教育</string>
+    <string name="welcome_word">云享资源&#160;&#160;&#160;&#160;智慧教学</string>
+    <string name="index">首页</string>
+    <string name="course">课程</string>
+    <string name="learn">学习</string>
+    <string name="person">个人</string>
+    <string name="click2quit">再按一次退出程序</string>
+    <string name="show_more">查看更多</string>
+    <string name="school">院校</string>
+    <string name="setting">系统设置</string>
+    <string name="wallet">我的钱包</string>
+    <string name="ability">能力档案</string>
+    <string name="use_help">使用帮助</string>
+    <string name="advice">问题反馈</string>
+    <string name="is_living">智享·直播</string>
+    <string name="input_search_content">输入搜索内容</string>
+    <string name="showmore">查看更多</string>
+    <string name="course_new">新课·速递</string>
+    <string name="course_top">热门·精选</string>
+    <string name="live_room_id">房间号：</string>
+    <string name="school_information">资讯</string>
+    <string name="school_announcement">公告</string>
+    <string name="school_circle">学友圈</string>
+    <string name="search">搜索</string>
+    <string name="mycourse">我的课程</string>
+    <string name="practical_training">综合实训</string>
+    <string name="mytask">我的任务</string>
+    <string name="grade_query">成绩查询</string>
+    <string name="live_room">直播间</string>
+    <string name="server_response_error">服务器响应异常!</string>
+    <string name="search_another_course">没有找到相关课程,请换个关键字搜索</string>
+    <string name="discover_course">发现课</string>
+    <string name="learn_like">学习偏好</string>
+    <string name="message">消息</string>
+    <string name="user_info">个人信息</string>
+    <string name="update">版本更新</string>
+    <string name="clearcache">清理缓存</string>
+    <string name="aboutus">关于我们</string>
+    <string name="finish">完成</string>
+    <string name="save_success">保存成功</string>
+    <string name="takepartin">参加课程</string>
+    <string-array name="jazzy_effects">
+        <item>Standard</item>
+        <item>Tablet</item>
+        <item>CubeIn</item>
+        <item>CubeOut</item>
+        <item>FlipVertical</item>
+        <item>FlipHorizontal</item>
+        <item>Stack</item>
+        <item>ZoomIn</item>
+        <item>ZoomOut</item>
+        <item>RotateUp</item>
+        <item>RotateDown</item>
+        <item>Accordion</item>
+    </string-array>
+    <string name="detail">详情</string>
+    <string name="misstake">错题</string>
+    <string name="exam">考试</string>
+    <string name="material">资料</string>
+    <string name="overview">总览</string>
+    <string name="quit_course">退选课程</string>
+    <string name="exercises">综合练习</string>
+    <string name="course_disscuss">课程交流</string>
+    <string name="send">发送</string>
+    <string name="clear">清空</string>
+    <string name="delete">删除</string>
+    <string name="comment">评论</string>
+    <string name="submit">提交</string>
+    <string name="please_input_content">请输入内容</string>
+    <string name="upload">上传</string>
+    <string name="chose_file">选择文件</string>
+    <string name="new_disscuss">新话题</string>
+    <string name="information_detail">资讯详情</string>
+    <string name="please_login_first">请先登录</string>
+    <string name="please_input_account">请输入账号</string>
+    <string name="please_input_phone">请输入手机号</string>
+    <string name="please_input_age">请输入年龄</string>
+    <string name="please_input_password">请输入密码</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="register_now">立即注册</string>
+    <string name="login">登&#160;&#160;录</string>
+    <string name="school_login">机构账号登录</string>
+    <string name="account_password_not_null">账号密码不能为空！</string>
+    <string name="man">男</string>
+    <string name="woman">女</string>
+    <string name="search_school">搜索院校或机构</string>
+    <string name="school_select">选择院校</string>
+    <string name="system_error">系统故障，请稍后重试!</string>
+    <string name="login_success">登录成功！</string>
+    <string name="mo_more_content">没有更多内容啦！</string>
+    <string name="submit_success">提交成功</string>
+    <string name="remove_mistake">移出错题</string>
+    <string name="remove_success">移除成功，请刷新页面</string>
+    <string name="add_to_mistake_success">添加成功，可在错题查看</string>
+    <string name="i_will_comment_too">我也说一句</string>
+
+</resources>

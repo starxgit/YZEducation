@@ -101,123 +101,123 @@ public class ExamAdapter extends BaseAdapter {
             lv.ll_ans = (LinearLayout) convertView.findViewById(R.id.ll_ans);
             lv.tv_cuo = (TextView) convertView.findViewById(R.id.tv_cuo);
             //设置空间集到convertView
-
-            final MyExamBean meb = listItems.get(position);   // 得到问题对象
-
-            // 必定显示内容
-            lv.tv_question.setText(position + 1 + "." + meb.getQuestion());  // 问题题目
-            lv.tv_trueans.setText(meb.getAnswer());     // 正确答案
-            lv.tv_myans.setText(meb.getStudent_ans());  // 我的答案
-            lv.tv_cuo.setText(Constant.QUESTION_STATE[meb.getMy_exam_state()]); // 状态
-            int examType = meb.getExam_type();
-            switch (examType) {
-                case 0:
-                    // 选择题
-                    lv.rg_answer.setVisibility(View.VISIBLE);
-                    lv.et_tiankong.setVisibility(View.GONE);
-                    lv.rd_a.setText("A." + meb.getOption1());
-                    lv.rd_b.setText("B." + meb.getOption2());
-                    lv.rd_c.setText("C." + meb.getOption3());
-                    lv.rd_d.setText("D." + meb.getOption4());
-                    break;
-                case 1:
-                    // 填空题
-                    lv.rg_answer.setVisibility(View.GONE);
-                    if (isDo == 0) {
-                        lv.et_tiankong.setVisibility(View.VISIBLE);
-                    } else {
-                        lv.et_tiankong.setVisibility(View.GONE);
-                    }
-                    break;
-                case 2:
-                    // 主观题
-                    lv.rg_answer.setVisibility(View.GONE);
-                    if (isDo == 0) {
-                        lv.et_tiankong.setVisibility(View.VISIBLE);
-                    } else {
-                        lv.et_tiankong.setVisibility(View.GONE);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            // 如果没有做过，答案栏不显示,输入框不显示
-            if (isDo == 0) {
-                lv.ll_ans.setVisibility(View.GONE);
-                lv.tv_cuo.setVisibility(View.GONE);
-
-            } else {
-                lv.ll_ans.setVisibility(View.VISIBLE);
-                lv.tv_cuo.setVisibility(View.VISIBLE);
-            }
-
-            // 选择题点击时的业务逻辑
-            lv.rd_a.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    answer_list.get(position).clear();
-                    answer_list.get(position).put("my_ans", "A");
-                    answer_list.get(position).put("exam_id", meb.getExam_id());
-                }
-            });
-            lv.rd_b.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    answer_list.get(position).clear();
-                    answer_list.get(position).put("my_ans", "B");
-                    answer_list.get(position).put("exam_id", meb.getExam_id());
-                }
-            });
-            lv.rd_c.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    answer_list.get(position).clear();
-                    answer_list.get(position).put("my_ans", "C");
-                    answer_list.get(position).put("exam_id", meb.getExam_id());
-                }
-            });
-            lv.rd_d.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    answer_list.get(position).clear();
-                    answer_list.get(position).put("my_ans", "D");
-                    answer_list.get(position).put("exam_id", meb.getExam_id());
-                }
-            });
-            final ListItemView finalLv = lv;
-            // 填空题或主观题输入动作
-            lv.et_tiankong.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    String str = finalLv.et_tiankong.getText().toString();
-                    answer_list.get(position).clear();
-                    answer_list.get(position).put("my_ans", str);
-                    answer_list.get(position).put("exam_id", meb.getExam_id());
-                }
-            });
-            // 错题可以添加到错题
-            lv.tv_cuo.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (meb.getMy_exam_state() == 2 || meb.getMy_exam_state() == 3) {
-                        addToMistake(meb.getMy_exam_id());
-                    }
-                }
-            });
-
             convertView.setTag(lv);
         } else {
             lv = (ListItemView) convertView.getTag();
         }
+
+        final MyExamBean meb = listItems.get(position);   // 得到问题对象
+
+        // 必定显示内容
+        lv.tv_question.setText(position + 1 + "." + meb.getQuestion());  // 问题题目
+        lv.tv_trueans.setText(meb.getAnswer());     // 正确答案
+        lv.tv_myans.setText(meb.getStudent_ans());  // 我的答案
+        lv.tv_cuo.setText(Constant.QUESTION_STATE[meb.getMy_exam_state()]); // 状态
+        int examType = meb.getExam_type();
+        switch (examType) {
+            case 0:
+                // 选择题
+                lv.rg_answer.setVisibility(View.VISIBLE);
+                lv.et_tiankong.setVisibility(View.GONE);
+                lv.rd_a.setText("A." + meb.getOption1());
+                lv.rd_b.setText("B." + meb.getOption2());
+                lv.rd_c.setText("C." + meb.getOption3());
+                lv.rd_d.setText("D." + meb.getOption4());
+                break;
+            case 1:
+                // 填空题
+                lv.rg_answer.setVisibility(View.GONE);
+                if (isDo == 0) {
+                    lv.et_tiankong.setVisibility(View.VISIBLE);
+                } else {
+                    lv.et_tiankong.setVisibility(View.GONE);
+                }
+                break;
+            case 2:
+                // 主观题
+                lv.rg_answer.setVisibility(View.GONE);
+                if (isDo == 0) {
+                    lv.et_tiankong.setVisibility(View.VISIBLE);
+                } else {
+                    lv.et_tiankong.setVisibility(View.GONE);
+                }
+                break;
+            default:
+                break;
+        }
+
+        // 如果没有做过，答案栏不显示,输入框不显示
+        if (isDo == 0) {
+            lv.ll_ans.setVisibility(View.GONE);
+            lv.tv_cuo.setVisibility(View.GONE);
+
+        } else {
+            lv.ll_ans.setVisibility(View.VISIBLE);
+            lv.tv_cuo.setVisibility(View.VISIBLE);
+        }
+
+        // 选择题点击时的业务逻辑
+        lv.rd_a.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answer_list.get(position).clear();
+                answer_list.get(position).put("my_ans", "A");
+                answer_list.get(position).put("exam_id", meb.getExam_id());
+            }
+        });
+        lv.rd_b.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answer_list.get(position).clear();
+                answer_list.get(position).put("my_ans", "B");
+                answer_list.get(position).put("exam_id", meb.getExam_id());
+            }
+        });
+        lv.rd_c.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answer_list.get(position).clear();
+                answer_list.get(position).put("my_ans", "C");
+                answer_list.get(position).put("exam_id", meb.getExam_id());
+            }
+        });
+        lv.rd_d.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answer_list.get(position).clear();
+                answer_list.get(position).put("my_ans", "D");
+                answer_list.get(position).put("exam_id", meb.getExam_id());
+            }
+        });
+        final ListItemView finalLv = lv;
+        // 填空题或主观题输入动作
+        lv.et_tiankong.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String str = finalLv.et_tiankong.getText().toString();
+                answer_list.get(position).clear();
+                answer_list.get(position).put("my_ans", str);
+                answer_list.get(position).put("exam_id", meb.getExam_id());
+            }
+        });
+        // 错题可以添加到错题
+        lv.tv_cuo.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (meb.getMy_exam_state() == 2 || meb.getMy_exam_state() == 3) {
+                    addToMistake(meb.getMy_exam_id());
+                }
+            }
+        });
+
         return convertView;
     }
 

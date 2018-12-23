@@ -21,6 +21,7 @@ import com.fstech.yzeduds.model.MistakeBean;
 import com.fstech.yzeduds.model.MyExamBean;
 import com.fstech.yzeduds.util.ErrorCode;
 import com.fstech.yzeduds.util.ResponseUtil;
+import com.fstech.yzeduds.util.SimilarUtil;
 import com.fstech.yzeduds.util.TokenUtil;
 
 @Controller
@@ -98,10 +99,10 @@ public class LearnController {
                         int myExamId = mb.getMy_exam_id();
                         if (type != 2) {
                             // 选择题或填空题
-                            if (studentAns.equals(answer)) {
-                                examDao.updateCheckMyExam(myExamId, 1);
-                            } else {
-                                examDao.updateCheckMyExam(myExamId, 2);
+                            int state = SimilarUtil.autocheck(answer, studentAns);
+                            System.out.println(state);
+                            if(state!=0){
+                                examDao.updateCheckMyExam(myExamId, state);
                             }
                         }
                     }
