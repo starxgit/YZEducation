@@ -153,7 +153,9 @@ public class ExamActivity extends Activity {
     }
 
     private void submit() {
-
+        Intent intent = new Intent(ExamActivity.this,CheckExamActivity.class);
+        intent.putExtra("lesson_id",lesson_id);
+        startActivity(intent);
     }
 
     /**

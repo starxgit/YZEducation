@@ -37,10 +37,10 @@ public class TeachController {
             @RequestParam String token, HttpServletResponse response) {
         JSONObject return_data = new JSONObject();
         List<MyExamBean> examBeans = examDao.findExamByLessonId(lesson_id);
-        for(MyExamBean meb:examBeans){
+        for (MyExamBean meb : examBeans) {
             int trueStudentNum = examDao.trueStudentNum(meb.getExam_id());
             int finishStudentNum = examDao.finishStudentNum(meb.getExam_id());
-            meb.setStudent_ans(trueStudentNum+" / ");
+            meb.setStudent_ans(trueStudentNum + " / ");
             meb.setMy_exam_state(finishStudentNum);
         }
         return_data.put("exam_list", examBeans);
@@ -85,8 +85,26 @@ public class TeachController {
 
     // 一章的习题完成情况
 
-    // 待批改习题列表
+    // 待批改习题列表（按题目分组）
+    @RequestMapping(value = "checkExamList", method = RequestMethod.GET)
+    public void checkExamList(HttpServletResponse response,
+            @RequestParam int lesson_id) {
+        List<MyExamBean> myExamBeanList = examDao
+                .findMyExamByLessonId(lesson_id);
+        ResponseUtil.normalResponse(response, myExamBeanList);
+    }
 
-    // 批改习题
+    // 人工批改习题
+    @RequestMapping(value = "teacherCheckExam", method = RequestMethod.POST)
+    public void teacherCheckExam(HttpServletResponse response,
+            @RequestParam int my_exam_id, @RequestParam int state) {
+        int result = examDao.updateCheckMyExam(my_exam_id, state);
+        if (result > 0) {
+            ResponseUtil.normalResponse(response, null);
+        } else {
+            ResponseUtil.errorResponse(response, null,
+                    ErrorCode.CODE_CHECK_FAIL, ErrorCode.MESSAGE_CHECK_FAIL);
+        }
+    }
 
 }

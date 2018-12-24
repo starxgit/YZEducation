@@ -40,8 +40,8 @@ public class ExamDao implements ExamMapper {
     }
 
     @Override
-    public void updateCheckMyExam(int my_exam_id, int my_exam_state) {
-        examMapper.updateCheckMyExam(my_exam_id, my_exam_state);
+    public int updateCheckMyExam(int my_exam_id, int my_exam_state) {
+        return examMapper.updateCheckMyExam(my_exam_id, my_exam_state);
     }
 
     @Override

@@ -24,12 +24,12 @@ public interface ExamMapper {
             @Param("exam_id") int exam_id,
             @Param("student_ans") String student_ans);
 
-    // 这节课的所有待批改学生主观题列表
+    // 这节课的所有待批改学生习题列表
     public List<MyExamBean> findMyExamByLessonId(
             @Param("lesson_id") int lesson_id);
 
     // 批改作业
-    public void updateCheckMyExam(@Param("my_exam_id") int my_exam_id,
+    public int updateCheckMyExam(@Param("my_exam_id") int my_exam_id,
             @Param("my_exam_state") int my_exam_state);
 
     // 添加习题

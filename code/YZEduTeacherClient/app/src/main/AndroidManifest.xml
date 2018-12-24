@@ -164,6 +164,9 @@
             android:name=".activity.AddExamActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".activity.CheckExamActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name=".activity.DisscussDetail"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeQmui"

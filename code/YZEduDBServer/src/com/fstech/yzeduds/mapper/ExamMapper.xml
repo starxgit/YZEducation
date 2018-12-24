@@ -94,5 +94,18 @@
 		select count(*) from
 		my_exam where exam_id = #{exam_id}
 	</select>
+	
+	<!-- 这节课的所有待批改学生习题列表 -->
+	<select id = "findMyExamByLessonId" resultMap="StudentMyExamBean">
+	select
+	my_exam_id,my_exam.exam_id,exam_type,my_exam_state,question,
+	option1,option2,option3,option4,student_ans,answer
+	from exam
+	left join
+	my_exam on exam.exam_id = my_exam.exam_id
+	where my_exam_state = 0
+	and lesson_id = #{lesson_id}
+	order by my_exam.exam_id asc
+	</select>
 
 </mapper>
