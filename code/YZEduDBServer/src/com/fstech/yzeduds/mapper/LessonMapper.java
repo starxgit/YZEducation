@@ -14,4 +14,9 @@ public interface LessonMapper {
     // 属于这节课的知识点列表
     public List<String> findListByLessonId(@Param("lessonId") int lessonId);
 
+    // 添加一节课
+    public int addLesson(LessonBean lessonBean);
+    
+    // 添加知识点
+    public void addKnowledge(@Param("lessonId") int lessonId,@Param("content")String content);
 }

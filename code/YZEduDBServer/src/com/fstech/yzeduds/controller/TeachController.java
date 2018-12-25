@@ -1,6 +1,7 @@
 package com.fstech.yzeduds.controller;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fstech.yzeduds.dao.ExamDao;
+import com.fstech.yzeduds.dao.LessonDao;
 import com.fstech.yzeduds.model.ExamBean;
+import com.fstech.yzeduds.model.LessonBean;
 import com.fstech.yzeduds.model.MyExamBean;
 import com.fstech.yzeduds.util.ErrorCode;
 import com.fstech.yzeduds.util.ResponseUtil;
-import com.fstech.yzeduds.util.TokenUtil;
 
 /**
  * Created By shaoxin On 2018-12-22 教师教学的控制器
@@ -28,6 +30,9 @@ public class TeachController {
 
     @Autowired
     private ExamDao examDao;
+
+    @Autowired
+    private LessonDao lessonDao;
 
     /**
      * 一节课的课后习题列表
@@ -50,6 +55,30 @@ public class TeachController {
     // 教师修改课程
 
     // 教师添加课时
+    @RequestMapping(value = "addLesson", method = RequestMethod.POST)
+    public void addLesson(HttpServletResponse response,
+            @RequestParam int course_id, @RequestParam String title,
+            @RequestParam String knowledge, @RequestParam String videoUrl) {
+        LessonBean lessonBean = new LessonBean(0, course_id, title, videoUrl);
+        int result = lessonDao.addLesson(lessonBean);
+        if (result > 0) {
+            int lessonId = lessonBean.getLesson_id();
+            System.out.println(lessonId);
+            // 添加知识点
+            StringTokenizer st = new StringTokenizer(knowledge, ";；");
+            String kno;
+            while (st.hasMoreTokens()) {
+                kno = st.nextToken();
+                lessonDao.addKnowledge(lessonId, kno);
+                System.out.println(kno);
+            }
+            ResponseUtil.normalResponse(response, null);
+        } else {
+            ResponseUtil.errorResponse(response, null,
+                    ErrorCode.CODE_ADD_LESSON_FAIL,
+                    ErrorCode.MESSAGE_ADD_LESSON_FAIL);
+        }
+    }
 
     // 教师上传课程资料
 

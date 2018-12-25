@@ -10,10 +10,13 @@ import com.fstech.yzedutc.R;
 public class Constant {
 
     // 这个是服务器的IP地址
-//    public static final String SERVER_IP = "https://www.fstechnology.cn";
+//    public static final String SERVER_IP = "http://www.fstechnology.cn";
 
     // 本地IP地址
     public static final String SERVER_IP = "http://192.168.199.173";
+
+    // 文件上传地址
+    public static final String UPLOAD_URL = "https://www.fstechnology.cn:8443/CommonFileServer/UploadVideo";
 
     // 设置服务器端口
     public static final String SERVER_PORT = "8080";

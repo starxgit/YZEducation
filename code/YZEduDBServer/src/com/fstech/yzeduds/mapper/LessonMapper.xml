@@ -13,10 +13,28 @@
 
 	<!-- 这节课的知识点列表 -->
 	<select id="findListByLessonId" resultType="String">
-		select knowledge_content from knowledge
+		select
+		knowledge_content from knowledge
 		where
 		lesson_id = #{lessonId}
-		order by knowledge_rank desc;
+		order by
+		knowledge_rank desc;
 	</select>
+
+	<!-- 添加一节课 -->
+	<insert id="addLesson" parameterType="com.fstech.yzeduds.model.LessonBean"
+		keyProperty="lesson_id" useGeneratedKeys="true">
+		insert into
+		lesson(course_id,lesson_title,lesson_video_url,gmt_create,gmt_modified)
+		values(#{course_id},#{lesson_title},#{lesson_video_url},now(),now())
+	</insert>
+
+	<!-- 添加知识点 -->
+	<insert id="addKnowledge">
+		insert into
+		knowledge(knowledge_content,knowledge_rank,
+		lesson_id,gmt_create,gmt_modified)
+		values(#{content},3,#{lessonId},now(),now())
+	</insert>
 
 </mapper>

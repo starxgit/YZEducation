@@ -43,4 +43,7 @@ public class ErrorCode {
 
     public static final int CODE_CHECK_FAIL = 2001;
     public static final String MESSAGE_CHECK_FAIL = "未知原因导致的批改失败，请稍后再试";
+    
+    public static final int CODE_ADD_LESSON_FAIL = 2002;
+    public static final String MESSAGE_ADD_LESSON_FAIL = "课程添加失败，请稍后再试";
 }

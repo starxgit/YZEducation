@@ -18,6 +18,7 @@ import com.fstech.yzedutc.R;
 import com.fstech.yzedutc.adapter.LessonListAdapter;
 import com.fstech.yzedutc.bean.CourseBean;
 import com.fstech.yzedutc.bean.LessonBean;
+import com.fstech.yzedutc.util.CacheActivityUtil;
 import com.fstech.yzedutc.util.CallBackUtil;
 import com.fstech.yzedutc.util.Constant;
 import com.fstech.yzedutc.util.ImageUitl;
@@ -75,6 +76,7 @@ public class CourseLearnActivity extends AppCompatActivity implements View.OnCli
     * 初始化视图
     * */
     private void initView() {
+        CacheActivityUtil.addActivity(CourseLearnActivity.this);
         tv_title = (TextView) findViewById(R.id.tv_title);
         iv_course_cover = (ImageView) findViewById(R.id.iv_course_cover);
         ll_material = (LinearLayout) findViewById(R.id.ll_material);
@@ -181,7 +183,7 @@ public class CourseLearnActivity extends AppCompatActivity implements View.OnCli
             case R.id.ll_detail:
                 Log.e("click", "add");
                 Intent intent3 = new Intent(CourseLearnActivity.this, AddLessonActivity.class);
-                intent3.putExtra("course_id", cb.getCourse_id() + "");
+                intent3.putExtra("cb", cb);
                 startActivity(intent3);
                 break;
             case R.id.tv_edit:

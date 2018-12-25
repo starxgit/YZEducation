@@ -25,4 +25,14 @@ public class LessonDao implements LessonMapper{
         return lessonMapper.findListByLessonId(lessonId);
     }
 
+    @Override
+    public int addLesson(LessonBean lessonBean) {
+        return lessonMapper.addLesson(lessonBean);
+    }
+
+    @Override
+    public void addKnowledge(int lessonId, String content) {
+        lessonMapper.addKnowledge(lessonId, content);
+    }
+
 }
