@@ -82,6 +82,7 @@ public class LessonLearnActivity extends AppCompatActivity implements View.OnCli
         lb = (LessonBean) intent.getSerializableExtra("lb");
         tv_title.setText(lb.getLesson_title());
         String url = lb.getLesson_video_url();
+        Log.e("url", url);
         player.setUp(url, JCVideoPlayer.SCREEN_LAYOUT_LIST, "");
     }
 
