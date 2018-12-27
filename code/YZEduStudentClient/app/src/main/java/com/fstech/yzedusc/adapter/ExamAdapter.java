@@ -146,7 +146,7 @@ public class ExamAdapter extends BaseAdapter {
                 break;
         }
 
-        // 如果没有做过，答案栏不显示,输入框不显示
+        // 如果没有做过，答案栏不显示,添加到错题不显示
         if (isDo == 0) {
             lv.ll_ans.setVisibility(View.GONE);
             lv.tv_cuo.setVisibility(View.GONE);

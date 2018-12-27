@@ -24,6 +24,7 @@ import com.fstech.yzedutc.R;
 import com.fstech.yzedutc.bean.CourseBean;
 import com.fstech.yzedutc.util.CacheActivityUtil;
 import com.fstech.yzedutc.util.CallBackUtil;
+import com.fstech.yzedutc.util.CmlRequestBody;
 import com.fstech.yzedutc.util.Constant;
 import com.fstech.yzedutc.util.OkhttpUtil;
 import com.fstech.yzedutc.util.UploadFileUtil;
@@ -36,8 +37,16 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by shaoxin on 12/19/18.
@@ -94,6 +103,7 @@ public class AddLessonActivity extends AppCompatActivity {
         bn_submit = (Button) findViewById(R.id.bn_submit);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         jindu = (ProgressBar) findViewById(R.id.jindu);
+        jindu.setProgress(1);
         bn_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +122,7 @@ public class AddLessonActivity extends AppCompatActivity {
     private void initData() {
         Intent intent = getIntent();
         cb = (CourseBean) intent.getSerializableExtra("cb");
-        Log.e("cb",cb.toString());
+        Log.e("cb", cb.toString());
     }
 
     /**
@@ -171,13 +181,40 @@ public class AddLessonActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        try {
-                            videoUrl = UploadFileUtil.uploadImage(Constant.UPLOAD_URL, path);
-                            handler.sendMessage(handler.obtainMessage(1));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            handler.sendMessage(handler.obtainMessage(2));
-                        }
+                        // 上传文件
+                        File file = new File(path);
+                        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                        builder.addFormDataPart("thumb", file.getName(),
+                                RequestBody.create(MediaType.parse("file/*"), file));
+                        Request.Builder request = new Request.Builder().url(Constant.UPLOAD_URL)
+                                .post(new CmlRequestBody(builder.build()) {
+                                    @Override
+                                    public void loading(long current, long total, boolean done) {
+                                        if (!done) {
+                                            double percent = (double) current / (double) total;
+                                            Log.e("percent", percent + "");
+                                            progressBar.setProgress((int) (percent * 100));
+                                        }
+                                    }
+                                });
+
+                        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                                .connectTimeout(1000, TimeUnit.SECONDS)
+                                .build();
+                        okHttpClient.newCall(request.build()).enqueue(new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                Log.e("fail", "fail");
+                                handler.sendMessage(handler.obtainMessage(2));
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                videoUrl = response.body().string();
+                                Log.e("res", videoUrl);
+                                handler.sendMessage(handler.obtainMessage(1));
+                            }
+                        });
                     }
                 }).start();
             } else {
@@ -223,6 +260,7 @@ public class AddLessonActivity extends AppCompatActivity {
                 Toast.makeText(AddLessonActivity.this, R.string.server_response_error, Toast.LENGTH_SHORT).show();
                 releaseLock();
             }
+
             @Override
             public void onResponse(String response) {
                 try {
@@ -231,8 +269,8 @@ public class AddLessonActivity extends AppCompatActivity {
                     if (result_code == 0) {
                         Toast.makeText(AddLessonActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
                         CacheActivityUtil.finishSingleActivityByClass(CourseLearnActivity.class);
-                        Intent intent = new Intent(AddLessonActivity.this,CourseLearnActivity.class);
-                        intent.putExtra("cb",cb);
+                        Intent intent = new Intent(AddLessonActivity.this, CourseLearnActivity.class);
+                        intent.putExtra("cb", cb);
                         startActivity(intent);
                         finish();
                     } else {
@@ -243,6 +281,49 @@ public class AddLessonActivity extends AppCompatActivity {
                 } finally {
                     releaseLock();
                 }
+            }
+        });
+    }
+
+    /**
+     * 上传文件的方法，由于涉及到线程通信，放到同一个Activity下面
+     *
+     * @param url
+     * @param path
+     * @param progressBar
+     * @throws IOException
+     */
+    public static void uploadImageP(String url, String path, final ProgressBar progressBar) throws IOException {
+        File file = new File(path);
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        builder.addFormDataPart("thumb", file.getName(),
+                RequestBody.create(MediaType.parse("file/*"), file));
+        Request.Builder request = new Request.Builder().url(url)
+                .post(new CmlRequestBody(builder.build()) {
+                    @Override
+                    public void loading(long current, long total, boolean done) {
+//                        Log.e("percent", (double)current / (double)total+"");
+                        if (!done) {
+                            double percent = (double) current / (double) total;
+                            Log.e("percent", percent + "");
+                            progressBar.setProgress((int) (percent * 100));
+                        }
+                    }
+                });
+
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(1000, TimeUnit.SECONDS)
+                .build();
+        okHttpClient.newCall(request.build()).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("fail", "fail");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseStr = response.body().string();
+                Log.e("res", responseStr);
             }
         });
     }
