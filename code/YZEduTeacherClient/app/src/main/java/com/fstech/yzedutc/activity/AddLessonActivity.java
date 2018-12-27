@@ -193,7 +193,7 @@ public class AddLessonActivity extends AppCompatActivity {
                                         if (!done) {
                                             double percent = (double) current / (double) total;
                                             Log.e("percent", percent + "");
-                                            progressBar.setProgress((int) (percent * 100));
+                                            jindu.setProgress((int) (percent * 100));
                                         }
                                     }
                                 });
@@ -227,7 +227,6 @@ public class AddLessonActivity extends AppCompatActivity {
      * 上锁
      */
     private void setLock() {
-        progressBar.setVisibility(View.VISIBLE);
         bn_submit.setClickable(false);
         bn_upload.setClickable(false);
     }
@@ -236,7 +235,6 @@ public class AddLessonActivity extends AppCompatActivity {
      * 解锁
      */
     private void releaseLock() {
-        progressBar.setVisibility(View.GONE);
         bn_submit.setClickable(true);
         bn_upload.setClickable(true);
     }
@@ -246,6 +244,7 @@ public class AddLessonActivity extends AppCompatActivity {
      */
     private void doUpload() {
         setLock();
+        progressBar.setVisibility(View.VISIBLE);
         String title = et_title.getText().toString();
         String knowledge = et_knowledge.getText().toString();
         String url = Constant.BASE_DB_URL + "teach/addLesson";
@@ -259,6 +258,7 @@ public class AddLessonActivity extends AppCompatActivity {
             public void onFailure(Call call, Exception e) {
                 Toast.makeText(AddLessonActivity.this, R.string.server_response_error, Toast.LENGTH_SHORT).show();
                 releaseLock();
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -280,51 +280,10 @@ public class AddLessonActivity extends AppCompatActivity {
                     e.printStackTrace();
                 } finally {
                     releaseLock();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
     }
 
-    /**
-     * 上传文件的方法，由于涉及到线程通信，放到同一个Activity下面
-     *
-     * @param url
-     * @param path
-     * @param progressBar
-     * @throws IOException
-     */
-    public static void uploadImageP(String url, String path, final ProgressBar progressBar) throws IOException {
-        File file = new File(path);
-        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        builder.addFormDataPart("thumb", file.getName(),
-                RequestBody.create(MediaType.parse("file/*"), file));
-        Request.Builder request = new Request.Builder().url(url)
-                .post(new CmlRequestBody(builder.build()) {
-                    @Override
-                    public void loading(long current, long total, boolean done) {
-//                        Log.e("percent", (double)current / (double)total+"");
-                        if (!done) {
-                            double percent = (double) current / (double) total;
-                            Log.e("percent", percent + "");
-                            progressBar.setProgress((int) (percent * 100));
-                        }
-                    }
-                });
-
-        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                .connectTimeout(1000, TimeUnit.SECONDS)
-                .build();
-        okHttpClient.newCall(request.build()).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e("fail", "fail");
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String responseStr = response.body().string();
-                Log.e("res", responseStr);
-            }
-        });
-    }
 }
