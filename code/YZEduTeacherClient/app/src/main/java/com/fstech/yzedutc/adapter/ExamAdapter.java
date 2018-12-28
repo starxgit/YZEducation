@@ -91,23 +91,24 @@ public class ExamAdapter extends BaseAdapter {
             lv.rg_answer = (LinearLayout) convertView.findViewById(R.id.rg_answer);
             //设置空间集到convertView
             convertView.setTag(lv);
+
+            final MyExamBean meb = listItems.get(position);   // 得到问题对象
+            if (meb.getExam_type() == 0) {
+                lv.rg_answer.setVisibility(View.VISIBLE);
+                lv.rd_a.setText("A. " + meb.getOption1());
+                lv.rd_b.setText("B. " + meb.getOption2());
+                lv.rd_c.setText("C. " + meb.getOption3());
+                lv.rd_d.setText("D. " + meb.getOption4());
+            } else {
+                lv.rg_answer.setVisibility(View.GONE);
+            }
+            // 必定显示内容
+            lv.tv_question.setText(position + 1 + "." + meb.getQuestion());  // 问题题目
+            lv.tv_trueans.setText(meb.getAnswer());     // 正确答案
+            lv.tv_myans.setText(meb.getStudent_ans() + meb.getMy_exam_state());  // 完成情况
         } else {
             lv = (ListItemView) convertView.getTag();
         }
-        final MyExamBean meb = listItems.get(position);   // 得到问题对象
-        if (meb.getExam_type() == 0) {
-            lv.rg_answer.setVisibility(View.VISIBLE);
-            lv.rd_a.setText("A. " + meb.getOption1());
-            lv.rd_b.setText("B. " + meb.getOption2());
-            lv.rd_c.setText("C. " + meb.getOption3());
-            lv.rd_d.setText("D. " + meb.getOption4());
-        } else {
-            lv.rg_answer.setVisibility(View.GONE);
-        }
-        // 必定显示内容
-        lv.tv_question.setText(position + 1 + "." + meb.getQuestion());  // 问题题目
-        lv.tv_trueans.setText(meb.getAnswer());     // 正确答案
-        lv.tv_myans.setText(meb.getStudent_ans() + meb.getMy_exam_state());  // 完成情况
         return convertView;
     }
 

@@ -64,18 +64,16 @@ public class MistakeListAdapter extends BaseAdapter {
             vh.tv_date = (TextView) convertView.findViewById(R.id.item_mistake_tv_date);
             //设置空间集到convertView
             convertView.setTag(vh);
+
+            MistakeBean mb = listItems.get(position);
+            vh.tv_title.setText(position + 1 + "." + mb.getQuestion());
+            vh.tv_date.setText(mb.getMistake_time().substring(0, 10));
+
+            vh.tv_type.setText("○ " + Constant.EXAM_TYPE[mb.getExam_type()]);
+            vh.tv_type.setBackgroundResource(Constant.LABLE_DRABLES[mb.getExam_type()]);
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-
-        MistakeBean mb = listItems.get(position);
-
-        vh.tv_title.setText(position + 1 + "." + mb.getQuestion());
-        vh.tv_date.setText(mb.getMistake_time().substring(0, 10));
-
-        vh.tv_type.setText("○ " + Constant.EXAM_TYPE[mb.getExam_type()]);
-        vh.tv_type.setBackgroundResource(Constant.LABLE_DRABLES[mb.getExam_type()]);
-
         return convertView;
     }
 

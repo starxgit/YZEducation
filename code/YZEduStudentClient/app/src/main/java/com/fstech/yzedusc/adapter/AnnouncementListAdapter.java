@@ -66,23 +66,22 @@ public class AnnouncementListAdapter extends BaseAdapter {
             vh.tv_announcement_date = (TextView) convertView.findViewById(R.id.item_announcement_tv_date);
             //设置空间集到convertView
             convertView.setTag(vh);
+
+            AnnouncementBean ab = listItems.get(position);
+
+            int is_stick = ab.getAnnouncement_stick();
+            if (is_stick == 1) {
+                vh.tv_isstick.setVisibility(View.VISIBLE);
+            } else {
+                vh.tv_isstick.setVisibility(View.GONE);
+            }
+
+            vh.tv_announcement_date.setText(ab.getAnnouncement_date().substring(0, 10));
+            vh.tv_announcement_title.setText(ab.getAnnouncement_title());
+            vh.tv_announcement_content.setText(ab.getAnnouncement_content());
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-
-        AnnouncementBean ab = listItems.get(position);
-
-        int is_stick = ab.getAnnouncement_stick();
-        if (is_stick==1) {
-            vh.tv_isstick.setVisibility(View.VISIBLE);
-        } else {
-            vh.tv_isstick.setVisibility(View.GONE);
-        }
-
-        vh.tv_announcement_date.setText(ab.getAnnouncement_date().substring(0,10));
-        vh.tv_announcement_title.setText(ab.getAnnouncement_title());
-        vh.tv_announcement_content.setText(ab.getAnnouncement_content());
-
         return convertView;
     }
 

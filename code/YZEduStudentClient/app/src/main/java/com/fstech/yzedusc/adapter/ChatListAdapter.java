@@ -75,31 +75,30 @@ public class ChatListAdapter extends BaseAdapter {
             vh.tv_content_in.setText("");
             vh.tv_user_out.setText("");
             vh.tv_content_out.setText("");
+
+            ChatBean cb = listItems.get(position);
+
+            if (cb.getUser_in() != null) {
+                vh.tv_user_in.setVisibility(View.VISIBLE);
+                vh.tv_content_in.setVisibility(View.VISIBLE);
+                vh.tv_user_out.setVisibility(View.GONE);
+                vh.tv_content_out.setVisibility(View.GONE);
+                vh.tv_user_in.setText(cb.getUser_in() + " ： ");
+            } else {
+                vh.tv_user_in.setVisibility(View.GONE);
+                vh.tv_content_in.setVisibility(View.GONE);
+                vh.tv_user_out.setVisibility(View.VISIBLE);
+                vh.tv_content_out.setVisibility(View.VISIBLE);
+            }
+            if (cb.getUser_out() != null)
+                vh.tv_user_out.setText(" ： " + cb.getUser_out());
+            if (cb.getContent_in() != null)
+                vh.tv_content_in.setText(cb.getContent_in());
+            if (cb.getContent_out() != null)
+                vh.tv_content_out.setText(cb.getContent_out());
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-
-        ChatBean cb = listItems.get(position);
-
-        if (cb.getUser_in() != null) {
-            vh.tv_user_in.setVisibility(View.VISIBLE);
-            vh.tv_content_in.setVisibility(View.VISIBLE);
-            vh.tv_user_out.setVisibility(View.GONE);
-            vh.tv_content_out.setVisibility(View.GONE);
-            vh.tv_user_in.setText(cb.getUser_in() + " ： ");
-        }else{
-            vh.tv_user_in.setVisibility(View.GONE);
-            vh.tv_content_in.setVisibility(View.GONE);
-            vh.tv_user_out.setVisibility(View.VISIBLE);
-            vh.tv_content_out.setVisibility(View.VISIBLE);
-        }
-        if (cb.getUser_out() != null)
-            vh.tv_user_out.setText(" ： " + cb.getUser_out());
-        if (cb.getContent_in() != null)
-            vh.tv_content_in.setText(cb.getContent_in());
-        if (cb.getContent_out() != null)
-            vh.tv_content_out.setText(cb.getContent_out());
-
         return convertView;
     }
 

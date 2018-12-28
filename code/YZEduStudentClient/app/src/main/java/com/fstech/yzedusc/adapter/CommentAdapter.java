@@ -67,21 +67,20 @@ public class CommentAdapter extends BaseAdapter {
             vh.tv_text = (TextView) convertView.findViewById(R.id.tv_text);
             //设置空间集到convertView
             convertView.setTag(vh);
+            CommunicationCommentBean ccb = listItems.get(position);
+            vh.tv_name.setText(ccb.getAuthor_name());
+            vh.tv_time.setText(ccb.getCommunication_comment_time());
+            vh.tv_text.setText(ccb.getCommunication_comment_content());
+            ImageUitl.showNetImage(vh.iv_avatar, ccb.getAuthor_avatar());
+            int isMy = ccb.getIsMy();
+            if (isMy == 1) {
+                vh.tv_delete.setVisibility(View.VISIBLE);
+            } else {
+                vh.tv_delete.setVisibility(View.GONE);
+            }
         } else {
             vh = (CommentAdapter.ViewHolder) convertView.getTag();
         }
-        CommunicationCommentBean ccb = listItems.get(position);
-        vh.tv_name.setText(ccb.getAuthor_name());
-        vh.tv_time.setText(ccb.getCommunication_comment_time());
-        vh.tv_text.setText(ccb.getCommunication_comment_content());
-        ImageUitl.showNetImage(vh.iv_avatar, ccb.getAuthor_avatar());
-        int isMy = ccb.getIsMy();
-        if (isMy == 1) {
-            vh.tv_delete.setVisibility(View.VISIBLE);
-        } else {
-            vh.tv_delete.setVisibility(View.GONE);
-        }
-
         return convertView;
     }
 

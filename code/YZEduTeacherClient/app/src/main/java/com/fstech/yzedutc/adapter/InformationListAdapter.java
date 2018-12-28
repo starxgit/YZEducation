@@ -75,24 +75,23 @@ public class InformationListAdapter extends BaseAdapter {
             vh.getTv_infomation_content.setText("");
             //设置空间集到convertView
             convertView.setTag(vh);
+
+            InformationBean info = listItems.get(position);
+            final String information_image = info.getInformation_cover();
+            String information_title = info.getInformation_title();
+            String information_date = info.getInformation_date().substring(0, 10);
+            vh.tv_infomation_title.setText(information_title);
+            vh.getTv_infomation_date.setText(information_date);
+            vh.getTv_infomation_content.setVisibility(View.GONE);
+            if (information_image == null) {
+                vh.iv_information_image.setVisibility(View.GONE);
+            } else {
+                vh.iv_information_image.setVisibility(View.VISIBLE);
+                ImageUitl.showNetImage(vh.iv_information_image, information_image);
+            }
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-
-        InformationBean info = listItems.get(position);
-        final String information_image = info.getInformation_cover();
-        String information_title = info.getInformation_title();
-        String information_date = info.getInformation_date().substring(0, 10);
-        vh.tv_infomation_title.setText(information_title);
-        vh.getTv_infomation_date.setText(information_date);
-        vh.getTv_infomation_content.setVisibility(View.GONE);
-        if (information_image == null) {
-            vh.iv_information_image.setVisibility(View.GONE);
-        } else {
-            vh.iv_information_image.setVisibility(View.VISIBLE);
-            ImageUitl.showNetImage(vh.iv_information_image,information_image);
-        }
-
         return convertView;
     }
 

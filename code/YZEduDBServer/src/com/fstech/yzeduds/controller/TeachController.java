@@ -112,8 +112,6 @@ public class TeachController {
         }
     }
 
-    // 一章的习题完成情况
-
     // 待批改习题列表（按题目分组）
     @RequestMapping(value = "checkExamList", method = RequestMethod.GET)
     public void checkExamList(HttpServletResponse response,

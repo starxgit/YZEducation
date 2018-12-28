@@ -70,17 +70,15 @@ public class CommunicationAdapter extends BaseAdapter {
             vh.tv_comment_num = (TextView) convertView.findViewById(R.id.tv_comment_num);
             //设置空间集到convertView
             convertView.setTag(vh);
+            CommunicationBean cb = listItems.get(position);
+            vh.tv_name.setText(cb.getNick_name());
+            vh.tv_text.setText(cb.getCommunication_content());
+            vh.tv_time.setText(cb.getCommunication_time());
+            vh.tv_comment_num.setText(cb.getComment_num() + "");
+            ImageUitl.showNetImage(vh.iv_avatar, cb.getAvatar());
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-
-        CommunicationBean cb = listItems.get(position);
-        vh.tv_name.setText(cb.getNick_name());
-        vh.tv_text.setText(cb.getCommunication_content());
-        vh.tv_time.setText(cb.getCommunication_time());
-        vh.tv_comment_num.setText(cb.getComment_num()+"");
-        ImageUitl.showNetImage(vh.iv_avatar, cb.getAvatar());
-
         return convertView;
     }
 

@@ -62,9 +62,6 @@ public class CourseGridAdapter extends BaseAdapter {
             vh.course_sum = (TextView) convertView.findViewById(R.id.item_course_grid_tv_sum);
             // 设置空间集到convertView
             convertView.setTag(vh);
-        } else {
-            vh = (ViewHolder) convertView.getTag();
-        }
 
         CourseBean courseBean = listItems.get(position);
         final String str_course_iamge = courseBean.getCourse_cover();
@@ -77,6 +74,9 @@ public class CourseGridAdapter extends BaseAdapter {
         vh.course_learn.setText(str_course_learn_student + str_course_sum_student + " 人学习");
         vh.course_sum.setText("共 " + str_course_sum + " 课时");
         ImageUitl.showNetImage(vh.course_image,str_course_iamge);
+        } else {
+            vh = (ViewHolder) convertView.getTag();
+        }
         return convertView;
     }
 
