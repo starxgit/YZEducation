@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fstech.yzeduds.mapper.MaterialMapper">
+	<!-- 查看这节课所有资料列表 -->
+	<select id="findListByCourse" resultMap="MaterialBean">
+		select
+		course_material_id,course_id,course_material_name,course_material_url,
+		course_material_size,gmt_create from course_material
+		where course_id =
+		#{courseId}
+		order by gmt_modified desc
+	</select>
+
+	<!-- 课程资料模型类 -->
+	<resultMap id="MaterialBean" type="com.fstech.yzeduds.model.MaterialBean">
+		<id column="course_material_id" jdbcType="INTEGER" property="material_id" />
+		<result column="course_id" jdbcType="INTEGER" property="course_id" />
+		<result column="course_material_name" jdbcType="VARCHAR"
+			property="material_name" />
+		<result column="course_material_url" jdbcType="VARCHAR"
+			property="material_url" />
+		<result column="course_material_size" jdbcType="VARCHAR"
+			property="material_size" />
+		<result column="gmt_create" jdbcType="VARCHAR" property="material_time" />
+	</resultMap>
+
+	<!-- 添加一个资料 -->
+	<insert id="addMaterial" parameterType="com.fstech.yzeduds.model.MaterialBean">
+		insert into
+		course_material(course_id,course_material_name,course_material_url,course_material_size,
+		gmt_create,gmt_modified)
+		values(#{course_id},#{material_name},#{material_url},#{material_size},now(),now())
+	</insert>
+	
+	<!-- 删除一个资料 -->
+	<delete id="delMaterial">
+		delete from course_material where course_material_id = #{materialId}
+	</delete>
+	
+
+</mapper>

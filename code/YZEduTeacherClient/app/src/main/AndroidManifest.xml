@@ -114,6 +114,7 @@
         <activity
             android:name=".activity.MaterialActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppThemeQmui"
             android:windowSoftInputMode="adjustNothing"></activity>
         <activity
             android:name=".activity.ExamActivity"
@@ -172,6 +173,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeQmui"
             android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".activity.UploadMaterialActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

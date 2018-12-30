@@ -49,4 +49,10 @@ public class ErrorCode {
     
     public static final int CODE_DEL_LESSON_FAIL = 2003;
     public static final String MESSAGE_DEL_LESSON_FAIL = "删除课程失败，请稍后再试";
+    
+    public static final int CODE_UPLOAD_FILE_FAIL = 2004;
+    public static final String MESSAGE_UPLOAD_FILE_FAIL = "上传资料失败，请稍后再试";
+    
+    public static final int CODE_DEL_MATERIAL_FAIL = 2005;
+    public static final String MESSAGE_DEL_MATERIAL_FAIL = "删除资料失败，请稍后再试";
 }

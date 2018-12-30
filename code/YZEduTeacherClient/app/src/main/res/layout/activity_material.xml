@@ -29,6 +29,16 @@
             android:textColor="@color/qmui_config_color_white"
             android:textSize="18sp" />
 
+        <TextView
+            android:id="@+id/tv_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:textColor="@color/Write"
+            android:text="@string/upload_file" />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -53,9 +63,22 @@
 
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="gone"/>
+
     <ListView
         android:id="@+id/lv_material"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="@color/Write"
+        android:visibility="visible">
+
+    </ListView>
 
 </LinearLayout>

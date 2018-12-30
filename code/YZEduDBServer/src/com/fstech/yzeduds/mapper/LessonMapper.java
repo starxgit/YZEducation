@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.fstech.yzeduds.model.LessonBean;
-import com.fstech.yzeduds.model.knowledge;
 
 public interface LessonMapper {
     // 属于这门课程的章节列表

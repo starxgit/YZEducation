@@ -105,6 +105,7 @@
     <string name="my_correct">我的批改</string>
     <string name="live">直播</string>
     <string name="new_lesson">添加章节</string>
+    <string name="upload_file">上传资料</string>
     <string name="check_exam">批改习题</string>
     <string name="quit_login">退出登录</string>
     <string-array name="exam_type">
