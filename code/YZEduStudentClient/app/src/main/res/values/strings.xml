@@ -94,5 +94,6 @@
     <string name="remove_success">移除成功，请刷新页面</string>
     <string name="add_to_mistake_success">添加成功，可在错题查看</string>
     <string name="i_will_comment_too">我也说一句</string>
+    <string name="quit_login">退出登录</string>
 
 </resources>

@@ -13,15 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fstech.yzeduds.dao.CourseDao;
 import com.fstech.yzeduds.dao.ExamDao;
 import com.fstech.yzeduds.dao.LessonDao;
-import com.fstech.yzeduds.dao.UserDao;
+import com.fstech.yzeduds.mapper.CourseMapper;
 import com.fstech.yzeduds.model.ExamBean;
 import com.fstech.yzeduds.model.LessonBean;
 import com.fstech.yzeduds.model.MyExamBean;
-import com.fstech.yzeduds.model.UserBean;
-import com.fstech.yzeduds.model.UserInfoBean;
-import com.fstech.yzeduds.util.CreateMD5;
 import com.fstech.yzeduds.util.ErrorCode;
 import com.fstech.yzeduds.util.ResponseUtil;
 import com.fstech.yzeduds.util.TokenUtil;
@@ -40,7 +38,7 @@ public class TeachController {
     private LessonDao lessonDao;
 
     @Autowired
-    private UserDao userDao;
+    private CourseDao courseDao;
 
     /**
      * 一节课的课后习题列表
@@ -60,7 +58,15 @@ public class TeachController {
         ResponseUtil.normalResponse(response, return_data);
     }
 
-    // 教师添加课时
+    /**
+     * 教师添加章节
+     * 
+     * @param response
+     * @param course_id
+     * @param title
+     * @param knowledge
+     * @param videoUrl
+     */
     @RequestMapping(value = "addLesson", method = RequestMethod.POST)
     public void addLesson(HttpServletResponse response,
             @RequestParam int course_id, @RequestParam String title,
@@ -68,6 +74,8 @@ public class TeachController {
         LessonBean lessonBean = new LessonBean(0, course_id, title, videoUrl);
         int result = lessonDao.addLesson(lessonBean);
         if (result > 0) {
+            // 课时自增
+            courseDao.increCourseSum(course_id);
             int lessonId = lessonBean.getLesson_id();
             System.out.println(lessonId);
             // 添加知识点
@@ -86,13 +94,42 @@ public class TeachController {
         }
     }
 
+    // 教师删除章节
+    @RequestMapping(value = "delLesson", method = RequestMethod.POST)
+    public void delLesson(HttpServletResponse response, String token,
+            int lesson_id) {
+        int user_id = TokenUtil.decodeTeacherId(token);
+        LessonBean lessonBean = lessonDao.findById(lesson_id);
+        int result = lessonDao.delLesson(lesson_id);
+        if (result > 0) {
+            courseDao.decreCourseSum(lessonBean.getCourse_id());
+            ResponseUtil.normalResponse(response, null);
+        } else {
+            ResponseUtil.errorResponse(response, null,
+                    ErrorCode.CODE_DEL_LESSON_FAIL,
+                    ErrorCode.MESSAGE_DEL_LESSON_FAIL);
+        }
+    }
+
     // 教师上传课程资料
 
     // 教师删除课程资料
 
     // 教师下载课程资料
 
-    // 添加课后习题
+    /**
+     * 教师添加课后习题
+     * 
+     * @param response
+     * @param exam_type
+     * @param lesson_id
+     * @param question
+     * @param option1
+     * @param option2
+     * @param option3
+     * @param option4
+     * @param answer
+     */
     @RequestMapping(value = "addExam", method = RequestMethod.POST)
     public void addExam(HttpServletResponse response,
             @RequestParam int exam_type, @RequestParam int lesson_id,

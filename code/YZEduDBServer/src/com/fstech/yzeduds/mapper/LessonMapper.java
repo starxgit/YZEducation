@@ -19,4 +19,10 @@ public interface LessonMapper {
     
     // 添加知识点
     public void addKnowledge(@Param("lessonId") int lessonId,@Param("content")String content);
+    
+    // 删除一节课
+    public int delLesson(@Param("lessonId") int lessonId);
+    
+    // 查找这节课的属性
+    public LessonBean findById(@Param("lessonId") int lessonId);
 }

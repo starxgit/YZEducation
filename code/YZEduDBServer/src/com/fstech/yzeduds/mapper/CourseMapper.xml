@@ -295,6 +295,19 @@
 		select course_id from my_course where user_id = #{user_id}
 		);
 	</select>
+	
+	<!-- 我教的课程列表 -->
+	<select id="findCourseByTeacherUserId" resultMap="CourseBean">
+		select
+		course_id,course_code,course_name,course_introduce,teacher_name as
+		course_teacher,
+		course_sum_student,course_learn_student,course_cover,course_sum,course_type,
+		course_price,course_finish,course.gmt_create
+		from course
+		left join
+		teacher on course.course_teacher = teacher.teacher_id
+		where teacher.user_id = #{user_id}
+	</select>
 
 	<!-- 插入选课记录 -->
 	<insert id="addMyCourse">
@@ -320,5 +333,16 @@
 	<update id="increCourseLearnNum">
 		update course set course_learn_student =
 		course_learn_student + 1 where course_id = #{course_id}
+	</update>
+	
+	<!-- 课时自增的方法 -->
+	<update id="increCourseSum">
+		update course set course_sum =
+		course_sum + 1 where course_id = #{course_id}
+	</update>
+	<!-- 课时自减的方法 -->
+	<update id="decreCourseSum">
+		update course set course_sum =
+		course_sum - 1 where course_id = #{course_id}
 	</update>
 </mapper>

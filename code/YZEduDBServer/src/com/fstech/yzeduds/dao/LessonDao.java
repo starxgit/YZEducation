@@ -35,4 +35,14 @@ public class LessonDao implements LessonMapper{
         lessonMapper.addKnowledge(lessonId, content);
     }
 
+    @Override
+    public int delLesson(int lessonId) {
+        return lessonMapper.delLesson(lessonId);
+    }
+
+    @Override
+    public LessonBean findById(int lessonId) {
+        return lessonMapper.findById(lessonId);
+    }
+
 }

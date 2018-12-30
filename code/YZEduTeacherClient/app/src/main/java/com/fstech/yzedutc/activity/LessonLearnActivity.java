@@ -17,6 +17,9 @@ import com.fstech.yzedutc.bean.LessonBean;
 import com.fstech.yzedutc.util.CallBackUtil;
 import com.fstech.yzedutc.util.Constant;
 import com.fstech.yzedutc.util.OkhttpUtil;
+import com.fstech.yzedutc.util.TokenUtil;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONArray;
@@ -41,6 +44,7 @@ public class LessonLearnActivity extends AppCompatActivity implements View.OnCli
     private LessonBean lb;
     private TextView tv_title;
     private JCVideoPlayerStandard player;
+    private TextView tv_delete;
     private LinearLayout ll_exercise;
     private LinearLayout ll_disscuss;
     private ListView lv_konwledge;
@@ -64,6 +68,7 @@ public class LessonLearnActivity extends AppCompatActivity implements View.OnCli
         ll_exercise = (LinearLayout) findViewById(R.id.ll_exercise);
         ll_disscuss = (LinearLayout) findViewById(R.id.ll_disscuss);
         lv_konwledge = (ListView) findViewById(R.id.lv_knowledge);
+        tv_delete = (TextView) findViewById(R.id.tv_delete);
         player = (JCVideoPlayerStandard) findViewById(R.id.player_video);
         listItems = new ArrayList<>();
         adapter = new SimpleAdapter(LessonLearnActivity.this, listItems, android.R.layout.activity_list_item,
@@ -71,6 +76,7 @@ public class LessonLearnActivity extends AppCompatActivity implements View.OnCli
         lv_konwledge.setAdapter(adapter);
         ll_disscuss.setOnClickListener(this);
         ll_exercise.setOnClickListener(this);
+        tv_delete.setOnClickListener(this);
     }
 
     /*
@@ -159,8 +165,65 @@ public class LessonLearnActivity extends AppCompatActivity implements View.OnCli
                 intent1.putExtra("lesson_id", lb.getLesson_id());
                 startActivity(intent1);
                 break;
+            case R.id.tv_delete:
+                tv_delete.setClickable(false);
+                new QMUIDialog.MessageDialogBuilder(LessonLearnActivity.this)
+                        .setTitle("删除章节")
+                        .setMessage("确定要删除" + lb.getLesson_title() + "吗？")
+                        .addAction("取消", new QMUIDialogAction.ActionListener() {
+                            @Override
+                            public void onClick(QMUIDialog dialog, int index) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .addAction(0, "删除", QMUIDialogAction.ACTION_PROP_NEGATIVE, new QMUIDialogAction.ActionListener() {
+                            @Override
+                            public void onClick(QMUIDialog dialog, int index) {
+                                delLesson();
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+                break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 删除章节的方法
+     */
+    private void delLesson() {
+        String lesson_id = lb.getLesson_id() + "";
+        String token = TokenUtil.getToken(LessonLearnActivity.this);
+        String url = Constant.BASE_DB_URL + "teach/delLesson";
+        Map<String, String> map = new HashMap<>();
+        map.put("lesson_id", lesson_id);
+        map.put("token", token);
+        OkhttpUtil.okHttpPost(url, map, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Toast.makeText(LessonLearnActivity.this, R.string.server_response_error, Toast.LENGTH_SHORT).show();
+                tv_delete.setClickable(true);
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int result_code = jsonObject.getInt("result_code");
+                    if (result_code == 0) {
+                        Toast.makeText(LessonLearnActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(LessonLearnActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } finally {
+                    tv_delete.setClickable(true);
+                }
+            }
+        });
     }
 }

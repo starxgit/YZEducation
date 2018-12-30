@@ -143,7 +143,7 @@ public class LearnFragment extends Fragment {
      * 初始化数据
      */
     private void initData() {
-        String url = Constant.BASE_DB_URL + "course/myList";
+        String url = Constant.BASE_DB_URL + "course/myTeachCourse";
         String token = TokenUtil.getToken(getActivity());
         Map<String, String> map = new HashMap<String, String>();
         map.put("token", token);

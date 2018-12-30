@@ -159,8 +159,7 @@ public class SchoolFragment extends Fragment {
     * 无返回
     * */
     private void initData() {
-        if (application.getUser_type() == 1) {
-
+        if (application.getUser_type() == 2) {
             String token = application.getToken();
             Log.e("token",token);
             setInformations(token);

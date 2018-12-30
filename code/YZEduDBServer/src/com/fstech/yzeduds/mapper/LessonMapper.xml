@@ -36,5 +36,18 @@
 		lesson_id,gmt_create,gmt_modified)
 		values(#{content},3,#{lessonId},now(),now())
 	</insert>
+	
+	<!-- 删除一节课 -->
+	<delete id="delLesson">
+		delete from lesson where lesson_id = #{lessonId} limit 1
+	</delete>
+	
+	<!-- 查找一节课 -->
+	<select id="findById" resultType="com.fstech.yzeduds.model.LessonBean">
+	select
+		lesson_id,course_id,lesson_title,lesson_video_url
+		from lesson where
+		lesson_id = #{lessonId}
+	</select>
 
 </mapper>

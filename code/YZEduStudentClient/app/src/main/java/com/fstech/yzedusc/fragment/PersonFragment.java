@@ -1,6 +1,7 @@
 package com.fstech.yzedusc.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -35,11 +36,13 @@ import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 public class PersonFragment extends Fragment implements View.OnClickListener {
 
     // 定义UI对象
-    private RelativeLayout re_wallet, re_ability, re_setting, re_learn_like, re_discover;
+    private RelativeLayout re_wallet, re_ability, re_setting, re_learn_like, re_discover,re_quit;
     private TextView tv_name;
     private QMUIRadiusImageView iv_avatar;
     private ImageView iv_message;
     private YZEduApplication application;
+    SharedPreferences perPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +68,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
         re_setting = (RelativeLayout) getActivity().findViewById(R.id.re_setting);
         re_learn_like = (RelativeLayout) getActivity().findViewById(R.id.re_learn_like);
         re_discover = (RelativeLayout) getActivity().findViewById(R.id.re_discover);
+        re_quit = (RelativeLayout)getActivity().findViewById(R.id.re_quit);
         iv_avatar = (QMUIRadiusImageView) getActivity().findViewById(R.id.iv_avatar);
         iv_message = (ImageView) getActivity().findViewById(R.id.iv_message);
         tv_name = (TextView) getActivity().findViewById(R.id.tv_name);
@@ -74,6 +78,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
         re_setting.setOnClickListener(this);
         re_learn_like.setOnClickListener(this);
         re_discover.setOnClickListener(this);
+        re_quit.setOnClickListener(this);
         iv_avatar.setOnClickListener(this);
         iv_message.setOnClickListener(this);
         tv_name.setOnClickListener(this);
@@ -172,9 +177,25 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
                     startActivity(intent7);
                 }
                 break;
+            case R.id.re_quit:
+                Log.e("click","quit");
+                Intent intent = new Intent(getActivity(),LoginActivity.class);
+                clearLogin();
+                startActivity(intent);
+                getActivity().finish();
+                break;
             default:
                 break;
         }
     }
 
+    /**
+     * 清除登录缓存信息
+     */
+    private void clearLogin(){
+        perPreferences = getActivity().getSharedPreferences("loginmsg", getActivity().MODE_PRIVATE);
+        editor = perPreferences.edit();
+        editor.putString("pass","");
+        editor.commit();
+    }
 }

@@ -143,6 +143,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
                 clearLogin();
                 startActivity(intent);
                 getActivity().finish();
+		break;
             default:
                 break;
         }

@@ -84,4 +84,19 @@ public class CourseDao implements CourseMapper {
         return courseMapper.increCourseLearnNum(course_id);
     }
 
+    @Override
+    public List<CourseBean> findCourseByTeacherUserId(int user_id) {
+        return courseMapper.findCourseByTeacherUserId(user_id);
+    }
+
+    @Override
+    public int increCourseSum(int course_id) {
+        return courseMapper.increCourseSum(course_id);
+    }
+
+    @Override
+    public int decreCourseSum(int course_id) {
+        return courseMapper.decreCourseSum(course_id);
+    }
+
 }

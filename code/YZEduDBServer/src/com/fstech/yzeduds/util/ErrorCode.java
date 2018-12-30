@@ -46,4 +46,7 @@ public class ErrorCode {
     
     public static final int CODE_ADD_LESSON_FAIL = 2002;
     public static final String MESSAGE_ADD_LESSON_FAIL = "课程添加失败，请稍后再试";
+    
+    public static final int CODE_DEL_LESSON_FAIL = 2003;
+    public static final String MESSAGE_DEL_LESSON_FAIL = "删除课程失败，请稍后再试";
 }

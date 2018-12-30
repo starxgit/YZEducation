@@ -109,6 +109,7 @@
         <activity
             android:name=".activity.LessonLearnActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppThemeQmui"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.MaterialActivity"

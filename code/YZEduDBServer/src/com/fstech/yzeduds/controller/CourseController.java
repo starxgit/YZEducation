@@ -166,6 +166,18 @@ public class CourseController {
         List<CourseBean> myCourseList = courseDao.findCourseByUserId(user_id);
         ResponseUtil.normalResponse(response, myCourseList);
     }
+    
+    /**
+     * 教师教的课程列表
+     * @param response
+     * @param token
+     */
+    @RequestMapping(value = "myTeachCourse", method = RequestMethod.GET)
+    public void myTeachCourse(HttpServletResponse response,String token){
+        int user_id = TokenUtil.decodeUserId(token);
+        List<CourseBean> myCourseList = courseDao.findCourseByTeacherUserId(user_id);
+        ResponseUtil.normalResponse(response, myCourseList);
+    }
 
     /**
      * 报名选课

@@ -53,6 +53,9 @@ public interface CourseMapper {
 
     // 我的课程列表（包括实训）
     public List<CourseBean> findCourseByUserId(@Param("user_id") int user_id);
+    
+    // 我的课程列表（包括实训）
+    public List<CourseBean> findCourseByTeacherUserId(@Param("user_id") int user_id);
 
     // 删除选课记录
     public int delMyCourse(@Param("course_id") int course_id,
@@ -63,5 +66,11 @@ public interface CourseMapper {
     
     // 课程学习人数自增
     public int increCourseLearnNum(@Param("course_id") int course_id);
+    
+    // 课时自增
+    public int increCourseSum(@Param("course_id") int course_id);
+
+    // 课时自减
+    public int decreCourseSum(@Param("course_id") int course_id);
 
 }
