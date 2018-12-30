@@ -128,4 +128,40 @@ public class UserController {
 
     }
 
+    // 教师登录的方法
+    @RequestMapping(value = "teacherLogin", method = RequestMethod.POST)
+    public void teacherLoginByAccount(HttpServletResponse response,
+            @RequestParam String account, @RequestParam String password) {
+        UserBean user = userDao.findTeacherByAccount(account);
+        if (user != null) {
+            String encodePass = CreateMD5.getMd5(password);
+            if (encodePass.equals(user.getUser_password())) {
+                // 登录成功，生成Token
+                int userType = 2; // 教师类型
+                String teacherName = user.getTeacher_name();
+                int teacher_id = user.getTeacher_id();
+                int schoolId = user.getSchool_id();
+                int class_id = 0;
+                int faculty_id = 0;
+                // 其他用户，非教师
+                UserInfoBean userInfoBean = new UserInfoBean(null, teacherName,
+                        user.getUser_account(), user.getUser_avatar(), userType);
+                String token = TokenUtil.enCodeToken(user.getUser_id(), -1,
+                        teacher_id, class_id, faculty_id, schoolId);
+                JSONObject return_data = new JSONObject();
+                return_data.put("token", token);
+                return_data.put("userInfo", userInfoBean);
+                ResponseUtil.normalResponse(response, return_data);
+            } else {
+                ResponseUtil.errorResponse(response, null,
+                        ErrorCode.CODE_PASSWORD_WRONG,
+                        ErrorCode.MESSAGE_PASSWORD_WRONG);
+            }
+        } else {
+            ResponseUtil.errorResponse(response, null,
+                    ErrorCode.CODE_USER_NOT_EXIST,
+                    ErrorCode.MESSAGE_USER_NOT_EXIT);
+        }
+    }
+
 }

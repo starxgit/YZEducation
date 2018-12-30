@@ -38,6 +38,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="15dp"
             android:text="@string/edit"
+            android:visibility="gone"
             android:textColor="@color/Write" />
 
     </RelativeLayout>

@@ -73,7 +73,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 if (perPreferences != null) {
                     String mphone = perPreferences.getString("mphone", "");
                     String mpwd = perPreferences.getString("pass", "");
-                    String url = Constant.BASE_DB_URL + "user/login";
+                    String url = Constant.BASE_DB_URL + "user/teacherLogin";
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("account", mphone);
                     map.put("password", mpwd);
@@ -123,12 +123,9 @@ public class WelcomeActivity extends AppCompatActivity {
         application.setAvatar(userInfo.getUser_avatar());
         application.setUser_type(userType);
         application.setToken(token);
-        if (userType == 1) {
-            // 学生用户
-            application.setUserName(userInfo.getStudent_name());
-        } else if (userType == 3) {
-            // 自由人用户
-            application.setUserName("用户" + userInfo.getUser_account());
+        if (userType == 2) {
+            // 教师用户
+            application.setUserName(userInfo.getTeacher_name());
         }
     }
 

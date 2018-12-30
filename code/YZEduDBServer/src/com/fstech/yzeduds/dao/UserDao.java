@@ -31,6 +31,11 @@ public class UserDao implements UserMapper{
         // TODO Auto-generated method stub
         return 0;
     }
+
+    @Override
+    public UserBean findTeacherByAccount(String user_account) {
+        return userMapper.findTeacherByAccount(user_account);
+    }
     
     
 }

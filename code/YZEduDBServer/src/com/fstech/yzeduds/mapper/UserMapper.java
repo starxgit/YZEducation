@@ -8,6 +8,9 @@ public interface UserMapper {
     // 账号查找这个用户
     public UserBean findUserByAccount(String user_account);
 
+    // 账号查找这个教师
+    public UserBean findTeacherByAccount(String user_account);
+
     // id查找这个用户
     public UserBean findUserById(int user_id);
 

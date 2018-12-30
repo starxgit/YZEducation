@@ -15,11 +15,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fstech.yzeduds.dao.ExamDao;
 import com.fstech.yzeduds.dao.LessonDao;
+import com.fstech.yzeduds.dao.UserDao;
 import com.fstech.yzeduds.model.ExamBean;
 import com.fstech.yzeduds.model.LessonBean;
 import com.fstech.yzeduds.model.MyExamBean;
+import com.fstech.yzeduds.model.UserBean;
+import com.fstech.yzeduds.model.UserInfoBean;
+import com.fstech.yzeduds.util.CreateMD5;
 import com.fstech.yzeduds.util.ErrorCode;
 import com.fstech.yzeduds.util.ResponseUtil;
+import com.fstech.yzeduds.util.TokenUtil;
 
 /**
  * Created By shaoxin On 2018-12-22 教师教学的控制器
@@ -33,6 +38,9 @@ public class TeachController {
 
     @Autowired
     private LessonDao lessonDao;
+
+    @Autowired
+    private UserDao userDao;
 
     /**
      * 一节课的课后习题列表
@@ -51,8 +59,6 @@ public class TeachController {
         return_data.put("exam_list", examBeans);
         ResponseUtil.normalResponse(response, return_data);
     }
-
-    // 教师修改课程
 
     // 教师添加课时
     @RequestMapping(value = "addLesson", method = RequestMethod.POST)

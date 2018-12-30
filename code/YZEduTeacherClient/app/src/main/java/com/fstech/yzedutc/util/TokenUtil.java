@@ -1,6 +1,7 @@
 package com.fstech.yzedutc.util;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.fstech.yzedutc.application.YZEduApplication;
 

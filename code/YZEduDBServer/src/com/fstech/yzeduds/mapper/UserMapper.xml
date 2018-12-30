@@ -13,6 +13,19 @@
 		where
 		user_account = #{user_account}
 	</select>
+	
+	<!-- 账号查找教师 -->
+	<select id="findTeacherByAccount" parameterType="String" resultMap="UserBean">
+		select
+		user.user_id,user_account,user_password,user_phone,user_sex,user_age,user_avatar,
+		teacher_id,teacher_name,teacher_number,school_id
+		from user
+		left join teacher on
+		user.user_id = teacher.user_id
+		where
+		user_account = #{user_account}
+	</select>
+	
 	<!-- 用户信息模型类 -->
 	<resultMap id="UserBean" type="com.fstech.yzeduds.model.UserBean">
 		<id column="user_id" jdbcType="INTEGER" property="user_id" />

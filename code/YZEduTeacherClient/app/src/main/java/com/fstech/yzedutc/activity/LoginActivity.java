@@ -103,12 +103,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         application.setAvatar(userInfo.getUser_avatar());
         application.setUser_type(userType);
         application.setToken(token);
-        if(userType==1){
-            // 学生用户
-            application.setUserName(userInfo.getStudent_name());
-        }else if(userType==3){
-            // 自由人用户
-            application.setUserName("用户"+userInfo.getUser_account());
+        if (userType == 2) {
+            // 教师用户
+            application.setUserName(userInfo.getTeacher_name());
         }
         CacheActivityUtil.finishSingleActivityByClass(MainActivity.class);
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -156,7 +153,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressBar.setVisibility(View.VISIBLE);
         qrlLogin.setClickable(false);
         // 登录
-        String url = Constant.BASE_DB_URL + "user/login";
+        String url = Constant.BASE_DB_URL + "user/teacherLogin";
         Map<String, String> map = new HashMap<String, String>();
         map.put("account", account);
         map.put("password", password);
@@ -179,7 +176,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         String token = jsonObject.getString("token");
                         try {
                             UserInfoBean userInfoBean = objectMapper.readValue(userInfo.toString(), UserInfoBean.class);
-                            loginScucess(userInfoBean,token);
+                            loginScucess(userInfoBean, token);
                         } catch (IOException e) {
                             Log.e("io", e.getMessage());
                             e.printStackTrace();
@@ -191,7 +188,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 } catch (JSONException e) {
                     Log.e("json", e.getMessage());
                     e.printStackTrace();
-                }finally {
+                } finally {
                     progressBar.setVisibility(View.GONE);
                     qrlLogin.setClickable(true);
                 }
