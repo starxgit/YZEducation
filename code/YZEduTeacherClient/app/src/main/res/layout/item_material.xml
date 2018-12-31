@@ -39,7 +39,7 @@
                     android:textColor="@color/qmui_config_color_white" />
 
                 <TextView
-                    android:id="@+id/item_task_tv_state"
+                    android:id="@+id/tv_download"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

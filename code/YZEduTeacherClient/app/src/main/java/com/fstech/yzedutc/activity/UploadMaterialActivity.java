@@ -172,7 +172,7 @@ public class UploadMaterialActivity extends AppCompatActivity {
                     MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
                     builder.addFormDataPart("thumb", file.getName(),
                             RequestBody.create(MediaType.parse("file/*"), file));
-                    Request.Builder request = new Request.Builder().url(Constant.UPLOAD_URL)
+                    Request.Builder request = new Request.Builder().url(Constant.OTHER_UPLOAD_URL)
                             .post(new CmlRequestBody(builder.build()) {
                                 @Override
                                 public void loading(long current, long total, boolean done) {

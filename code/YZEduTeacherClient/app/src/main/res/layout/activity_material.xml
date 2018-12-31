@@ -63,6 +63,34 @@
 
     </LinearLayout>
 
+
+    <LinearLayout
+        android:id="@+id/ll_jindu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Write"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/pb_jindu"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_margin="15dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_jindu"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="已下载：0%" />
+
+    </LinearLayout>
+
+
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"

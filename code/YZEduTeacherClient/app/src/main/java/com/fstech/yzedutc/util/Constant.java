@@ -18,6 +18,9 @@ public class Constant {
     // 文件上传地址
     public static final String UPLOAD_URL = "https://www.fstechnology.cn:8443/CommonFileServer/UploadVideo";
 
+    // 其他文件上传地址
+    public static final String OTHER_UPLOAD_URL = "https://www.fstechnology.cn:8443/CommonFileServer/UploadFile";
+
     // 设置服务器端口
     public static final String SERVER_PORT = "8080";
 
