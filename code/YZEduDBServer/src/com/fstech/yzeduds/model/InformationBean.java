@@ -1,12 +1,15 @@
 package com.fstech.yzeduds.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by shaoxin on 18-11-13. 显示咨询列表的模型类
  */
 
-public class InformationBean {
+public class InformationBean implements Serializable{
+    private static final long serialVersionUID = -1;
+    
     private int information_id; // 资讯id
     private String information_title; // 资讯标题
     private String information_cover; // 资讯图片路径(如果没有设为null)

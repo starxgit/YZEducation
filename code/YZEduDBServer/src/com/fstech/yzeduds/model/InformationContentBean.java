@@ -1,9 +1,12 @@
 package com.fstech.yzeduds.model;
 
+import java.io.Serializable;
+
 /**
  * 资讯详情模型类
  * */
-public class InformationContentBean {
+public class InformationContentBean implements Serializable{
+    private static final long serialVersionUID = -1;
     
     private String platform_content_img;
     private String platform_content_text;

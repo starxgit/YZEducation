@@ -1,10 +1,14 @@
 package com.fstech.yzeduds.model;
 
+import java.io.Serializable;
+
 /**
  * Created by shaoxin on 18-3-28.
  * 公告数据的模型类
  */
-public class AnnouncementBean {
+public class AnnouncementBean implements Serializable{
+    private static final long serialVersionUID = -1;
+    
     private int announcement_id;            // 公告id
     private String announcement_title;      // 公告标题
     private String announcement_content;    // 公告内容

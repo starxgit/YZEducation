@@ -8,6 +8,8 @@ import java.io.Serializable;
  */
 
 public class ClassificationBean implements Serializable {
+    private static final long serialVersionUID = -1;
+    
     private int classification_id;          // 分类id
     private String classification_name;     // 分类名
     private int classification_own;         // 所属分类

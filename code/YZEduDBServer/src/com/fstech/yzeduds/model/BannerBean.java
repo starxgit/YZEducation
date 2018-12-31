@@ -1,6 +1,9 @@
 package com.fstech.yzeduds.model;
 
-public class BannerBean {
+import java.io.Serializable;
+
+public class BannerBean implements Serializable{
+    private static final long serialVersionUID = -1;
     private int banner_id;          // banner_id
     private String banner_image;    // banner图片路径
     private int banner_type;        // banner广告类型

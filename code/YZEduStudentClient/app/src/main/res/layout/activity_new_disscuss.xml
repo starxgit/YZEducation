@@ -41,6 +41,8 @@
 
     <EditText
         android:id="@+id/et_content"
+        android:gravity="top"
+        android:textSize="14sp"
         android:layout_marginTop="10dp"
         android:layout_width="300dp"
         android:background="@color/grey2"

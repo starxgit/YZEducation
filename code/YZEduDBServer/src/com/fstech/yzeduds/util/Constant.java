@@ -16,4 +16,7 @@ public class Constant {
 
     // 课程分页的页数
     public final static int COURSE_PAGE_SIZE = 10;
+    
+    // Redis缓存数据时间
+    public final static int REDIS_CACHE_TTL = 60;
 }
