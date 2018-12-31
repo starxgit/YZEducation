@@ -1,6 +1,5 @@
 package com.fstech.yzeduds.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +9,6 @@ import com.fstech.yzeduds.mapper.CourseMapper;
 import com.fstech.yzeduds.model.ClassificationBean;
 import com.fstech.yzeduds.model.CourseBean;
 import com.fstech.yzeduds.model.LessonBean;
-import com.fstech.yzeduds.util.Constant;
-import com.fstech.yzeduds.util.JedisUtil;
-import com.fstech.yzeduds.util.SerializeUtil;
 
 @Repository
 public class CourseDao implements CourseMapper {
@@ -42,22 +38,7 @@ public class CourseDao implements CourseMapper {
 
     @Override
     public List<ClassificationBean> classificationList(int cfa_id) {
-        List<ClassificationBean> classificationList = new ArrayList<ClassificationBean>();
-        String key = "classificationList";
-        List<String>list = JedisUtil.getList(key, 0, -1);
-        if(list.size()>0){
-            for(int i=0;i<list.size();i++){
-                ClassificationBean cfab = (ClassificationBean) SerializeUtil.unSerialize(list.get(i));
-                classificationList.add(cfab);
-            }
-        }else{
-            classificationList = courseMapper.classificationList(cfa_id);
-            for(int i=0;i<classificationList.size();i++){
-                String str=SerializeUtil.serialize(classificationList.get(i));
-                JedisUtil.addToListByTTL(key, str, Constant.REDIS_CACHE_TTL);
-            }
-        }
-        return classificationList;
+        return courseMapper.classificationList(cfa_id);
     }
 
     @Override
