@@ -41,7 +41,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="5dp"
                     android:text="荀况"
-                    android:textColor="@color/text_black3" />
+                    android:textColor="@color/text_black9" />
 
             </LinearLayout>
 
@@ -57,8 +57,8 @@
                     android:layout_marginBottom="15dp"
                     android:layout_marginTop="10dp"
                     android:text="JAVA和C有什么不同？是不是要学过C再学Java？"
-                    android:textColor="@color/text_black9"
-                    android:textSize="13sp" />
+                    android:textColor="@color/text_black3"
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

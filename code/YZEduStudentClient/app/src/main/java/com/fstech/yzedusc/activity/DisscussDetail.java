@@ -177,6 +177,7 @@ public class DisscussDetail extends AppCompatActivity {
      * 提交我的评论的方法
      */
     private void submitComment() {
+        hideKeyBoard();
         String text = editText.getText().toString();
         String url = Constant.BASE_DB_URL + "communication/addComment";
         int communication_id = communicationBean.getCommunication_id();
@@ -277,6 +278,7 @@ public class DisscussDetail extends AppCompatActivity {
                     int result_code = jsonObject.getInt("result_code");
                     if (result_code == 0) {
                         listItems.clear();
+                        adapter.notifyDataSetChanged();
                         // 返回正确的情况
                         JSONArray jsonArray = jsonObject.getJSONArray("return_data");
                         ObjectMapper objectMapper = new ObjectMapper();
@@ -331,8 +333,9 @@ public class DisscussDetail extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     int result_code = jsonObject.getInt("result_code");
                     if (result_code == 0) {
-                        listItems.remove(positionFn);
-                        adapter.notifyDataSetChanged();
+                        getCommentList();
+//                        listItems.remove(positionFn);
+//                        adapter.notifyDataSetChanged();
                         Toast.makeText(DisscussDetail.this, "删除成功", Toast.LENGTH_SHORT).show();
                     } else {
                         String message = jsonObject.getString("message");

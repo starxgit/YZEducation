@@ -35,7 +35,7 @@
 					</tr>
 				</thead>
 				<tbody id="teachers">
-					
+
 				</tbody>
 			</table>
 		</div>
@@ -53,24 +53,28 @@
 		$(function () {
 			getList();
 		});
-		// 获取院系列表
+		// 获取教师列表
 		function getList() {
-			let school_id = 305;
-			$.ajax({
-				url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "person/teacherList",
-				type: "get",
-				data: {
-					"school_id": school_id,
-				},
-				success: function (res) {
-					let data = JSON.parse(res);
-					if (data.result_code == 0) {
-						setList(data.return_data);
-					} else {
-						alert(data.message);
+			let school_id = $.cookie('school_id');
+			if (typeof (school_id) == "undefined") {
+				self.location = "login.html";
+			} else {
+				$.ajax({
+					url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "person/teacherList",
+					type: "get",
+					data: {
+						"school_id": school_id,
+					},
+					success: function (res) {
+						let data = JSON.parse(res);
+						if (data.result_code == 0) {
+							setList(data.return_data);
+						} else {
+							alert(data.message);
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 
 		// 将列表设置到页面
@@ -108,21 +112,21 @@
 			layer.confirm('确认要删除吗？', function (index) {
 				console.log(id);
 				$.ajax({
-				url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "person/delTeacher",
-				type: "post",
-				data: {
-					"teacher_number": id,
-				},
-				success: function (res) {
-					let data = JSON.parse(res);
-					if (data.result_code == 0) {
-						layer.msg('已删除!', { icon: 1, time: 1000 });
-						$("#teacher"+id).remove();
-					} else {
-						alert(data.message);
+					url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "person/delTeacher",
+					type: "post",
+					data: {
+						"teacher_number": id,
+					},
+					success: function (res) {
+						let data = JSON.parse(res);
+						if (data.result_code == 0) {
+							layer.msg('已删除!', { icon: 1, time: 1000 });
+							$("#teacher" + id).remove();
+						} else {
+							alert(data.message);
+						}
 					}
-				}
-			});
+				});
 			});
 		}
 

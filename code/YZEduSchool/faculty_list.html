@@ -55,49 +55,53 @@
 			layer.confirm('确认要删除吗？', function (index) {
 				console.log(id);
 				$.ajax({
-				url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "school/delFaculty",
-				type: "post",
-				data: {
-					"faculty_id": id,
-				},
-				success: function (res) {
-					let data = JSON.parse(res);
-					if (data.result_code == 0) {
-						layer.msg('已删除!', { icon: 1, time: 1000 });
-						$("#faculty"+id).remove();
-					} else {
-						alert(data.message);
+					url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "school/delFaculty",
+					type: "post",
+					data: {
+						"faculty_id": id,
+					},
+					success: function (res) {
+						let data = JSON.parse(res);
+						if (data.result_code == 0) {
+							layer.msg('已删除!', { icon: 1, time: 1000 });
+							$("#faculty" + id).remove();
+						} else {
+							alert(data.message);
+						}
 					}
-				}
-			});
+				});
 			});
 		}
 
 		// 获取院系列表
 		function getList() {
-			let school_id = 305;
-			$.ajax({
-				url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "school/facultyList",
-				type: "get",
-				data: {
-					"school_id": school_id,
-				},
-				success: function (res) {
-					let data = JSON.parse(res);
-					if (data.result_code == 0) {
-						setList(data.return_data);
-					} else {
-						alert(data.message);
+			let school_id = $.cookie('school_id');
+			if (typeof (school_id) == "undefined") {
+				self.location = "login.html";
+			} else {
+				$.ajax({
+					url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "school/facultyList",
+					type: "get",
+					data: {
+						"school_id": school_id,
+					},
+					success: function (res) {
+						let data = JSON.parse(res);
+						if (data.result_code == 0) {
+							setList(data.return_data);
+						} else {
+							alert(data.message);
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 
 		// 将列表设置到页面
 		function setList(array) {
 			array.forEach(faculty => {
 				console.log(faculty);
-				let tr = '<tr id="faculty'+faculty.faculty_id +'" class="text-c">'
+				let tr = '<tr id="faculty' + faculty.faculty_id + '" class="text-c">'
 					+ '<td><input type="checkbox" value="" name=""></td>'
 					+ '<td>' + faculty.faculty_id + '</td>'
 					+ '<td>' + faculty.faculty_name + '</td>'

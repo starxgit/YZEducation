@@ -31,14 +31,38 @@
 	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/hcharts/Highcharts/5.0.6/js/highcharts.js"></script>
 	<script type="text/javascript" src="https://cdn.fstechnology.cn/YZEduSchoolWeb/lib/hcharts/Highcharts/5.0.6/js/modules/exporting.js"></script>
 	<script type="text/javascript">
+
+		Date.prototype.Format = function (fmt) {
+			var o = {
+				"M+": this.getMonth() + 1, //月份 
+				"d+": this.getDate(), //日 
+				"H+": this.getHours(), //小时 
+				"m+": this.getMinutes(), //分 
+				"s+": this.getSeconds(), //秒 
+				"q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+				"S": this.getMilliseconds() //毫秒 
+			};
+			if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+			for (var k in o)
+				if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+			return fmt;
+		}
+
 		$(function () {
+			var date1 = new Date(new Date() - 1000 * 60 * 60 * 24 * 1).Format("yyyy-MM-dd");
+			var date2 = new Date(new Date() - 1000 * 60 * 60 * 24 * 2).Format("yyyy-MM-dd");
+			var date3 = new Date(new Date() - 1000 * 60 * 60 * 24 * 3).Format("yyyy-MM-dd");
+			var date4 = new Date(new Date() - 1000 * 60 * 60 * 24 * 4).Format("yyyy-MM-dd");
+			var date5 = new Date(new Date() - 1000 * 60 * 60 * 24 * 5).Format("yyyy-MM-dd");
+			var date6 = new Date(new Date() - 1000 * 60 * 60 * 24 * 6).Format("yyyy-MM-dd");
+			var date7 = new Date(new Date() - 1000 * 60 * 60 * 24 * 7).Format("yyyy-MM-dd");
 			Highcharts.chart('container', {
 				title: {
 					text: '一周课程数量分析',
 					x: -20 //center
 				},
 				xAxis: {
-					categories: ['2018-11-30', '2018-12-01', '2018-12-02', '2018-12-03', '2018-12-04', '2018-12-05', '2018-12-06']
+					categories: [date7, date6, date5, date4, date3, date2, date1]
 				},
 				yAxis: {
 					title: {

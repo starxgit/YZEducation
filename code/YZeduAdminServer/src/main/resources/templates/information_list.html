@@ -34,39 +34,19 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="text-c">
+					
+					<tr class="text-c" th:each="inf : ${informations}">
 						<td><input type="checkbox" value="" name=""></td>
-						<td>这是标题1</td>
-						<td><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2310514390,3580363630&fm=27&gp=0.jpg" style="width:100px"></td>
-						<td>2018-11-13 </td>
+						<td th:text="${inf.information_title}"></td>
+						<td><img th:src="${inf.information_cover}" style="width:100px"></td>
+						<td th="$inf.information_time}"></td>
 						<td class="f-14 td-manage">
 							<a style="text-decoration:none" class="ml-5" onClick="article_del(this,'10001')" href="javascript:;" title="删除">
 								<i class="Hui-iconfont">&#xe6e2;</i>
 							</a>
 						</td>
 					</tr>
-					<tr class="text-c">
-						<td><input type="checkbox" value="" name=""></td>
-						<td>这是标题2</td>
-						<td><img src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1557680978,316529973&fm=58" style="width:100px"></td>
-						<td>2018-11-13 </td>
-						<td class="f-14 td-manage">
-							<a style="text-decoration:none" class="ml-5" onClick="article_del(this,'10001')" href="javascript:;" title="删除">
-								<i class="Hui-iconfont">&#xe6e2;</i>
-							</a>
-						</td>
-					</tr>
-					<tr class="text-c">
-						<td><input type="checkbox" value="" name=""></td>
-						<td>这是标题3</td>
-						<td><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2249893882,1165836821&fm=27&gp=0.jpg" style="width:100px"></td>
-						<td>2018-11-13 </td>
-						<td class="f-14 td-manage">
-							<a style="text-decoration:none" class="ml-5" onClick="article_del(this,'10001')" href="javascript:;" title="删除">
-								<i class="Hui-iconfont">&#xe6e2;</i>
-							</a>
-						</td>
-					</tr>
+			
 				</tbody>
 			</table>
 		</div>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fstech.yzeduss.mapper.CourseMapper">
+
+    <!--该院校所有课程列表-->
+    <select id="findCourseBySchoolId" resultType="com.fstech.yzeduss.model.Course">
+        select course_id,course_name,course_introduce,teacher_name,course.school_id,faculty_id,class_id
+        classification_name,course_sum_student,course_learn_student,course_cover,course_sum
+        from course
+        left join teacher on course.course_teacher = teacher.teacher_id
+        left join classification on course.course_classification = classification.classification_id
+        where course.school_id = #{school_id}
+        and course_type != 3
+    </select>
+    <!--该院校所有实训列表-->
+    <select id="findPracticalBySchoolId" resultType="com.fstech.yzeduss.model.Course">
+        select course_id,course_name,course_introduce,teacher_name,course.school_id,faculty_id,class_id
+        classification_name,course_sum_student,course_learn_student,course_cover,course_sum
+        from course
+        left join teacher on course.course_teacher = teacher.teacher_id
+        left join classification on course.course_classification = classification.classification_id
+        where course.school_id = #{school_id}
+        and course_type = 3
+    </select>
+
+</mapper>

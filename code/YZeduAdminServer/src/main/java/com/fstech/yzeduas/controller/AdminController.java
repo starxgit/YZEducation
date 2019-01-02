@@ -22,7 +22,7 @@ public class AdminController {
     @Autowired
     private AdminDao adminDao;
 
-    // 所有管理员困
+    // 所有管理员
     @RequestMapping("adminList")
     public String allAdmin(Model model, HttpServletRequest request) {
         if (SessionUtil.isLogin(request) == true) {

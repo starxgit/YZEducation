@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     // 定义UI对象
     private RadioGroup rg_tab_bar;
     private RadioButton rb_main;
-    private RadioButton rb_course;
+//    private RadioButton rb_course;
     private RadioButton rb_school;
     private RadioButton rb_learn;
     private RadioButton rb_person;
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         CacheActivityUtil.addActivity(MainActivity.this);
         rg_tab_bar = (RadioGroup) findViewById(R.id.rg_tab_bar);
         rb_main = (RadioButton) findViewById(R.id.rb_main);
-        rb_course = (RadioButton) findViewById(R.id.rb_course);
+//        rb_course = (RadioButton) findViewById(R.id.rb_course);
         rb_school = (RadioButton) findViewById(R.id.rb_school);
         rb_learn = (RadioButton) findViewById(R.id.rb_learn);
         rb_person = (RadioButton) findViewById(R.id.rb_person);
@@ -86,17 +86,17 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             case R.id.rb_main:
                 vpager.setCurrentItem(Constant.PAGE_ONE);
                 break;
-            case R.id.rb_course:
-                vpager.setCurrentItem(Constant.PAGE_TWO);
-            break;
+//            case R.id.rb_course:
+//                vpager.setCurrentItem(Constant.PAGE_TWO);
+//            break;
             case R.id.rb_learn:
-                vpager.setCurrentItem(Constant.PAGE_THREE);
+                vpager.setCurrentItem(Constant.PAGE_TWO);
                 break;
             case R.id.rb_school:
-                vpager.setCurrentItem(Constant.PAGE_FOUR);
+                vpager.setCurrentItem(Constant.PAGE_THREE);
                 break;
             case R.id.rb_person:
-                vpager.setCurrentItem(Constant.PAGE_FIVE);
+                vpager.setCurrentItem(Constant.PAGE_FOUR);
                 break;
         }
     }
@@ -118,16 +118,16 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 case Constant.PAGE_ONE:
                     rb_main.setChecked(true);
                     break;
+//                case Constant.PAGE_TWO:
+//                    rb_course.setChecked(true);
+//                    break;
                 case Constant.PAGE_TWO:
-                    rb_course.setChecked(true);
-                    break;
-                case Constant.PAGE_THREE:
                     rb_learn.setChecked(true);
                     break;
-                case Constant.PAGE_FOUR:
+                case Constant.PAGE_THREE:
                     rb_school.setChecked(true);
                     break;
-                case Constant.PAGE_FIVE:
+                case Constant.PAGE_FOUR:
                     rb_person.setChecked(true);
                     break;
             }
@@ -143,9 +143,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         Drawable drawable1 = getResources().getDrawable(R.drawable.menu_main);
         drawable1.setBounds(0, 0, len, len);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
         rb_main.setCompoundDrawables(null, drawable1, null, null);//只放上面
-        Drawable drawable2 = getResources().getDrawable(R.drawable.menu_course);
-        drawable2.setBounds(0, 0, len, len);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
-        rb_course.setCompoundDrawables(null, drawable2, null, null);//只放上面
+//        Drawable drawable2 = getResources().getDrawable(R.drawable.menu_course);
+//        drawable2.setBounds(0, 0, len, len);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+//        rb_course.setCompoundDrawables(null, drawable2, null, null);//只放上面
         Drawable drawable3 = getResources().getDrawable(R.drawable.menu_mycourse);
         drawable3.setBounds(0, 0, len, len);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
         rb_learn.setCompoundDrawables(null, drawable3, null, null);//只放上面

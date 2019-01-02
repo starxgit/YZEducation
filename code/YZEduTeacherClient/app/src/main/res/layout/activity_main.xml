@@ -18,11 +18,11 @@
             android:drawableTop="@drawable/menu_main"
             android:text="@string/index" />
 
-        <RadioButton
-            android:id="@+id/rb_course"
-            style="@style/tab_menu_item"
-            android:drawableTop="@drawable/menu_course"
-            android:text="@string/live" />
+        <!--<RadioButton-->
+            <!--android:id="@+id/rb_course"-->
+            <!--style="@style/tab_menu_item"-->
+            <!--android:drawableTop="@drawable/menu_course"-->
+            <!--android:text="@string/live" />-->
 
         <RadioButton
             android:id="@+id/rb_learn"

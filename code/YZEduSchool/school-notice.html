@@ -33,7 +33,7 @@
 					</tr>
 				</thead>
 				<tbody id="notices">
-					
+
 				</tbody>
 			</table>
 		</div>
@@ -77,22 +77,26 @@
 
 		// 获取公告列表
 		function getList() {
-			let school_id = 305;
-			$.ajax({
-				url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "info/announcementList",
-				type: "get",
-				data: {
-					"school_id": school_id,
-				},
-				success: function (res) {
-					let data = JSON.parse(res);
-					if (data.result_code == 0) {
-						setList(data.return_data);
-					} else {
-						alert(data.message);
+			let school_id = $.cookie('school_id');
+			if (typeof (school_id) == "undefined") {
+				self.location = "login.html";
+			} else {
+				$.ajax({
+					url: "https://www.fstechnology.cn:8443/YZEduSchoolServer/" + "info/announcementList",
+					type: "get",
+					data: {
+						"school_id": school_id,
+					},
+					success: function (res) {
+						let data = JSON.parse(res);
+						if (data.result_code == 0) {
+							setList(data.return_data);
+						} else {
+							alert(data.message);
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 
 		// 将列表设置到页面

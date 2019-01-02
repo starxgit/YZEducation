@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fstech.yzeduas.mapper.InformationMapper">
+
+    <!--所有管理员列表-->
+    <select id="findList" resultMap="Information">
+        SELECT
+        platform_information_id,
+        platform_information_title,
+        platform_information_cover,
+        gmt_modified
+        FROM platform_information
+        order by gmt_modified desc
+    </select>
+    <resultMap id="Information" type="com.fstech.yzeduas.model.Information">
+        <id column="platform_information_id" property="information_id" jdbcType="VARCHAR"/>
+        <result column="platform_information_title" property="information_title" jdbcType="VARCHAR"/>
+        <result column="platform_information_cover" property="information_cover" jdbcType="VARCHAR"/>
+        <result column="gmt_create" property="information_time" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+</mapper>

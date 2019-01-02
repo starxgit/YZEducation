@@ -13,6 +13,8 @@ spring:
     suffix: .html
   resources:
     static-locations: classpath:/templates/
+  jmx:
+    enabled: false
 
 mybatis:
   mapper-locations: classpath:mapping/*.xml

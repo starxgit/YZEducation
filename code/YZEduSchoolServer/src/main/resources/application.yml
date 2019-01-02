@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     name: test
-    url: jdbc:mysql://118.89.29.44:3306/yzedu?useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/yzedu?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: yzedu
     password: yzedu
 

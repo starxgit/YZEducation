@@ -18,5 +18,16 @@
         <result column="gmt_create" property="registe_time" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!--通过账号查找管理员-->
+    <select id="findByAccount" resultType="com.fstech.yzeduss.model.SchoolAdmin">
+         SELECT
+            school_admin_id,
+            school_id,
+            school_admin_password,
+            school_admin_number,
+            school_admin_name,
+            gmt_create
+        FROM school_admin where school_admin_number = #{account}
+    </select>
 
 </mapper>

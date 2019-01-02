@@ -20,9 +20,9 @@ import com.fstech.yzedutc.util.Constant;
 
 public class MyFragmentAdapter extends FragmentPagerAdapter {
 
-    private final int PAGER_COUNT = 5;
+    private final int PAGER_COUNT = 4;
     private MainFragment myFragment0 = null;
-    private LiveFragment myFragment1 = null;
+//    private LiveFragment myFragment1 = null;
     private LearnFragment myFragment2 = null;
     private SchoolFragment myFragment3 = null;
     private PersonFragment myFragment4 = null;
@@ -30,7 +30,7 @@ public class MyFragmentAdapter extends FragmentPagerAdapter {
     public MyFragmentAdapter(FragmentManager fm) {
         super(fm);
         myFragment0 = new MainFragment();
-        myFragment1 = new LiveFragment();
+//        myFragment1 = new LiveFragment();
         myFragment2 = new LearnFragment();
         myFragment3 = new SchoolFragment();
         myFragment4 = new PersonFragment();
@@ -60,16 +60,16 @@ public class MyFragmentAdapter extends FragmentPagerAdapter {
             case Constant.PAGE_ONE:
                 fragment = myFragment0;
                 break;
+//            case Constant.PAGE_TWO:
+//                fragment = myFragment1;
+//                break;
             case Constant.PAGE_TWO:
-                fragment = myFragment1;
-                break;
-            case Constant.PAGE_THREE:
                 fragment = myFragment2;
                 break;
-            case Constant.PAGE_FOUR:
+            case Constant.PAGE_THREE:
                 fragment = myFragment3;
                 break;
-            case Constant.PAGE_FIVE:
+            case Constant.PAGE_FOUR:
                 fragment = myFragment4;
                 break;
         }

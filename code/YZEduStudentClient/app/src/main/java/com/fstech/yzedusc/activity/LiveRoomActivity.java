@@ -91,7 +91,7 @@ public class LiveRoomActivity extends AppCompatActivity {
         flag = true;
         Intent intent = getIntent();
         lb = (LiveRoomBean) intent.getSerializableExtra("lb");
-        String url = "rtmp://22280.liveplay.myqcloud.com/live/22280_" + lb.getLive_room_number() + "362d11e892905cb9018cf0d4?bizid=22280";
+        String url = "rtmp://cdn.fstechnology.cn/live/22280_9600f698362d11e892905cb9018cf0d4";
         Log.e("lburl", url);
         player.setUp(url, JCVideoPlayer.SCREEN_LAYOUT_LIST, "");
 //        ChatBean cb = new ChatBean(1, "直播机器人", "欢迎进入直播间", null, null, null);
